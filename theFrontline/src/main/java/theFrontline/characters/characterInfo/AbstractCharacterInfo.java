@@ -30,6 +30,7 @@ public abstract class AbstractCharacterInfo {
     public CardGroup masterDeck;
     public Stats stats;
     public Rarity rarity;
+    public int offence, defence, utility;
 
     public AbstractCharacterInfo(String id, int maxHP) {
         this.id = id;
@@ -45,6 +46,7 @@ public abstract class AbstractCharacterInfo {
         masterDeck = new CardGroup(CardGroup.CardGroupType.MASTER_DECK);
         masterDeck.group.addAll(getStarterDeck());
         stats = new Stats();
+        setFlavorStats();
     }
 
     public abstract ArrayList<AbstractCard> getStarterDeck();
@@ -98,6 +100,8 @@ public abstract class AbstractCharacterInfo {
             masterDeck.addToTop(CardLibrary.getCopy(cas.id, cas.upgrades, cas.misc));
         }
     }
+
+    public abstract void setFlavorStats();
 
     public class Stats {
         protected int armor, addDraw;

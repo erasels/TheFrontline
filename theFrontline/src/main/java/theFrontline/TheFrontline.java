@@ -25,7 +25,7 @@ import theFrontline.cards.variables.ShowNumber;
 import theFrontline.characters.FrontlineCharacter;
 import theFrontline.characters.characterInfo.AbstractCharacterInfo;
 import theFrontline.characters.characterInfo.CharacterSave;
-import theFrontline.mechanics.speed.AbstractSpeedTime;
+import theFrontline.screens.AbstractScreen;
 import theFrontline.patches.ui.MasterDeckViewPatches;
 import theFrontline.util.CharacterHelper;
 import theFrontline.util.TextureLoader;
@@ -53,7 +53,7 @@ public class TheFrontline implements
     public static final String ENABLE_PLACEHOLDER_SETTINGS = "enablePlaceholder";
     public static boolean enablePlaceholder = true;
 
-    public static AbstractSpeedTime speedScreen;
+    public static AbstractScreen screen;
 
     private static final String MODNAME = "The Frontline";
     private static final String AUTHOR = "erasels";
@@ -179,8 +179,8 @@ public class TheFrontline implements
 
     @Override
     public void receivePostUpdate() {
-        if (speedScreen != null && speedScreen.isDone) {
-            speedScreen = null;
+        if (screen != null && screen.isDone) {
+            screen = null;
         }
 
         if(MasterDeckViewPatches.RESET_ON_CLOSE && CardCrawlGame.dungeon != null && AbstractDungeon.screen != AbstractDungeon.CurrentScreen.MASTER_DECK_VIEW) {

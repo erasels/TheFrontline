@@ -15,5 +15,21 @@
       "Choose ",
       " card(s)."
     ]
+  },
+  "theFrontline:HelperStrings": {
+    "TEXT": [
+      "Offence: ",
+      "Defence: ",
+      "Utility: ",
+      "Health Damage Reduction: ",
+      "Additional Card Draw: ",
+      "Special Ability: "
+    ]
+  },
+  "theFrontline:CharAddScreen": {
+    "TEXT": [
+      "Accept",
+      "Scrap"
+    ]
   }
 }

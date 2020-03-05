@@ -21,6 +21,13 @@ public class F2000 extends ARInfo {
     }
 
     @Override
+    public void setFlavorStats() {
+        offence = 2;
+        defence = 2;
+        utility = 2;
+    }
+
+    @Override
     public Rarity getRarity() {
         return Rarity.BASIC;
     }

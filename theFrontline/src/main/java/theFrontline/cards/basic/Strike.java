@@ -6,10 +6,7 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.vfx.combat.CleaveEffect;
-import theFrontline.actions.utility.BeginSpeedModeAction;
 import theFrontline.cards.abstracts.FrontlineCard;
-import theFrontline.mechanics.speed.ButtonGenerators.BasicButtonGenerator;
-import theFrontline.mechanics.speed.SpeedClickButtonTime;
 import theFrontline.util.CardInfo;
 import theFrontline.util.UC;
 
@@ -49,7 +46,7 @@ public class Strike extends FrontlineCard {
                 UC.doVfx(new CleaveEffect());
                 UC.doAllDmg(damage, AbstractGameAction.AttackEffect.NONE, false);
             };
-            UC.atb(new BeginSpeedModeAction(new SpeedClickButtonTime(10.0f, myRunnable, new BasicButtonGenerator(1f, true))));
+            //UC.atb(new BeginSpeedModeAction(new SpeedClickButtonTime(10.0f, myRunnable, new BasicButtonGenerator(1f, true))));
             //UC.atb(new BeginSpeedModeAction(new SpeedHoverZoneTime(10.0f, myRunnable, true, 10)));
         }
     }
