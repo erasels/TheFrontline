@@ -1,0 +1,130 @@
+package theFrontline.characters.characterInfo;
+
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.megacrit.cardcrawl.cards.AbstractCard;
+import com.megacrit.cardcrawl.cards.CardGroup;
+import com.megacrit.cardcrawl.cards.CardSave;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
+import com.megacrit.cardcrawl.helpers.CardLibrary;
+import com.megacrit.cardcrawl.localization.CharacterStrings;
+import theFrontline.characters.characterInfo.frontline.FrontlineInfo;
+
+import java.util.ArrayList;
+
+import static theFrontline.TheFrontline.makeID;
+
+public abstract class AbstractCharacterInfo {
+    public enum Rarity {
+        BASIC, COMMON, UNCOMMON, RARE, EPIC
+    }
+
+    public Color col = Color.WHITE.cpy();
+    public String id;
+    protected CharacterStrings characterStrings;
+    public ArrayList<String> availableCards;
+    public Texture img;
+
+    public String name;
+    public int maxHP, currentHP;
+    public CardGroup masterDeck;
+    public Stats stats;
+    public Rarity rarity;
+
+    public AbstractCharacterInfo(String id, int maxHP) {
+        this.id = id;
+        this.maxHP = this.currentHP = maxHP;
+        this.rarity = getRarity();
+
+        initialize();
+    }
+
+    protected void initialize() {
+        characterStrings = CardCrawlGame.languagePack.getCharacterString(makeID(id));
+        name = characterStrings.NAMES[0];
+        masterDeck = new CardGroup(CardGroup.CardGroupType.MASTER_DECK);
+        masterDeck.group.addAll(getStarterDeck());
+        stats = new Stats();
+    }
+
+    public abstract ArrayList<AbstractCard> getStarterDeck();
+
+    public abstract Rarity getRarity();
+
+    public abstract String getDescription();
+
+    public void onDeploy(AbstractCharacterInfo character){}
+    public void onSwitch(AbstractCharacterInfo nextChar){}
+    public void preBattlePrep(){}
+
+    public Color getColor() {
+        float tmp;
+        switch(rarity) {
+            case UNCOMMON:
+                tmp = 1.15f;
+                break;
+            case RARE:
+                tmp = 1.3f;
+                break;
+            case EPIC:
+                tmp = 1.5f;
+                break;
+            default:
+                tmp = 1f;
+                break;
+        }
+        col.mul(tmp);
+        return col;
+    }
+
+    public boolean isGFL() {
+        return this instanceof FrontlineInfo;
+    }
+
+    public boolean isGFL(FrontlineInfo.Type type) {
+        return isGFL() && ((FrontlineInfo) this).type == type;
+    }
+
+    public CharacterSave getSave() {
+        return new CharacterSave(this.getClass().getName(), stats.getSaveString(), currentHP, maxHP, masterDeck.getCardDeck());
+    }
+
+    public void setSave(CharacterSave cs) {
+        stats.setFromSaveString(cs.stats);
+        currentHP = cs.currentHP;
+        maxHP = cs.maxHP;
+        masterDeck.clear();
+        for(CardSave cas : cs.masterDeck) {
+            masterDeck.addToTop(CardLibrary.getCopy(cas.id, cas.upgrades, cas.misc));
+        }
+    }
+
+    public class Stats {
+        protected int armor, addDraw;
+
+        public Stats() {
+            armor = 0;
+            addDraw = 0;
+        }
+
+        public Stats(int armor, int addDraw) {
+            this.armor = armor;
+            this.addDraw = addDraw;
+        }
+
+        public String getSaveString() {
+            return armor + ";" + addDraw;
+        }
+
+        public void setFromSaveString(String str) {
+            String[] tmp = str.split(";");
+            armor = Integer.parseInt(tmp[0]);
+            addDraw = Integer.parseInt(tmp[1]);
+        }
+
+        public int getArmor() { return armor; }
+        public int getAddDraw() { return addDraw; }
+        public void setArmor(int armor) { this.armor = armor; }
+        public void setAddDraw(int addDraw) { this.addDraw = addDraw; }
+    }
+}
