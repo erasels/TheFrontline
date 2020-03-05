@@ -1,2 +1,2 @@
-An upset shrine maiden enters the spire...
-https://docs.google.com/spreadsheets/d/1u3ySGQmTSbzLv1wrARKtG6aMjMtWbBzj6WSPpjRjcD4/edit
+Character compromised of multiple characters.
+Collect them, fight with them and grow them.
