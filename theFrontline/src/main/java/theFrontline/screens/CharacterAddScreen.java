@@ -113,6 +113,7 @@ public class CharacterAddScreen extends AbstractScreen implements ScrollBarListe
 
         btnAccept.hide();
         btnScrap.hide();
+        isDone = true;
         show = false;
         AbstractDungeon.getCurrRoom().phase = roomPhase;
         roomPhase = null;
