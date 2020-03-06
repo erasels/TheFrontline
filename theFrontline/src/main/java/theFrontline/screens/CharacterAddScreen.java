@@ -1,6 +1,7 @@
 package theFrontline.screens;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.evacipated.cardcrawl.modthespire.lib.*;
 import com.megacrit.cardcrawl.cards.AbstractCard;
@@ -21,9 +22,10 @@ import javassist.CtBehavior;
 import theFrontline.TheFrontline;
 import theFrontline.characters.characterInfo.AbstractCharacterInfo;
 import theFrontline.characters.characterInfo.frontline.AR.F2000;
+import theFrontline.ui.buttons.CharacterImageButton;
 import theFrontline.ui.buttons.LabledButton;
 import theFrontline.util.CharacterHelper;
-import theFrontline.util.UC;
+import theFrontline.util.ScrapHelper;
 
 import java.util.ArrayList;
 
@@ -48,18 +50,22 @@ public class CharacterAddScreen extends AbstractScreen implements ScrollBarListe
 
     private LabledButton btnAccept;
     private LabledButton btnScrap;
+    private CharacterImageButton btnChar;
 
     public CharacterAddScreen(float duration) {
         super(duration);
         scrollBar = new ScrollBar(this);
         btnAccept = new LabledButton(Settings.WIDTH * 0.1f, Settings.HEIGHT * 0.25f, TEXT[0], false,
                 () -> {
-                    UC.pc().characters.add(this.character);
+                    CharacterHelper.addCharacter(this.character);
                     close();
                 }, Color.FOREST);
 
         btnScrap = new LabledButton(Settings.WIDTH * 0.1f, Settings.HEIGHT * 0.15f, TEXT[1], false,
-                () -> close(), Color.ROYAL);
+                () -> {
+                    ScrapHelper.addScrap(character.getScrapValue());
+                    close();
+                }, Color.ROYAL);
     }
 
     public void open(AbstractCharacterInfo ci) {
@@ -72,6 +78,7 @@ public class CharacterAddScreen extends AbstractScreen implements ScrollBarListe
         targetY = scrollLowerBound;
         scrollY = Settings.HEIGHT - 400.0f * Settings.scale;
 
+        btnChar = new CharacterImageButton(X_OFFSET / 2f, Settings.HEIGHT * 0.6f, character, TEXT[4], character.getDescription(), true);
         btnAccept.show();
         btnScrap.show();
 
@@ -95,6 +102,7 @@ public class CharacterAddScreen extends AbstractScreen implements ScrollBarListe
             AbstractDungeon.closeCurrentScreen();
 
             TheFrontline.screen = new CharacterAddScreen(1f);
+            //((CharacterAddScreen) TheFrontline.screen).open(CharacterHelper.getRandomCharacter());
             ((CharacterAddScreen) TheFrontline.screen).open(new F2000());
 
             return SpireReturn.Return(true);
@@ -129,6 +137,7 @@ public class CharacterAddScreen extends AbstractScreen implements ScrollBarListe
 
         btnAccept.update();
         btnScrap.update();
+        btnChar.update();
 
         boolean isScrollingScrollBar = scrollBar.update();
         if (!isScrollingScrollBar) {
@@ -184,23 +193,40 @@ public class CharacterAddScreen extends AbstractScreen implements ScrollBarListe
     }
 
     public static final float X_OFFSET = Settings.WIDTH * 0.05f;
+
     public void render(SpriteBatch sb) {
         if (!shouldShow()) {
             return;
         }
 
+        Color tCol;
+        switch(character.getRarity()) {
+            case EPIC:
+                tCol = Color.GOLDENROD;
+                break;
+            case RARE:
+                tCol = Color.OLIVE;
+                break;
+            case UNCOMMON:
+                tCol = Color.SKY;
+                break;
+            default:
+                tCol = Color.WHITE;
+        }
+        sb.setColor(tCol);
+        Texture tIcon = CharacterHelper.getTypeIcon(character);
+        float tmpImgW = character.img.getWidth() * Settings.scale;
+        float tmpImgH = character.img.getHeight() * Settings.scale;
+        sb.draw(tIcon, X_OFFSET / 2f, (Settings.HEIGHT * 0.6f) + (tmpImgH + (5*Settings.scale)), tIcon.getWidth() * Settings.scale, tIcon.getHeight() * Settings.scale, 0, 0, tIcon.getWidth(), tIcon.getHeight(), false, false);
         sb.setColor(Color.WHITE);
-        float tmpImgW = character.img.getWidth();
-        float tmpImgH = character.img.getHeight();
-        sb.draw(character.img, X_OFFSET - ((tmpImgW * Settings.scale) * 0.5f), Settings.HEIGHT * 0.6f, tmpImgW * Settings.scale, tmpImgH * Settings.scale, 0, 0, (int) tmpImgW, (int) tmpImgH, false, false);
-
-        FontHelper.renderFontLeft(sb, FontHelper.cardDescFont_L, CharacterHelper.getFlavorStatsString(character, false), ((tmpImgW * Settings.scale) / 2f) - (X_OFFSET - (40f * Settings.scale)), (Settings.HEIGHT * 0.6f) + ((tmpImgH * Settings.scale) / 4f), Color.WHITE.cpy());
+        //sb.draw(character.img, X_OFFSET / 2f, Settings.HEIGHT * 0.6f, tmpImgW, tmpImgH, 0, 0, character.img.getWidth(), character.img.getHeight(), false, false);
+        btnChar.render(sb);
+        FontHelper.renderFontLeft(sb, FontHelper.cardDescFont_L, CharacterHelper.getFlavorStatsString(character, false), (X_OFFSET / 2f) + tmpImgW + (30f * Settings.scale), (Settings.HEIGHT * 0.6f) + ((tmpImgH) / 4f), Color.WHITE.cpy());
 
         String stats = CharacterHelper.getStatsString(character, false);
-        String effect = CharacterHelper.getEffectString(character);
-        FontHelper.renderFontLeft(sb, FontHelper.cardDescFont_L, stats, X_OFFSET/2f, (Settings.HEIGHT * 0.6f) - ((tmpImgH * Settings.scale) / 4f), Color.WHITE.cpy());
-        //TODO: Put this into a tip that renders on hovering the character portrait
-        FontHelper.renderFontLeft(sb, FontHelper.cardDescFont_L, effect, START_X - SPACE, Settings.HEIGHT * 0.85f, Color.WHITE.cpy());
+        FontHelper.renderFontLeft(sb, FontHelper.cardDescFont_L, stats, X_OFFSET / 2f, (Settings.HEIGHT * 0.6f) - ((tmpImgH) / 2f), Color.WHITE.cpy());
+
+        FontHelper.renderFontLeft(sb, FontHelper.cardDescFont_L, TEXT[2] + character.getScrapValue() + TEXT[3], btnScrap.hb.cX - (btnScrap.hb.width/2), btnScrap.hb.cY - (btnScrap.hb.height), Color.WHITE.cpy());
 
         row = -1;
         col = 0;
@@ -230,9 +256,9 @@ public class CharacterAddScreen extends AbstractScreen implements ScrollBarListe
             r.target_x = r.current_x = (START_X + SPACE * col);
             r.target_y = r.current_y = (START_Y - (scrollY - START_Y) - (SPACE * 2) * row);
             r.render(sb);
-            if(r.hb.hovered) {
+            if (r.hb.hovered) {
                 TipHelper.renderTipForCard(r, sb, r.keywords);
-                if(r.cardsToPreview != null) {
+                if (r.cardsToPreview != null) {
                     r.renderCardPreview(sb);
                 }
             }
@@ -259,7 +285,7 @@ public class CharacterAddScreen extends AbstractScreen implements ScrollBarListe
 
     //TODO: Get actual cards
     private ArrayList<AbstractCard> getCards() {
-        if(cards == null) {
+        if (cards == null) {
             cards = character.getStarterDeck();
         }
         return cards;
