@@ -5,7 +5,6 @@ import basemod.ReflectionHacks;
 import basemod.abstracts.CustomPlayer;
 import basemod.animations.G3DJAnimation;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpireEnum;
@@ -70,6 +69,7 @@ public class FrontlineCharacter extends CustomPlayer {
     private static final String[] NAMES = characterStrings.NAMES;
     private static final String[] TEXT = characterStrings.TEXT;
 
+    public int scrap;
     public ArrayList<AbstractCharacterInfo> characters = new ArrayList<>();
     public String previousCharacter;
     public String currentCharacter;
@@ -88,6 +88,7 @@ public class FrontlineCharacter extends CustomPlayer {
         dialogX = (drawX + 0.0F * Settings.scale);
         dialogY = (drawY + 220.0F * Settings.scale);
         combatDecks = new HashMap<>();
+        scrap = 0;
     }
 
     public String getPortraitImageName() {
@@ -141,18 +142,26 @@ public class FrontlineCharacter extends CustomPlayer {
         combatDecks.clear();
     }
 
-    public void onDeploy(AbstractCharacterInfo character) {
-        getCurrChar().onDeploy(character);
+    public void onDeploy() {
+        getCurrChar().onDeploy();
     }
 
-    public void onSwitch(AbstractCharacterInfo nextChar) {
-        getCurrChar().onSwitch(nextChar);
+    public void onRetreat(AbstractCharacterInfo nextChar) {
+        getCurrChar().onRetreat(nextChar);
+    }
+
+    public void onSwitch(AbstractCharacterInfo currChar, AbstractCharacterInfo nextChar) {
+        characters.forEach(c -> c.onSwitch(currChar, nextChar));
+    }
+
+    public void onAddCharacter(AbstractCharacterInfo newChar) {
+        characters.forEach(c -> c.onAddNewCharacter(newChar));
     }
 
     public void switchCharacter(AbstractCharacterInfo c) {
         updateCharInfo();
 
-        onSwitch(c);
+        onRetreat(c);
 
         int cardsInHand = 0;
         if(AbstractDungeon.getCurrRoom().phase == AbstractRoom.RoomPhase.COMBAT) {
@@ -180,10 +189,10 @@ public class FrontlineCharacter extends CustomPlayer {
                 discardPile.clear();
             }
             UC.att(new DrawCardAction(cardsInHand));
-
         }
 
-        onDeploy(c);
+        onSwitch(getPrevChar(), c);
+        onDeploy();
     }
 
     public void loadCharInfo() {
@@ -239,15 +248,6 @@ public class FrontlineCharacter extends CustomPlayer {
             }
         }
         return null;
-    }
-
-    @Override
-    public void dispose() {
-        //TODO: Actually fix this, this is just a dirty hack
-        Texture tmp = img;
-        img = null;
-        super.dispose();
-        img = tmp;
     }
 
     // Starting Deck

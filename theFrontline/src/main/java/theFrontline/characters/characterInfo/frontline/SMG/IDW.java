@@ -14,7 +14,7 @@ public class IDW extends SMGInfo {
     }
 
     @Override
-    public void onSwitch(AbstractCharacterInfo nextChar) {
+    public void onRetreat(AbstractCharacterInfo nextChar) {
         if(nextChar.isGFL(Type.AR)) {
             UC.doPow(UC.p(), new DexterityPower(UC.p(), DEX_AMT));
         }

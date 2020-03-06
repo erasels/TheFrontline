@@ -14,7 +14,7 @@ public class F2000 extends ARInfo {
     }
 
     @Override
-    public void onSwitch(AbstractCharacterInfo nextChar) {
+    public void onRetreat(AbstractCharacterInfo nextChar) {
         if(nextChar.isGFL(Type.SMG)) {
             UC.doPow(UC.p(), new StrengthPower(UC.p(), STR_AMT));
         }

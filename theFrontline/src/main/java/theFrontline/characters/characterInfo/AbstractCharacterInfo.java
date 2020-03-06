@@ -55,8 +55,10 @@ public abstract class AbstractCharacterInfo {
 
     public abstract String getDescription();
 
-    public void onDeploy(AbstractCharacterInfo character){}
-    public void onSwitch(AbstractCharacterInfo nextChar){}
+    public void onDeploy(){}
+    public void onRetreat(AbstractCharacterInfo nextChar){}
+    public void onSwitch(AbstractCharacterInfo currChar, AbstractCharacterInfo nextChar){}
+    public void onAddNewCharacter(AbstractCharacterInfo newChar){}
     public void preBattlePrep(){}
 
     public Color getColor() {
@@ -90,6 +92,8 @@ public abstract class AbstractCharacterInfo {
     public CharacterSave getSave() {
         return new CharacterSave(this.getClass().getName(), stats.getSaveString(), currentHP, maxHP, masterDeck.getCardDeck());
     }
+
+    public abstract int getScrapValue();
 
     public void setSave(CharacterSave cs) {
         stats.setFromSaveString(cs.stats);
