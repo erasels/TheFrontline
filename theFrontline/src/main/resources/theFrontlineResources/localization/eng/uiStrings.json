@@ -31,7 +31,16 @@
   "theFrontline:CharAddScreen": {
     "TEXT": [
       "Accept",
-      "Scrap"
+      "Scrap",
+      "Scrap to gain ",
+      " Scrap.",
+      "Special Ability"
+    ]
+  },
+  "theFrontline:ScrapDisplay": {
+    "TEXT": [
+      "Scrap",
+      "Used to upgrade your Frontliners and craft cards. NL Click to open usage menu."
     ]
   }
 }

@@ -29,7 +29,9 @@ import theFrontline.characters.characterInfo.CharacterSave;
 import theFrontline.characters.characterInfo.frontline.FrontlineInfo;
 import theFrontline.patches.ui.MasterDeckViewPatches;
 import theFrontline.screens.AbstractScreen;
+import theFrontline.ui.ScrapDisplay;
 import theFrontline.util.CharacterHelper;
+import theFrontline.util.ScrapHelper;
 import theFrontline.util.TextureLoader;
 import theFrontline.util.UC;
 
@@ -55,6 +57,7 @@ public class TheFrontline implements
     public static boolean enablePlaceholder = true;
 
     public static AbstractScreen screen;
+    public static ScrapDisplay scrapDisplay;
 
     private static final String MODNAME = "The Frontline";
     private static final String AUTHOR = "erasels";
@@ -155,7 +158,7 @@ public class TheFrontline implements
                 FrontlineCharacter p = UC.pc();
                 if(i != null && p != null) {
                     for(CharacterSave cs : i) {
-                        AbstractCharacterInfo ci = CharacterHelper.getCharacterFromID(cs.id);
+                        AbstractCharacterInfo ci = CharacterHelper.getCharacterByClassName(cs.id);
                         ci.setSave(cs);
                         p.characters.add(ci);
                     }
@@ -177,6 +180,24 @@ public class TheFrontline implements
             }
         });
 
+        BaseMod.addSaveField(makeID("CurrentScrap"), new CustomSavable<Integer>() {
+            @Override
+            public Integer onSave() {
+                return ScrapHelper.getScrap();
+            }
+
+            @Override
+            public void onLoad(Integer i) {
+                if(i != null) {
+                    ScrapHelper.addScrap(i);
+                }
+            }
+        });
+
+        if(scrapDisplay == null) {
+            scrapDisplay = new ScrapDisplay();
+        }
+
         new AutoAdd(getModID())
                 .packageFilter("theFrontline.characters.characterInfo.frontline")
                 .any(FrontlineInfo.class, (info, character) -> CharacterHelper.addToMap(character));
@@ -197,17 +218,19 @@ public class TheFrontline implements
     public static ArrayList<AbstractCharacterInfo> charsToLoad = new ArrayList<>();
     @Override
     public void receiveStartGame() {
+        BaseMod.removeTopPanelItem(scrapDisplay);
         if (AbstractDungeon.player.chosenClass == FrontlineCharacter.Enums.THE_FRONTLINE) {
             if( charsToLoad != null && !charsToLoad.isEmpty()) {
                 UC.pc().setChar(charsToLoad.get(0));
                 charsToLoad.remove(0);
                 for(AbstractCharacterInfo ci : charsToLoad) {
-                    UC.pc().characters.add(ci);
+                    CharacterHelper.addCharacter(ci);
                 }
                 charsToLoad = null;
             } else if (CardCrawlGame.loadingSave) {
                 UC.pc().setChar(UC.pc().getCurrChar());
             }
+            BaseMod.addTopPanelItem(scrapDisplay);
         }
     }
 
