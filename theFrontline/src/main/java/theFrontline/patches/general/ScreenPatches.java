@@ -28,10 +28,18 @@ public class ScreenPatches {
 
     @SpirePatch(clz = AbstractDungeon.class, method = "update")
     public static class UpdateCaller {
-        @SpirePostfixPatch
+        @SpireInsertPatch(locator = Locator.class)
         public static void patch(AbstractDungeon __instance) {
             if(TheFrontline.screen != null) {
                 TheFrontline.screen.update();
+            }
+        }
+
+        private static class Locator extends SpireInsertLocator {
+            @Override
+            public int[] Locate(CtBehavior ctBehavior) throws Exception {
+                Matcher finalMatcher = new Matcher.FieldAccessMatcher(AbstractDungeon.class, "topPanel");
+                return LineFinder.findInOrder(ctBehavior, finalMatcher);
             }
         }
     }
