@@ -21,7 +21,7 @@ import theFrontline.characters.characterInfo.AbstractCharacterInfo;
 import theFrontline.characters.characterInfo.frontline.FrontlineInfo;
 import theFrontline.util.UC;
 
-public class CharacterOrb extends AbstractOrb{
+public class CharacterOrb extends AbstractOrb {
     // Standard ID/Description
     public static final String ORB_ID = TheFrontline.makeID("CharacterOrb");
     private static final OrbStrings orbString = CardCrawlGame.languagePack.getOrbString(ORB_ID);
@@ -33,16 +33,16 @@ public class CharacterOrb extends AbstractOrb{
     protected static final float NUM_Y_OFFSET = -30.0F * Settings.scale;
     // Animation Rendering Numbers - You can leave these at default, or play around with them and see what they change.
     private float vfxTimer = 1.0f;
-    private float vfxIntervalMin = 0.1f;
-    private float vfxIntervalMax = 0.4f;
+    private float vfxIntervalMin = 0.3f;
+    private float vfxIntervalMax = 0.7f;
     private float alpha = 1f;
 
     public CharacterOrb(AbstractCharacterInfo c) {
         character = c;
         ID = ORB_ID;
         String tmp = "";
-        if(c.isGFL()) {
-            tmp = ((FrontlineInfo)c).type.name() + ": ";
+        if (c.isGFL()) {
+            tmp = ((FrontlineInfo) c).type.name() + ": ";
         }
         name = tmp + c.name;
 
@@ -76,10 +76,10 @@ public class CharacterOrb extends AbstractOrb{
     public void update() {
         super.update();
 
-        if(hb.hovered) {
-           alpha = 1.0f;
-            if(AbstractDungeon.getCurrRoom().phase == AbstractRoom.RoomPhase.COMBAT && AbstractDungeon.actionManager.phase == GameActionManager.Phase.WAITING_ON_USER && InputHelper.justReleasedClickLeft) {
-                if(AbstractDungeon.actionManager.actions.stream().noneMatch(a -> a instanceof SwitchCharacterAction)) {
+        if (hb.hovered) {
+            alpha = 1.0f;
+            if (AbstractDungeon.getCurrRoom().phase == AbstractRoom.RoomPhase.COMBAT && AbstractDungeon.actionManager.phase == GameActionManager.Phase.WAITING_ON_USER && InputHelper.justReleasedClickLeft) {
+                if (AbstractDungeon.actionManager.actions.stream().noneMatch(a -> a instanceof SwitchCharacterAction)) {
                     UC.atb(new SwitchCharacterCombatAction(character));
                 }
             }
@@ -91,7 +91,22 @@ public class CharacterOrb extends AbstractOrb{
     @Override
     public void render(SpriteBatch sb) {
         sb.setColor(new Color(1.0f, 1.0f, 1.0f, alpha));
-        sb.draw(character.img, cX - (character.img.getWidth()/4f), cY - 48.0f + bobEffect.y, 0, 0, character.img.getWidth(), character.img.getHeight(), scale * 0.5f, scale *0.5f, angle, 0, 0, character.img.getWidth(), character.img.getHeight(), false, false);
+        sb.draw(character.img,
+                cX - ((character.img.getWidth()*Settings.scale)/4f),
+                cY - 48.0f + bobEffect.y,
+                0,
+                0,
+                character.img.getWidth() * Settings.scale,
+                character.img.getHeight() * Settings.scale,
+                scale * 0.5f,
+                scale * 0.5f,
+                angle,
+                0,
+                0,
+                character.img.getWidth(),
+                character.img.getHeight(),
+                false,
+                false);
         renderText(sb);
         hb.render(sb);
     }
@@ -101,9 +116,14 @@ public class CharacterOrb extends AbstractOrb{
         FontHelper.renderFontCentered(sb, FontHelper.cardEnergyFont_L, Integer.toString(character.currentHP), this.cX - NUM_X_OFFSET, this.cY + this.bobEffect.y / 2.0F - NUM_Y_OFFSET, new Color(1F, 0.4F, 0.4F, alpha), this.fontScale);
     }
 
-    public void onEvoke() {}
-    public void triggerEvokeAnimation() {}
-    public void playChannelSFX() { }
+    public void onEvoke() {
+    }
+
+    public void triggerEvokeAnimation() {
+    }
+
+    public void playChannelSFX() {
+    }
 
     @Override
     public AbstractOrb makeCopy() {
