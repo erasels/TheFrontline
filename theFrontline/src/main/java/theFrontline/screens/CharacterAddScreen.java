@@ -10,6 +10,7 @@ import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.helpers.MathHelper;
+import com.megacrit.cardcrawl.helpers.TipHelper;
 import com.megacrit.cardcrawl.helpers.input.InputHelper;
 import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.rewards.RewardItem;
@@ -43,6 +44,7 @@ public class CharacterAddScreen extends AbstractScreen implements ScrollBarListe
     private float grabStartY = 0.0F;
     private ScrollBar scrollBar;
     private boolean show = false;
+    private ArrayList<AbstractCard> cards;
 
     private LabledButton btnAccept;
     private LabledButton btnScrap;
@@ -181,20 +183,11 @@ public class CharacterAddScreen extends AbstractScreen implements ScrollBarListe
         }
     }
 
-    private void updateList(ArrayList<AbstractCard> list) {
-        for (AbstractCard r : list) {
-            r.hb.move(r.current_x, r.current_y);
-            r.update();
-        }
-    }
-
     public static final float X_OFFSET = Settings.WIDTH * 0.05f;
-
     public void render(SpriteBatch sb) {
         if (!shouldShow()) {
             return;
         }
-
 
         sb.setColor(Color.WHITE);
         float tmpImgW = character.img.getWidth();
@@ -219,6 +212,13 @@ public class CharacterAddScreen extends AbstractScreen implements ScrollBarListe
         btnScrap.render(sb);
     }
 
+    private void updateList(ArrayList<AbstractCard> list) {
+        for (AbstractCard r : list) {
+            r.update();
+            r.updateHoverLogic();
+        }
+    }
+
     private void renderList(SpriteBatch sb, ArrayList<AbstractCard> list) {
         row += 1;
         col = 0;
@@ -227,9 +227,15 @@ public class CharacterAddScreen extends AbstractScreen implements ScrollBarListe
                 col = 0;
                 row += 1;
             }
-            r.current_x = (START_X + SPACE * col);
-            r.current_y = (START_Y - (scrollY - START_Y) - (SPACE * 2) * row);
+            r.target_x = r.current_x = (START_X + SPACE * col);
+            r.target_y = r.current_y = (START_Y - (scrollY - START_Y) - (SPACE * 2) * row);
             r.render(sb);
+            if(r.hb.hovered) {
+                TipHelper.renderTipForCard(r, sb, r.keywords);
+                if(r.cardsToPreview != null) {
+                    r.renderCardPreview(sb);
+                }
+            }
             col += 1;
         }
     }
@@ -251,7 +257,11 @@ public class CharacterAddScreen extends AbstractScreen implements ScrollBarListe
         scrollBar.parentScrolledToPercent(percent);
     }
 
+    //TODO: Get actual cards
     private ArrayList<AbstractCard> getCards() {
-        return character.getStarterDeck();
+        if(cards == null) {
+            cards = character.getStarterDeck();
+        }
+        return cards;
     }
 }
