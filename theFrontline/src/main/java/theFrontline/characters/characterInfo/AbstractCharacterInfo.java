@@ -104,11 +104,13 @@ public abstract class AbstractCharacterInfo {
     public abstract void setFlavorStats();
 
     public class Stats {
-        protected int armor, addDraw;
+        protected int armor, addDraw, strike, defend;
 
         public Stats() {
             armor = 0;
             addDraw = 0;
+            strike = 0;
+            defend = 0;
         }
 
         public Stats(int armor, int addDraw) {
@@ -117,18 +119,24 @@ public abstract class AbstractCharacterInfo {
         }
 
         public String getSaveString() {
-            return armor + ";" + addDraw;
+            return armor + ";" + addDraw + ";" + strike + ";" + defend;
         }
 
         public void setFromSaveString(String str) {
             String[] tmp = str.split(";");
             armor = Integer.parseInt(tmp[0]);
             addDraw = Integer.parseInt(tmp[1]);
+            strike = Integer.parseInt(tmp[2]);
+            defend = Integer.parseInt(tmp[3]);
         }
 
         public int getArmor() { return armor; }
         public int getAddDraw() { return addDraw; }
         public void setArmor(int armor) { this.armor = armor; }
         public void setAddDraw(int addDraw) { this.addDraw = addDraw; }
+        public int getStrike() { return strike; }
+        public void setStrike(int strike) { this.strike = strike; }
+        public int getDefend() { return defend; }
+        public void setDefend(int defend) { this.defend = defend; }
     }
 }
