@@ -124,6 +124,7 @@ public abstract class AbstractCharacterInfo {
 
         public void setFromSaveString(String str) {
             String[] tmp = str.split(";");
+            if(tmp.length < 4) return;
             armor = Integer.parseInt(tmp[0]);
             addDraw = Integer.parseInt(tmp[1]);
             strike = Integer.parseInt(tmp[2]);
