@@ -4,7 +4,7 @@
     <!--Hello! You'll basically should only need to change these names and the steam path (just below)-->
     <!--The author name(s) as they appear in MTS and any other comments are in your ModTheSpire.json-->
     <groupId>UpdateBodyText</groupId>
-    <artifactId>TheFrontLine</artifactId>
+    <artifactId>theFrontline</artifactId>
     <name>The FrontLine</name>
     <version>0.0.1</version>
     <description>Oh boy, here we go.</description>
