@@ -1,5 +1,6 @@
 package theFrontline;
 
+import basemod.AutoAdd;
 import basemod.BaseMod;
 import basemod.ModLabeledToggleButton;
 import basemod.ModPanel;
@@ -25,13 +26,13 @@ import theFrontline.cards.variables.ShowNumber;
 import theFrontline.characters.FrontlineCharacter;
 import theFrontline.characters.characterInfo.AbstractCharacterInfo;
 import theFrontline.characters.characterInfo.CharacterSave;
-import theFrontline.screens.AbstractScreen;
+import theFrontline.characters.characterInfo.frontline.FrontlineInfo;
 import theFrontline.patches.ui.MasterDeckViewPatches;
+import theFrontline.screens.AbstractScreen;
 import theFrontline.util.CharacterHelper;
 import theFrontline.util.TextureLoader;
 import theFrontline.util.UC;
 
-import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Properties;
@@ -175,6 +176,10 @@ public class TheFrontline implements
                 }
             }
         });
+
+        new AutoAdd(getModID())
+                .packageFilter("theFrontline.characters.characterInfo.frontline")
+                .any(FrontlineInfo.class, (info, character) -> CharacterHelper.addToMap(character));
     }
 
     @Override
@@ -215,11 +220,10 @@ public class TheFrontline implements
         BaseMod.addDynamicVariable(new MagicNumber2());
         BaseMod.addDynamicVariable(new ShowNumber());
 
-        try {
-            AutoLoader.addCards();
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
+        new AutoAdd(getModID())
+                .packageFilter("theFrontline.cards")
+                .setDefaultSeen(true)
+                .cards();
     }
 
     @Override
