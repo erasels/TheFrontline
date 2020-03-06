@@ -1,8 +1,10 @@
 package theFrontline.util;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import theFrontline.TheFrontline;
+import theFrontline.characters.FrontlineCharacter;
 import theFrontline.characters.characterInfo.AbstractCharacterInfo;
 import theFrontline.characters.characterInfo.frontline.FrontlineInfo;
 
@@ -19,6 +21,14 @@ public class CharacterHelper {
         put(AbstractCharacterInfo.Rarity.RARE, new HashMap<>());
         put(AbstractCharacterInfo.Rarity.EPIC, new HashMap<>());
     }};*/
+
+    public static void addCharacter(AbstractCharacterInfo ci) {
+        FrontlineCharacter p = UC.pc();
+        if(p != null && ci != null) {
+            p.onAddCharacter(ci);
+            p.characters.add(ci);
+        }
+    }
 
     public static HashMap<FrontlineInfo.Type, HashMap<String, FlInstanceInfo>> frontlineMap = new HashMap<FrontlineInfo.Type, HashMap<String, FlInstanceInfo>>() {{
         put(FrontlineInfo.Type.AR, new HashMap<>());
@@ -60,7 +70,7 @@ public class CharacterHelper {
         return getRandomCharacter(FrontlineInfo.Type.values()[AbstractDungeon.relicRng.random(FrontlineInfo.Type.values().length-1)]);
     }
 
-    public static AbstractCharacterInfo getCharacterFromID(String id) {
+    public static AbstractCharacterInfo getCharacterByClassName(String id) {
         AbstractCharacterInfo ci = null;
         try {
             Class<?> clazz = Class.forName(id);
@@ -70,6 +80,13 @@ public class CharacterHelper {
         }
 
         return ci;
+    }
+
+    public static Texture getTypeIcon(AbstractCharacterInfo ci) {
+        if(ci.isGFL()) {
+            return TextureLoader.getTexture(TheFrontline.makeUIPath("TypeIcon/" + ((FrontlineInfo)ci).type.name() + ".png"));
+        }
+        return TextureLoader.getTexture(TheFrontline.makeUIPath("TypeIcon/Undefined.png"));
     }
 
     public static String getFlavorStatsString(AbstractCharacterInfo ci, boolean nlBreak) {
