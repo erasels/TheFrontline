@@ -33,6 +33,22 @@ public abstract class FrontlineInfo extends AbstractCharacterInfo {
     }
 
     @Override
+    public int getScrapValue() {
+        int amt = 5;
+        switch (getRarity()) {
+            case EPIC:
+                amt*=8;
+                break;
+            case RARE:
+                amt *= 5;
+                break;
+            case UNCOMMON:
+                amt *= 2;
+        }
+        return amt;
+    }
+
+    @Override
     public ArrayList<AbstractCard> getStarterDeck() {
         ArrayList<String> cards = new ArrayList<>(Arrays.asList(Strike.ID, Strike.ID, Defend.ID, Defend.ID));
         return cards.stream().map(id -> CardLibrary.getCard(id).makeCopy()).collect(Collectors.toCollection(ArrayList::new));
