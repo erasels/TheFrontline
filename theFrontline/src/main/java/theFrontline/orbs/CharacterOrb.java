@@ -93,7 +93,7 @@ public class CharacterOrb extends AbstractOrb {
         sb.setColor(new Color(1.0f, 1.0f, 1.0f, alpha));
         sb.draw(character.img,
                 cX - ((character.img.getWidth()*Settings.scale)/4f),
-                cY - 48.0f + bobEffect.y,
+                cY - (48.0f*Settings.scale) + bobEffect.y,
                 0,
                 0,
                 character.img.getWidth() * Settings.scale,
