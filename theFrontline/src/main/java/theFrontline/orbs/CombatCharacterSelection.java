@@ -49,7 +49,7 @@ public class CombatCharacterSelection {
         chars.add(co);
 
         float dist = 420.0F * Settings.scale;
-        float angle = (size() - 1) * 15.0F;
+        float angle = (size() - 1) * 25.0F;
         float offsetAngle = angle / 2.0F;
         if (size() != 1) {
             angle *= (float) chars.indexOf(co) / ((float) size() - 1.0F);
