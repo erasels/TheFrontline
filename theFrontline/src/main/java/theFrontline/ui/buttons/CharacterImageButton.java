@@ -73,7 +73,8 @@ public class CharacterImageButton extends Button {
         } else {
             sb.setColor(inactiveColor);
         }*/
-        sb.draw(ci.img, x, y);
+        //sb.draw(ci.img, x, y);
+        sb.draw(ci.img, x, y, ci.img.getWidth() * Settings.scale, ci.img.getHeight() * Settings.scale, 0, 0, ci.img.getWidth(), ci.img.getHeight(), false, false);
         //sb.setColor(Color.WHITE);
         hb.render(sb);
     }
