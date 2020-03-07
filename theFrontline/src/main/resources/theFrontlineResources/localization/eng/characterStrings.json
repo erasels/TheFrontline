@@ -35,5 +35,18 @@
     "OPTIONS": [
       ""
     ]
+  },
+  "theFrontline:BrenTen": {
+    "NAMES": [
+      "Bren Ten",
+      "Bren Ten"
+    ],
+    "TEXT": [
+      "Whenever you #ySwitch, gain #b",
+      " #yVigor."
+    ],
+    "OPTIONS": [
+      ""
+    ]
   }
 }
