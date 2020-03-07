@@ -1,4 +1,4 @@
-package theFrontline.characters.characterInfo.frontline.AR;
+package theFrontline.characters.characterInfo.frontline.HG;
 
 import com.badlogic.gdx.graphics.Color;
 import com.megacrit.cardcrawl.cards.AbstractCard;
@@ -8,18 +8,18 @@ import theFrontline.characters.characterInfo.frontline.FrontlineInfo;
 
 import java.util.ArrayList;
 
-public abstract class ARInfo extends FrontlineInfo {
-    public static final int BASE_HP = 25;
+public abstract class HGInfo extends FrontlineInfo {
+    public static final int BASE_HP = 20;
 
-    public ARInfo(String id, int maxHP) {
-        super(id, BASE_HP + maxHP, Type.AR);
+    public HGInfo(String id, int maxHP) {
+        super(id, BASE_HP + maxHP, Type.HG);
     }
 
     @Override
     protected void initialize() {
         super.initialize();
-        col = Color.SKY.cpy();
-        //TODO: Add AR base crafting cards
+        col = Color.BROWN.cpy();
+        //TODO: Add HG base crafting cards
         //availableCards.add
     }
 

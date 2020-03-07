@@ -111,6 +111,11 @@ public abstract class AbstractCharacterInfo {
     }
     public abstract void setFlavorStats();
 
+
+    public int getArmor() { return stats.armor; }
+    public int getAddDraw() { return stats.addDraw; }
+    public int getStrike() { return stats.strike; }
+    public int getDefend() { return stats.defend; }
     public class Stats {
         protected int armor, addDraw, strike, defend;
 
@@ -138,14 +143,5 @@ public abstract class AbstractCharacterInfo {
             strike = Integer.parseInt(tmp[2]);
             defend = Integer.parseInt(tmp[3]);
         }
-
-        public int getArmor() { return armor; }
-        public int getAddDraw() { return addDraw; }
-        public void setArmor(int armor) { this.armor = armor; }
-        public void setAddDraw(int addDraw) { this.addDraw = addDraw; }
-        public int getStrike() { return strike; }
-        public void setStrike(int strike) { this.strike = strike; }
-        public int getDefend() { return defend; }
-        public void setDefend(int defend) { this.defend = defend; }
     }
 }

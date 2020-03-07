@@ -197,7 +197,7 @@ public class FrontlineCharacter extends CustomPlayer {
 
     public void loadCharInfo() {
         if(getPrevChar() != null) {
-            this.masterHandSize -= getPrevChar().stats.getAddDraw();
+            this.masterHandSize -= getPrevChar().getAddDraw();
         }
 
         AbstractCharacterInfo cc = getCurrChar();
@@ -207,7 +207,7 @@ public class FrontlineCharacter extends CustomPlayer {
         currentHealth = cc.currentHP;
         masterDeck = cc.masterDeck;
 
-        this.masterHandSize += cc.stats.getAddDraw();
+        this.masterHandSize += cc.getAddDraw();
 
         this.img = cc.img;
     }
@@ -228,7 +228,7 @@ public class FrontlineCharacter extends CustomPlayer {
     }
 
     public int getDamageReduction() {
-        return getCurrChar().stats.getArmor();
+        return getCurrChar().getArmor();
     }
 
     public AbstractCharacterInfo getCurrChar() {
