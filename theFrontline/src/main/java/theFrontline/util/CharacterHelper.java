@@ -24,9 +24,13 @@ public class CharacterHelper {
 
     public static void addCharacter(AbstractCharacterInfo ci) {
         FrontlineCharacter p = UC.pc();
-        if(p != null && ci != null) {
-            p.onAddCharacter(ci);
-            p.characters.add(ci);
+        if (p != null && ci != null) {
+            if (!p.characters.contains(ci)) {
+                p.onAddCharacter(ci);
+                p.characters.add(ci);
+            } else {
+                TheFrontline.logger.warn("Tried to add duplicate character.");
+            }
         }
     }
 
@@ -54,20 +58,41 @@ public class CharacterHelper {
 
     public static FrontlineInfo getRandomCharacter(FrontlineInfo.Type type, AbstractCharacterInfo.Rarity rarity) {
         ArrayList<FlInstanceInfo> tmp = frontlineMap.get(type).values().stream().filter(flInstanceInfo -> flInstanceInfo.rarity == rarity).collect(Collectors.toCollection(ArrayList::new));
-        tmp.removeIf(i -> i.rarity != rarity);
-        return tmp.get(AbstractDungeon.relicRng.random(tmp.size()-1)).getChar();
+        if (tmp.isEmpty()) {
+            tmp = new ArrayList<>(frontlineMap.get(type).values());
+        }
+        ArrayList<Class<? extends AbstractCharacterInfo>> noDuplicateCheck = UC.pc().characters.stream().filter(tci -> (tci instanceof FrontlineInfo) && (((FrontlineInfo) tci).type != type)).map(ci -> ci.getClass()).collect(Collectors.toCollection(ArrayList::new));
+        tmp.removeIf(ci -> noDuplicateCheck.contains(ci.fClass));
+        return tmp.get(AbstractDungeon.relicRng.random(tmp.size() - 1)).getChar();
     }
 
     public static FrontlineInfo getRandomCharacter(FrontlineInfo.Type type) {
-        return getRandomCharacter(type, AbstractCharacterInfo.Rarity.values()[AbstractDungeon.relicRng.random(AbstractCharacterInfo.Rarity.values().length-1)]);
+        return getRandomCharacter(type, AbstractCharacterInfo.Rarity.values()[AbstractDungeon.relicRng.random(AbstractCharacterInfo.Rarity.values().length - 1)]);
     }
 
     public static FrontlineInfo getRandomCharacter(AbstractCharacterInfo.Rarity rarity) {
-        return getRandomCharacter(FrontlineInfo.Type.values()[AbstractDungeon.relicRng.random(FrontlineInfo.Type.values().length-1)], rarity);
+        return getRandomCharacter(FrontlineInfo.Type.values()[AbstractDungeon.relicRng.random(FrontlineInfo.Type.values().length - 1)], rarity);
     }
 
     public static FrontlineInfo getRandomCharacter() {
-        return getRandomCharacter(FrontlineInfo.Type.values()[AbstractDungeon.relicRng.random(FrontlineInfo.Type.values().length-1)]);
+        return getRandomCharacter(FrontlineInfo.Type.values()[AbstractDungeon.relicRng.random(FrontlineInfo.Type.values().length - 1)]);
+    }
+
+    public static AbstractCharacterInfo.Rarity getRandomRarity() {
+        int roll = AbstractDungeon.relicRng.random(0, 100);
+        if (roll > 89) {
+            //10% chance
+            return AbstractCharacterInfo.Rarity.EPIC;
+        } else if (roll > 69) { //nice
+            //20% chance
+            return AbstractCharacterInfo.Rarity.RARE;
+        } else if (roll > 39) {
+            //30%
+            return AbstractCharacterInfo.Rarity.UNCOMMON;
+        } else {
+            //40%
+            return AbstractCharacterInfo.Rarity.COMMON;
+        }
     }
 
     public static AbstractCharacterInfo getCharacterByClassName(String id) {
@@ -83,8 +108,8 @@ public class CharacterHelper {
     }
 
     public static Texture getTypeIcon(AbstractCharacterInfo ci) {
-        if(ci.isGFL()) {
-            return TextureLoader.getTexture(TheFrontline.makeUIPath("TypeIcon/" + ((FrontlineInfo)ci).type.name() + ".png"));
+        if (ci.isGFL()) {
+            return TextureLoader.getTexture(TheFrontline.makeUIPath("TypeIcon/" + ((FrontlineInfo) ci).type.name() + ".png"));
         }
         return TextureLoader.getTexture(TheFrontline.makeUIPath("TypeIcon/Undefined.png"));
     }
