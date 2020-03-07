@@ -26,6 +26,7 @@ public abstract class AbstractCharacterInfo {
     public Texture img;
 
     public String name;
+    public String fullName;
     public int maxHP, currentHP;
     public CardGroup masterDeck;
     public Stats stats;
@@ -44,6 +45,7 @@ public abstract class AbstractCharacterInfo {
     protected void initialize() {
         characterStrings = CardCrawlGame.languagePack.getCharacterString(makeID(id));
         name = characterStrings.NAMES[0];
+        fullName = characterStrings.NAMES[1];
         masterDeck = new CardGroup(CardGroup.CardGroupType.MASTER_DECK);
         masterDeck.group.addAll(getStarterDeck());
         stats = new Stats();

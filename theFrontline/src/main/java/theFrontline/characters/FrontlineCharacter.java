@@ -320,7 +320,7 @@ public class FrontlineCharacter extends CustomPlayer {
     @Override
     public String getTitle(AbstractPlayer.PlayerClass playerClass) {
         if(getCurrChar() != null) {
-            return getCurrChar().name;
+            return getCurrChar().fullName;
         }
         return NAMES[1];
     }
