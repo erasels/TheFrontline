@@ -48,5 +48,44 @@
     "OPTIONS": [
       ""
     ]
+  },
+  "theFrontline:G43": {
+    "NAMES": [
+      "G43",
+      "Gewehr 43"
+    ],
+    "TEXT": [
+      "When #yswitched into from an #yHG, draw #b",
+      " cards."
+    ],
+    "OPTIONS": [
+      ""
+    ]
+  },
+  "theFrontline:HS10": {
+    "NAMES": [
+      "HS10",
+      "High Standard Model 10"
+    ],
+    "TEXT": [
+      "At the end of combat, heals #b",
+      " HP."
+    ],
+    "OPTIONS": [
+      ""
+    ]
+  },
+  "theFrontline:AAT52": {
+    "NAMES": [
+      "AAT-52",
+      "AAT-52"
+    ],
+    "TEXT": [
+      "At the start of your turn, if the previous character this combat was a #ySG, gain #b",
+      " #yGrace."
+    ],
+    "OPTIONS": [
+      ""
+    ]
   }
 }
