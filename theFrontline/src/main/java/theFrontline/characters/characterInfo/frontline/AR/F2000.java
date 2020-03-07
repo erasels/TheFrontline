@@ -35,6 +35,6 @@ public class F2000 extends ARInfo {
 
     @Override
     public String getDescription() {
-        return characterStrings.TEXT[0];
+        return characterStrings.TEXT[0] + getMN() + characterStrings.TEXT[1];
     }
 }

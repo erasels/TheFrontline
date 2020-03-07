@@ -35,6 +35,6 @@ public class IDW extends SMGInfo {
 
     @Override
     public String getDescription() {
-        return characterStrings.TEXT[0];
+            return characterStrings.TEXT[0] + getMN() + characterStrings.TEXT[1];
     }
 }
