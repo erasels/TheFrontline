@@ -35,7 +35,7 @@ public class Defend extends FrontlineCard {
     public void use(AbstractPlayer p, AbstractMonster m) {
         UC.doDef(block);
         if (CardCrawlGame.playerName.toLowerCase().equals("rordev")) {
-            UC.att(new SwitchCharacterCombatAction(UC.pc().characters.stream().filter(ci -> !ci.id.equals(UC.pc().getCurrChar().id)).findFirst().get()));
+            UC.att(new SwitchCharacterCombatAction(UC.pc().characters.stream().filter(ci -> !ci.id.equals(UC.pc().getCurrChar().id)).findFirst().get(), 1));
         }
     }
 }

@@ -4,8 +4,8 @@ import com.megacrit.cardcrawl.relics.AbstractRelic;
 import theFrontline.TheFrontline;
 import theFrontline.util.TextureLoader;
 
-public abstract class SacredRelic extends AbstractRelic {
-    public SacredRelic(String setId, String imgName, RelicTier tier, LandingSound sfx) {
+public abstract class FrontlineRelic extends AbstractRelic {
+    public FrontlineRelic(String setId, String imgName, RelicTier tier, LandingSound sfx) {
         super(setId, "", tier, sfx);
 
         imgUrl = imgName;
@@ -16,4 +16,7 @@ public abstract class SacredRelic extends AbstractRelic {
             outlineImg = TextureLoader.getTexture(TheFrontline.makeRelicOutlinePath(imgName));
         }
     }
+
+    public void onCharacterSwitch(boolean inCombat) {}
+    public int characterSwitchCost(int cost){ return cost;}
 }

@@ -2,8 +2,10 @@ package theFrontline.actions.utility;
 
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.core.Settings;
+import com.megacrit.cardcrawl.relics.AbstractRelic;
 import theFrontline.characters.FrontlineCharacter;
 import theFrontline.characters.characterInfo.AbstractCharacterInfo;
+import theFrontline.relics.abstracts.FrontlineRelic;
 import theFrontline.util.UC;
 
 public class SwitchCharacterAction extends AbstractGameAction {
@@ -28,6 +30,11 @@ public class SwitchCharacterAction extends AbstractGameAction {
             if(p != null) {
                 p.switchCharacter(ci);
                 p.healthBarUpdatedEvent();
+                for(AbstractRelic r : p.relics) {
+                    if(r instanceof FrontlineRelic) {
+                        ((FrontlineRelic) r).onCharacterSwitch(false);
+                    }
+                }
             }
         }
         tickDuration();

@@ -1,17 +1,20 @@
 package theFrontline.actions.utility;
 
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.vfx.combat.SmokeBombEffect;
 import theFrontline.characters.FrontlineCharacter;
 import theFrontline.characters.characterInfo.AbstractCharacterInfo;
+import theFrontline.relics.abstracts.FrontlineRelic;
 import theFrontline.util.UC;
 import theFrontline.vfx.combat.unique.CharacterRunEffect;
 
 public class SwitchCharacterCombatAction extends SwitchCharacterAction{
-    private static final int ENERGY_COST = 1;
+    private int eCost;
 
-    public SwitchCharacterCombatAction(AbstractCharacterInfo ci) {
+    public SwitchCharacterCombatAction(AbstractCharacterInfo ci, int i) {
         super(ci);
+        eCost = i;
     }
 
     @Override
@@ -22,10 +25,15 @@ public class SwitchCharacterCombatAction extends SwitchCharacterAction{
 
             FrontlineCharacter p = UC.pc();
             if(p != null) {
-                p.energy.use(ENERGY_COST);
+                p.energy.use(eCost);
                 p.switchCharacter(ci);
                 p.healthBarUpdatedEvent();
                 p.switchOrbSystem.fixSelection();
+                for(AbstractRelic r : p.relics) {
+                    if(r instanceof FrontlineRelic) {
+                        ((FrontlineRelic) r).onCharacterSwitch(true);
+                    }
+                }
             }
         }
         tickDuration();

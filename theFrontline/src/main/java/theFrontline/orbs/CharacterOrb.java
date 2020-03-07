@@ -12,6 +12,7 @@ import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.helpers.input.InputHelper;
 import com.megacrit.cardcrawl.localization.OrbStrings;
 import com.megacrit.cardcrawl.orbs.AbstractOrb;
+import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.megacrit.cardcrawl.vfx.combat.FrostOrbPassiveEffect;
 import theFrontline.TheFrontline;
@@ -19,6 +20,7 @@ import theFrontline.actions.utility.SwitchCharacterAction;
 import theFrontline.actions.utility.SwitchCharacterCombatAction;
 import theFrontline.characters.characterInfo.AbstractCharacterInfo;
 import theFrontline.characters.characterInfo.frontline.FrontlineInfo;
+import theFrontline.relics.abstracts.FrontlineRelic;
 import theFrontline.util.UC;
 
 public class CharacterOrb extends AbstractOrb {
@@ -36,6 +38,7 @@ public class CharacterOrb extends AbstractOrb {
     private float vfxIntervalMin = 0.3f;
     private float vfxIntervalMax = 0.7f;
     private float alpha = 1f;
+    private int eCost;
 
     public CharacterOrb(AbstractCharacterInfo c) {
         character = c;
@@ -75,12 +78,18 @@ public class CharacterOrb extends AbstractOrb {
     @Override
     public void update() {
         super.update();
+        eCost = 1;
+        for(AbstractRelic r : UC.p().relics) {
+            if(r instanceof FrontlineRelic) {
+                eCost = ((FrontlineRelic) r).characterSwitchCost(eCost);
+            }
+        }
 
         if (hb.hovered) {
             alpha = 1.0f;
             if (AbstractDungeon.getCurrRoom().phase == AbstractRoom.RoomPhase.COMBAT && AbstractDungeon.actionManager.phase == GameActionManager.Phase.WAITING_ON_USER && InputHelper.justReleasedClickLeft) {
                 if (AbstractDungeon.actionManager.actions.stream().noneMatch(a -> a instanceof SwitchCharacterAction)) {
-                    UC.atb(new SwitchCharacterCombatAction(character));
+                    UC.atb(new SwitchCharacterCombatAction(character, eCost));
                 }
             }
         } else {
@@ -114,6 +123,9 @@ public class CharacterOrb extends AbstractOrb {
     @Override
     protected void renderText(SpriteBatch sb) {
         FontHelper.renderFontCentered(sb, FontHelper.cardEnergyFont_L, Integer.toString(character.currentHP), this.cX - NUM_X_OFFSET, this.cY + this.bobEffect.y / 2.0F - NUM_Y_OFFSET, new Color(1F, 0.4F, 0.4F, alpha), this.fontScale);
+        Color tmpCol = new Color(Color.SKY);
+        tmpCol.a = alpha;
+        FontHelper.renderFontCentered(sb, FontHelper.cardEnergyFont_L, Integer.toString(eCost), this.cX + NUM_X_OFFSET, this.cY + this.bobEffect.y / 2.0F + NUM_Y_OFFSET, tmpCol, this.fontScale);
     }
 
     public void onEvoke() {
