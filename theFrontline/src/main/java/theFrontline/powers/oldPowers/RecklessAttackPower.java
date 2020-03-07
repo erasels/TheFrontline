@@ -1,4 +1,4 @@
-package theFrontline.powers;
+package theFrontline.powers.oldPowers;
 
 import basemod.interfaces.CloneablePowerInterface;
 import com.badlogic.gdx.graphics.Color;
@@ -12,13 +12,13 @@ import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.megacrit.cardcrawl.vfx.combat.ShockWaveEffect;
 import theFrontline.TheFrontline;
-import theFrontline.powers.abstracts.AbstractSacredPower;
+import theFrontline.powers.abstracts.AbstractFrontlinePower;
 import theFrontline.util.UC;
 
 import static theFrontline.util.UC.atb;
 import static theFrontline.util.UC.doVfx;
 
-public class RecklessAttackPower extends AbstractSacredPower implements CloneablePowerInterface {
+public class RecklessAttackPower extends AbstractFrontlinePower implements CloneablePowerInterface {
     public static final String POWER_ID = TheFrontline.makeID("RecklessAttack");
     private static final PowerStrings powerStrings = CardCrawlGame.languagePack.getPowerStrings(POWER_ID);
     public static final String NAME = powerStrings.NAME;

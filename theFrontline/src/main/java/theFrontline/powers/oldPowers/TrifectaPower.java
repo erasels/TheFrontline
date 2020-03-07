@@ -1,4 +1,4 @@
-package theFrontline.powers;
+package theFrontline.powers.oldPowers;
 
 import basemod.interfaces.CloneablePowerInterface;
 import com.megacrit.cardcrawl.actions.common.RemoveSpecificPowerAction;
@@ -13,11 +13,11 @@ import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import theFrontline.TheFrontline;
-import theFrontline.powers.abstracts.AbstractSacredPower;
+import theFrontline.powers.abstracts.AbstractFrontlinePower;
 
 import static theFrontline.util.UC.p;
 
-public class TrifectaPower extends AbstractSacredPower implements CloneablePowerInterface {
+public class TrifectaPower extends AbstractFrontlinePower implements CloneablePowerInterface {
     public static final String POWER_ID = TheFrontline.makeID("Trifecta");
     private static final PowerStrings powerStrings = CardCrawlGame.languagePack.getPowerStrings(POWER_ID);
     public static final String NAME = powerStrings.NAME;

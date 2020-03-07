@@ -1,4 +1,4 @@
-package theFrontline.powers;
+package theFrontline.powers.oldPowers;
 
 import basemod.interfaces.CloneablePowerInterface;
 import com.evacipated.cardcrawl.mod.stslib.powers.interfaces.OnReceivePowerPower;
@@ -9,11 +9,11 @@ import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.megacrit.cardcrawl.powers.IntangiblePlayerPower;
 import com.megacrit.cardcrawl.powers.IntangiblePower;
 import theFrontline.TheFrontline;
-import theFrontline.powers.abstracts.AbstractSacredPower;
+import theFrontline.powers.abstracts.AbstractFrontlinePower;
 
 import static theFrontline.util.UC.p;
 
-public class LimitPower extends AbstractSacredPower implements CloneablePowerInterface, OnReceivePowerPower {
+public class LimitPower extends AbstractFrontlinePower implements CloneablePowerInterface, OnReceivePowerPower {
     public static final String POWER_ID = TheFrontline.makeID("Limit");
     private static final PowerStrings powerStrings = CardCrawlGame.languagePack.getPowerStrings(POWER_ID);
     public static final String NAME = powerStrings.NAME;

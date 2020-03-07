@@ -2,20 +2,11 @@ package theFrontline.powers.abstracts;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.evacipated.cardcrawl.mod.stslib.powers.abstracts.TwoAmountPower;
-import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 
 import static theFrontline.TheFrontline.makePowerPath;
 
-public class AbstractSacredPower extends TwoAmountPower {
-    public boolean isBarrierPower = false;
-
-    //To be used with a certain power
-    public void extendBarrier(int amount) {
-        this.amount += amount;
-    }
-    public void retaliate(AbstractCreature target) {}
-
+public class AbstractFrontlinePower extends TwoAmountPower {
     /**
      * @param bigImageName - is the name of the 84x84 image for your power.
      * @param smallImageName - is the name of the 32x32 image for your power.
