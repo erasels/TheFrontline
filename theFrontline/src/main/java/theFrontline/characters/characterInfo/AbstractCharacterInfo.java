@@ -31,6 +31,7 @@ public abstract class AbstractCharacterInfo {
     public Stats stats;
     public Rarity rarity;
     public int offence, defence, utility;
+    protected int magicNumber;
 
     public AbstractCharacterInfo(String id, int maxHP) {
         this.id = id;
@@ -105,6 +106,9 @@ public abstract class AbstractCharacterInfo {
         }
     }
 
+    public int getMN() {
+        return magicNumber;
+    }
     public abstract void setFlavorStats();
 
     public class Stats {

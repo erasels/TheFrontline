@@ -7,16 +7,17 @@ import theFrontline.util.UC;
 public class IDW extends SMGInfo {
     public static final String ID = IDW.class.getSimpleName();
     public static final int MAX_HP = 5;
-    private static final int DEX_AMT = 2;
+    private static final int DEX_AMT = 1;
 
     public IDW() {
         super(ID, MAX_HP);
+        magicNumber = DEX_AMT;
     }
 
     @Override
     public void onRetreat(AbstractCharacterInfo nextChar) {
         if(nextChar.isGFL(Type.AR)) {
-            UC.doPow(UC.p(), new DexterityPower(UC.p(), DEX_AMT));
+            UC.doPow(UC.p(), new DexterityPower(UC.p(), getMN()));
         }
     }
 
