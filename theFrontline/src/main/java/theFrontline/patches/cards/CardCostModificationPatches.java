@@ -5,7 +5,7 @@ import com.evacipated.cardcrawl.modthespire.lib.SpirePostfixPatch;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
-import theFrontline.powers.RecklessAttackPower;
+import theFrontline.powers.oldPowers.RecklessAttackPower;
 
 public class CardCostModificationPatches {
     @SpirePatch(clz = AbstractCard.class, method = "freeToPlay")

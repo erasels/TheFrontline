@@ -126,5 +126,12 @@
       " incoming debuffs back to the sender. NL Applies #b",
       " #yPoison if the debuff only works on players."
     ]
+  },
+  "theFrontline:Grace": {
+    "NAME": "Grace",
+    "DESCRIPTIONS": [
+      "The next time you gain #yBlock from a card, gain #b",
+      " additional #yBlock."
+    ]
   }
 }
