@@ -125,10 +125,10 @@ public class CharacterHelper {
     }
 
     public static String getStatsString(AbstractCharacterInfo ci, boolean nlBreak) {
-        String tmp = TEXT[3] + ci.stats.getArmor() + " NL " +
-                TEXT[4] + ci.stats.getAddDraw() + " NL " +
-                TEXT[5] + ci.stats.getStrike() + " NL " +
-                TEXT[6] + ci.stats.getDefend() + " NL ";
+        String tmp = TEXT[3] + ci.getArmor() + " NL " +
+                TEXT[4] + ci.getAddDraw() + " NL " +
+                TEXT[5] + ci.getStrike() + " NL " +
+                TEXT[6] + ci.getDefend() + " NL ";
         if (!nlBreak) {
             tmp = tmp.replaceAll("NL ", "\n");
         }

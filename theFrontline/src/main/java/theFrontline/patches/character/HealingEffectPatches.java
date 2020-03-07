@@ -10,8 +10,8 @@ import theFrontline.util.UC;
 public class HealingEffectPatches {
     @SpirePatch(clz = AbstractCreature.class, method = "heal", paramtypez = {int.class, boolean.class})
     public static class HealEffectLogic {
-        @SpireInsertPatch
-        public static SpireReturn<Void> patch(AbstractCreature __instance, int amt, int showEffect) {
+        @SpireInsertPatch(locator =  Locator.class)
+        public static SpireReturn<Void> patch(AbstractCreature __instance, int amt, boolean showEffect) {
             FrontlineCharacter p = UC.pc();
             if(p != null && !p.idOfHealingTarget.equals(p.currentCharacter)) {
                 return SpireReturn.Return(null);
@@ -22,7 +22,7 @@ public class HealingEffectPatches {
         private static class Locator extends SpireInsertLocator {
             @Override
             public int[] Locate(CtBehavior ctBehavior) throws Exception {
-                Matcher finalMatcher = new Matcher.FieldAccessMatcher(TopPanel.class, "panelHealEffect");
+                Matcher finalMatcher = new Matcher.MethodCallMatcher(TopPanel.class, "panelHealEffect");
                 return LineFinder.findInOrder(ctBehavior, finalMatcher);
             }
         }

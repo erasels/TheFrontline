@@ -91,6 +91,24 @@ public class FrontlineCharacter extends CustomPlayer {
         scrap = 0;
     }
 
+    /*
+    super(name, setClass, new SacredEnergyOrb(), new SpineAnimation(
+                TheFrontline.makeCharPath("frontline/MG/AAT52/aat52.atlas"),
+                TheFrontline.makeCharPath("frontline/MG/AAT52/skeleton.json"),
+                1f
+                ));
+
+        initializeClass(null, // required call to load textures and setup energy/loadout.
+                THE_FRONTLINE_SHOULDER_1,
+                THE_FRONTLINE_SHOULDER_2,
+                THE_FRONTLINE_CORPSE,
+                getLoadout(), 0.0F, 0.0F, 220.0F, 290.0F, new EnergyManager(ENERGY_PER_TURN));
+
+        AnimationState.TrackEntry e = state.setAnimation(0, "wait", true);
+        //stateData.setMix("Hit", "Idle", 0.1f);
+        e.setTimeScale(1f);
+     */
+
     public String getPortraitImageName() {
         return BaseMod.getPlayerPortrait(chosenClass);
     }
