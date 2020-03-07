@@ -125,6 +125,25 @@ public class FrontlineCharacter extends CustomPlayer {
         switchOrbSystem.render(sb);
     }
 
+    public String idOfHealingTarget = "";
+    public void heal(int amount, AbstractCharacterInfo ci) {
+        if(ci.id.equals(currentCharacter)) {
+            heal(amount);
+            return;
+        }
+
+        idOfHealingTarget = ci.id;
+        int tmpHp = currentHealth, tmpMHp = maxHealth;
+        currentHealth = ci.currentHP;
+        maxHealth = ci.maxHP;
+        heal(amount);
+        ci.currentHP = currentHealth;
+        ci.maxHP = maxHealth;
+        currentHealth = tmpHp;
+        maxHealth = tmpMHp;
+        idOfHealingTarget = "";
+    }
+
     @Override
     public void preBattlePrep() {
         super.preBattlePrep();
@@ -136,8 +155,15 @@ public class FrontlineCharacter extends CustomPlayer {
     }
 
     @Override
+    public void applyStartOfTurnRelics() {
+        characters.forEach(AbstractCharacterInfo::atTurnStart);
+        super.applyStartOfTurnRelics();
+    }
+
+    @Override
     public void onVictory() {
         super.onVictory();
+        characters.forEach(AbstractCharacterInfo::onVictory);
         updateCharInfo();
         combatDecks.clear();
     }

@@ -63,6 +63,8 @@ public abstract class AbstractCharacterInfo {
     public void onSwitch(AbstractCharacterInfo currChar, AbstractCharacterInfo nextChar){}
     public void onAddNewCharacter(AbstractCharacterInfo newChar){}
     public void preBattlePrep(){}
+    public void atTurnStart() {}
+    public void onVictory() {}
 
     public Color getColor() {
         float tmp;
