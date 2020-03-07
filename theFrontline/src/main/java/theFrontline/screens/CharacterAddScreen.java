@@ -21,7 +21,6 @@ import com.megacrit.cardcrawl.screens.mainMenu.ScrollBarListener;
 import javassist.CtBehavior;
 import theFrontline.TheFrontline;
 import theFrontline.characters.characterInfo.AbstractCharacterInfo;
-import theFrontline.characters.characterInfo.frontline.AR.F2000;
 import theFrontline.ui.buttons.CharacterImageButton;
 import theFrontline.ui.buttons.LabledButton;
 import theFrontline.util.CharacterHelper;
@@ -103,7 +102,7 @@ public class CharacterAddScreen extends AbstractScreen implements ScrollBarListe
 
             TheFrontline.screen = new CharacterAddScreen(1f);
             //((CharacterAddScreen) TheFrontline.screen).open(CharacterHelper.getRandomCharacter());
-            ((CharacterAddScreen) TheFrontline.screen).open(new F2000());
+            ((CharacterAddScreen) TheFrontline.screen).open(CharacterHelper.getRandomCharacter());
 
             return SpireReturn.Return(true);
         }
