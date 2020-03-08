@@ -23,6 +23,7 @@ import com.megacrit.cardcrawl.helpers.CardLibrary;
 import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.helpers.ScreenShake;
 import com.megacrit.cardcrawl.localization.CharacterStrings;
+import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.relics.PrismaticShard;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.megacrit.cardcrawl.screens.CharSelectInfo;
@@ -91,32 +92,11 @@ public class FrontlineCharacter extends CustomPlayer {
                 THE_FRONTLINE_CORPSE,
                 getLoadout(), 0.0F, 0.0F, 220.0F, 290.0F, new EnergyManager(ENERGY_PER_TURN));
 
-        AnimationState.TrackEntry e = state.setAnimation(0, "wait", true);
-        //stateData.setMix("Hit", "Idle", 0.1f);
-        e.setTimeScale(1f);
         dialogX = (drawX + 0.0F * Settings.scale);
         dialogY = (drawY + 220.0F * Settings.scale);
         combatDecks = new HashMap<>();
         scrap = 0;
     }
-
-    /*
-    super(name, setClass, new SacredEnergyOrb(), new SpineAnimation(
-                TheFrontline.makeCharPath("frontline/MG/AAT52/aat52.atlas"),
-                TheFrontline.makeCharPath("frontline/MG/AAT52/skeleton.json"),
-                1f
-                ));
-
-        initializeClass(null, // required call to load textures and setup energy/loadout.
-                THE_FRONTLINE_SHOULDER_1,
-                THE_FRONTLINE_SHOULDER_2,
-                THE_FRONTLINE_CORPSE,
-                getLoadout(), 0.0F, 0.0F, 220.0F, 290.0F, new EnergyManager(ENERGY_PER_TURN));
-
-        AnimationState.TrackEntry e = state.setAnimation(0, "wait", true);
-        //stateData.setMix("Hit", "Idle", 0.1f);
-        e.setTimeScale(1f);
-     */
 
     public String getPortraitImageName() {
         return BaseMod.getPlayerPortrait(chosenClass);
@@ -189,10 +169,20 @@ public class FrontlineCharacter extends CustomPlayer {
 
     @Override
     public void onVictory() {
+        setAni(3, "victory", false);
+        setAni(2, "victoryloop", true);
         super.onVictory();
         characters.forEach(AbstractCharacterInfo::onVictory);
         updateCharInfo();
         combatDecks.clear();
+    }
+
+    @Override
+    public void useCard(AbstractCard c, AbstractMonster monster, int energyOnUse) {
+        super.useCard(c, monster, energyOnUse);
+        if(c.type == AbstractCard.CardType.ATTACK) {
+            setAni(1, "attack", false);
+        }
     }
 
     public void onDeploy() {
@@ -271,8 +261,9 @@ public class FrontlineCharacter extends CustomPlayer {
         SpineAnimation spine = (SpineAnimation)animation;
         this.loadAnimation(spine.atlasUrl, spine.skeletonUrl, spine.scale);
         AnimationState.TrackEntry e = state.setAnimation(0, "wait", true);
-        //wait, attack, move, die, victoryLoop, victory
-        stateData.setMix("attack", "wait", 0.1f);
+        //wait, attack, move, die, victoryloop, victory
+        stateData.setMix("attack", "wait", 0.05f);
+        stateData.setMix("victory", "victoryloop", 0f);
         e.setTimeScale(1f);
     }
 
@@ -312,6 +303,11 @@ public class FrontlineCharacter extends CustomPlayer {
             }
         }
         return null;
+    }
+
+    public void setAni(int trackIndex, String animationName, boolean loop) {
+        AnimationState.TrackEntry e = state.setAnimation(trackIndex, animationName, loop);
+        e.setTimeScale(1f);
     }
 
     // Starting Deck
