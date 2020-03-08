@@ -33,7 +33,7 @@ public class SelectionPatches {
     private static final float SPACE = 175f * Settings.scale;
     private static boolean resetHP = true;
 
-    private static ArrayList<CharacterSelectionButton> starterCharacters = new ArrayList<>(Arrays.asList(
+    public static ArrayList<CharacterSelectionButton> starterCharacters = new ArrayList<>(Arrays.asList(
             new CharacterSelectionButton(XPOS, YPOS, new F2000()),
             new CharacterSelectionButton(XPOS + SPACE, YPOS, new IDW()),
             new CharacterSelectionButton(XPOS + SPACE * 2, YPOS, new BrenTen()),
@@ -50,7 +50,7 @@ public class SelectionPatches {
         public static void patch(CharacterOption __instance) {
             if (__instance.c instanceof FrontlineCharacter) {
                 update();
-                if(resetHP) {
+                if (resetHP) {
                     ReflectionHacks.setPrivate(__instance, CharacterOption.class, "hp", Integer.toString(selectedChar.getChar().maxHP));
                     resetHP = false;
                 }
@@ -107,7 +107,7 @@ public class SelectionPatches {
                         FontHelper.tipHeaderFont,
                         CharacterOption.TEXT[4] + backUpChar.getChar().maxHP,
                         infx + 18.0F * Settings.scale,
-                        infy + (102.0F * Settings.scale) - (FontHelper.getHeight(FontHelper.tipHeaderFont, "HP", 1f) + 5*Settings.scale),
+                        infy + (102.0F * Settings.scale) - (FontHelper.getHeight(FontHelper.tipHeaderFont, "HP", 1f) + 5 * Settings.scale),
                         10000.0F,
                         10000.0F,
                         Settings.RED_TEXT_COLOR);
@@ -123,14 +123,14 @@ public class SelectionPatches {
     }
 
     public static void setSelectedCharacter(CharacterSelectionButton cbtn, boolean backup) {
-        if(!backup) {
-            if(cbtn == backUpChar) {
+        if (!backup) {
+            if (cbtn == backUpChar) {
                 backUpChar = selectedChar;
             }
             selectedChar = cbtn;
             resetHP = true;
         } else {
-            if(cbtn == selectedChar) {
+            if (cbtn == selectedChar) {
                 selectedChar = backUpChar;
                 resetHP = true;
             }
@@ -151,9 +151,6 @@ public class SelectionPatches {
                     break;
                 }
             }
-            starterCharacters = null;
-            selectedChar = null;
-            backUpChar = null;
         }
 
         private static class Locator extends SpireInsertLocator {

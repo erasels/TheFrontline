@@ -27,6 +27,7 @@ import theFrontline.characters.FrontlineCharacter;
 import theFrontline.characters.characterInfo.AbstractCharacterInfo;
 import theFrontline.characters.characterInfo.CharacterSave;
 import theFrontline.characters.characterInfo.frontline.FrontlineInfo;
+import theFrontline.patches.character.SelectionPatches;
 import theFrontline.patches.ui.MasterDeckViewPatches;
 import theFrontline.screens.AbstractScreen;
 import theFrontline.ui.ScrapDisplay;
@@ -232,6 +233,9 @@ public class TheFrontline implements
             } else if (CardCrawlGame.loadingSave) {
                 UC.pc().setChar(UC.pc().getCurrChar());
             }
+            SelectionPatches.starterCharacters = null;
+            SelectionPatches.selectedChar = null;
+            SelectionPatches.backUpChar = null;
             BaseMod.addTopPanelItem(scrapDisplay);
         }
     }
