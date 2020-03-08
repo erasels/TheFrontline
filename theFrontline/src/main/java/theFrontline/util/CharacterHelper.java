@@ -147,8 +147,8 @@ public class CharacterHelper {
         if(!ci.isGFL()) return null;
         FrontlineInfo fi = (FrontlineInfo) ci;
         return new SpineAnimation(
-                TheFrontline.makeCharPath("frontline/" + fi.type.name() + "/"+ fi.name + "/skeleton.atlas"),
-                TheFrontline.makeCharPath("frontline/" + fi.type.name() + "/"+ fi.name + "/skeleton.json"),
+                TheFrontline.makeCharPath("frontline/" + fi.type.name() + "/"+ fi.id + "/skeleton.atlas"),
+                TheFrontline.makeCharPath("frontline/" + fi.type.name() + "/"+ fi.id + "/skeleton.json"),
                 TheFrontline.WAIFU_SCALE);
     }
 
