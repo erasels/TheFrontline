@@ -3,10 +3,11 @@ package theFrontline.characters;
 import basemod.BaseMod;
 import basemod.ReflectionHacks;
 import basemod.abstracts.CustomPlayer;
-import basemod.animations.G3DJAnimation;
+import basemod.animations.SpineAnimation;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.esotericsoftware.spine.AnimationState;
 import com.evacipated.cardcrawl.modthespire.lib.SpireEnum;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.DrawCardAction;
@@ -35,6 +36,7 @@ import theFrontline.characters.characterInfo.AbstractCharacterInfo;
 import theFrontline.orbs.CharacterOrb;
 import theFrontline.orbs.CombatCharacterSelection;
 import theFrontline.ui.SacredEnergyOrb;
+import theFrontline.util.CharacterHelper;
 import theFrontline.util.UC;
 
 import java.util.ArrayList;
@@ -77,14 +79,21 @@ public class FrontlineCharacter extends CustomPlayer {
     public CombatCharacterSelection switchOrbSystem = new CombatCharacterSelection();
 
     public FrontlineCharacter(String name, PlayerClass setClass) {
-        super(name, setClass, new SacredEnergyOrb(), new G3DJAnimation(null, null));
+        super(name, setClass, new SacredEnergyOrb(), new SpineAnimation(
+                TheFrontline.makeCharPath("frontline/MG/AAT52/skeleton.atlas"),
+                TheFrontline.makeCharPath("frontline/MG/AAT52/skeleton.json"),
+                WAIFU_SCALE
+        ));
 
-        initializeClass(TheFrontline.makeCharPath("main2.png"), // required call to load textures and setup energy/loadout.
+        initializeClass(null, // required call to load textures and setup energy/loadout.
                 THE_FRONTLINE_SHOULDER_1,
                 THE_FRONTLINE_SHOULDER_2,
                 THE_FRONTLINE_CORPSE,
                 getLoadout(), 0.0F, 0.0F, 220.0F, 290.0F, new EnergyManager(ENERGY_PER_TURN));
 
+        AnimationState.TrackEntry e = state.setAnimation(0, "wait", true);
+        //stateData.setMix("Hit", "Idle", 0.1f);
+        e.setTimeScale(1f);
         dialogX = (drawX + 0.0F * Settings.scale);
         dialogY = (drawY + 220.0F * Settings.scale);
         combatDecks = new HashMap<>();
@@ -254,6 +263,17 @@ public class FrontlineCharacter extends CustomPlayer {
         this.masterHandSize += cc.getAddDraw();
 
         this.img = cc.img;
+        switchAnimation(cc);
+    }
+
+    public void switchAnimation(AbstractCharacterInfo ci) {
+        this.animation = CharacterHelper.getAnimation(ci);
+        SpineAnimation spine = (SpineAnimation)animation;
+        this.loadAnimation(spine.atlasUrl, spine.skeletonUrl, spine.scale);
+        AnimationState.TrackEntry e = state.setAnimation(0, "wait", true);
+        //wait, attack, move, die, victoryLoop, victory
+        stateData.setMix("attack", "wait", 0.1f);
+        e.setTimeScale(1f);
     }
 
     public void setChar(AbstractCharacterInfo ci) {
