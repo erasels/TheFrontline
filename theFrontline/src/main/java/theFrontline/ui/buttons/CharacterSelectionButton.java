@@ -11,12 +11,12 @@ public class CharacterSelectionButton extends CharacterImageButton {
 
     @Override
     public void onClick() {
-        SelectionPatches.selectedChar = this;
+        SelectionPatches.setSelectedCharacter(this, false);
     }
 
     @Override
     public void onRightClick() {
-        SelectionPatches.backUpChar = this;
+        SelectionPatches.setSelectedCharacter(this, true);
     }
 
     public AbstractCharacterInfo getChar() {
