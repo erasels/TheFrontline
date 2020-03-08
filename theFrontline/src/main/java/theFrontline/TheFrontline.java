@@ -83,6 +83,8 @@ public class TheFrontline implements
     public static final String THE_FRONTLINE_SHOULDER_2 = "theFrontlineResources/images/char/shoulder2.png";
     public static final String THE_FRONTLINE_CORPSE = "theFrontlineResources/images/char/corpse.png";
 
+    public static final float WAIFU_SCALE = 1f;
+
     public static final String BADGE_IMAGE = "theFrontlineResources/images/Badge.png";
 
     public TheFrontline() {

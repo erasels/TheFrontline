@@ -1,5 +1,6 @@
 package theFrontline.util;
 
+import basemod.animations.SpineAnimation;
 import com.badlogic.gdx.graphics.Texture;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
@@ -139,6 +140,16 @@ public class CharacterHelper {
         String tmp = TEXT[7] + ci.getDescription();
         tmp = tmp.replaceAll("NL ", "\n");
         return tmp;
+    }
+
+    public static SpineAnimation getAnimation(AbstractCharacterInfo ci) {
+        //change Frontline if I ever add more franchises
+        if(!ci.isGFL()) return null;
+        FrontlineInfo fi = (FrontlineInfo) ci;
+        return new SpineAnimation(
+                TheFrontline.makeCharPath("frontline/" + fi.type.name() + "/"+ fi.name + "/skeleton.atlas"),
+                TheFrontline.makeCharPath("frontline/" + fi.type.name() + "/"+ fi.name + "/skeleton.json"),
+                TheFrontline.WAIFU_SCALE);
     }
 
     public static class FlInstanceInfo {
