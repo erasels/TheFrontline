@@ -1,10 +1,9 @@
 package theFrontline.characters.characterInfo.frontline.SG;
 
-import theFrontline.characters.characterInfo.frontline.RF.G43;
 import theFrontline.util.UC;
 
 public class M1897 extends SGInfo {
-    public static final String ID = G43.class.getSimpleName();
+    public static final String ID = M1897.class.getSimpleName();
     public static final int MAX_HP = 5;
     private static final int HP_HEAL = 2;
 

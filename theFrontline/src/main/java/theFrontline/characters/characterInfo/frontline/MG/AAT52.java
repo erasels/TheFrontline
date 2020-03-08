@@ -1,12 +1,11 @@
 package theFrontline.characters.characterInfo.frontline.MG;
 
 import theFrontline.characters.characterInfo.AbstractCharacterInfo;
-import theFrontline.characters.characterInfo.frontline.RF.G43;
 import theFrontline.powers.GracePower;
 import theFrontline.util.UC;
 
 public class AAT52 extends MGInfo {
-    public static final String ID = G43.class.getSimpleName();
+    public static final String ID = AAT52.class.getSimpleName();
     public static final int MAX_HP = 5;
     private static final int GRACE_AMT = 4;
 
