@@ -25,7 +25,10 @@
       "Additional Card Draw: ",
       "Strike Damage Bonus: ",
       "Defend Block Bonus: ",
-      "Special Ability: "
+      "Special Ability: ",
+      "Select your 2 starting characters. \n(LMB: 1st character, RMB: 2nd character)",
+      "First: ",
+      "Second: "
     ]
   },
   "theFrontline:CharAddScreen": {

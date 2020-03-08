@@ -8,6 +8,7 @@ import theFrontline.TheFrontline;
 import theFrontline.characters.FrontlineCharacter;
 import theFrontline.characters.characterInfo.AbstractCharacterInfo;
 import theFrontline.characters.characterInfo.frontline.FrontlineInfo;
+import theFrontline.patches.character.SelectionPatches;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -140,6 +141,12 @@ public class CharacterHelper {
         String tmp = TEXT[7] + ci.getDescription();
         tmp = tmp.replaceAll("NL ", "\n");
         return tmp;
+    }
+
+    public static String getCharacterSelectionString() {
+        return TEXT[8] + "\n" +
+                TEXT[9] + SelectionPatches.selectedChar.getChar().fullName + "\n" +
+                TEXT[10] + SelectionPatches.backUpChar.getChar().fullName;
     }
 
     public static SpineAnimation getAnimation(AbstractCharacterInfo ci) {
