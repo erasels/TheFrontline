@@ -1,13 +1,14 @@
 package theFrontline.characters.characterInfo.frontline.SMG;
 
 import com.megacrit.cardcrawl.powers.DexterityPower;
+import com.megacrit.cardcrawl.powers.LoseDexterityPower;
 import theFrontline.characters.characterInfo.AbstractCharacterInfo;
 import theFrontline.util.UC;
 
 public class IDW extends SMGInfo {
     public static final String ID = IDW.class.getSimpleName();
     public static final int MAX_HP = 5;
-    private static final int DEX_AMT = 1;
+    private static final int DEX_AMT = 3;
 
     public IDW() {
         super(ID, MAX_HP);
@@ -18,6 +19,7 @@ public class IDW extends SMGInfo {
     public void onRetreat(AbstractCharacterInfo nextChar) {
         if(nextChar.isGFL(Type.AR)) {
             UC.doPow(UC.p(), new DexterityPower(UC.p(), getMN()));
+            UC.doPow(UC.p(), new LoseDexterityPower(UC.p(), getMN()));
         }
     }
 
