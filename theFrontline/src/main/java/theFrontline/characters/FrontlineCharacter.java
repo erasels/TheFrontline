@@ -263,7 +263,9 @@ public class FrontlineCharacter extends CustomPlayer {
         AnimationState.TrackEntry e = state.setAnimation(0, "wait", true);
         //wait, attack, move, die, victoryloop, victory
         stateData.setMix("attack", "wait", 0.05f);
-        stateData.setMix("victory", "victoryloop", 0f);
+        if(stateData.getSkeletonData().findAnimation("victoryloop") != null) {
+            stateData.setMix("victory", "victoryloop", 0f);
+        }
         e.setTimeScale(1f);
     }
 
@@ -306,8 +308,10 @@ public class FrontlineCharacter extends CustomPlayer {
     }
 
     public void setAni(int trackIndex, String animationName, boolean loop) {
-        AnimationState.TrackEntry e = state.setAnimation(trackIndex, animationName, loop);
-        e.setTimeScale(1f);
+        if(stateData.getSkeletonData().findAnimation(animationName) != null) {
+            AnimationState.TrackEntry e = state.setAnimation(trackIndex, animationName, loop);
+            e.setTimeScale(1f);
+        }
     }
 
     // Starting Deck
