@@ -23,7 +23,7 @@ public class DONTLETTHISPATCHGETTOPRODUCTION {
     @SpirePatch(clz = MenuButton.class, method = "update")
     public static class fkmainmenu {
         public static void Prefix(MenuButton __instance) {
-            if (CardCrawlGame.playerName.toLowerCase().equals("rordev")) {
+            if (CardCrawlGame.playerName.toLowerCase().equals("rordevd")) {
                 if (__instance.result == MenuButton.ClickResult.RESUME_GAME) {
                     CardCrawlGame.mainMenuScreen.screen = MainMenuScreen.CurScreen.NONE;
                     CardCrawlGame.mainMenuScreen.hideMenuButtons();
