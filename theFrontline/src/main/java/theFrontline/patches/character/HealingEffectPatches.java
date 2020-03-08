@@ -13,7 +13,7 @@ public class HealingEffectPatches {
         @SpireInsertPatch(locator =  Locator.class)
         public static SpireReturn<Void> patch(AbstractCreature __instance, int amt, boolean showEffect) {
             FrontlineCharacter p = UC.pc();
-            if(p != null && !p.idOfHealingTarget.equals(p.currentCharacter)) {
+            if(p != null && !p.idOfHealingTarget.equals("") && !p.idOfHealingTarget.equals(p.currentCharacter)) {
                 return SpireReturn.Return(null);
             }
             return SpireReturn.Continue();
