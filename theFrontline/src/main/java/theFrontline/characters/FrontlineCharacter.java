@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.esotericsoftware.spine.AnimationState;
-import com.evacipated.cardcrawl.modthespire.lib.SpireEnum;
+import com.evacipated.cardcrawl.modthespire.lib.*;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.DrawCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
@@ -28,9 +28,12 @@ import com.megacrit.cardcrawl.relics.PrismaticShard;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.megacrit.cardcrawl.screens.CharSelectInfo;
 import com.megacrit.cardcrawl.ui.panels.TopPanel;
+import javassist.CtBehavior;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import theFrontline.TheFrontline;
+import theFrontline.actions.utility.ForcedWaitAction;
+import theFrontline.actions.utility.SwitchCharacterCombatAction;
 import theFrontline.cards.basic.Defend;
 import theFrontline.cards.basic.Strike;
 import theFrontline.characters.characterInfo.AbstractCharacterInfo;
@@ -109,9 +112,40 @@ public class FrontlineCharacter extends CustomPlayer {
 
     @Override
     public void damage(DamageInfo info) {
-        //TODO: Switch cahracter on death logic
         super.damage(info);
         updateCharInfo();
+    }
+
+    @SpirePatch(clz = AbstractPlayer.class, method = "damage", paramtypez = {DamageInfo.class})
+    public static class CharacterDeathMechanic {
+        @SpireInsertPatch(locator = Locator.class)
+        public static SpireReturn patch(AbstractPlayer __instance, DamageInfo info) {
+            FrontlineCharacter p = UC.pc();
+            if (p != null && p.characters.size() > 1) {
+                AbstractCharacterInfo deadChar = p.getCurrChar();
+                if(AbstractDungeon.getCurrRoom() != null && AbstractDungeon.getCurrRoom().phase == AbstractRoom.RoomPhase.COMBAT) {
+                    p.state.clearTracks();
+                    p.setAni(0, "die", false);
+                    UC.att(new SwitchCharacterCombatAction(p.characters.stream().filter(c -> c != p.getCurrChar()).findFirst().get(), 0, true));
+                    UC.att(new ForcedWaitAction(Settings.ACTION_DUR_LONG));
+                } else {
+                    p.switchCharacter(p.characters.stream().filter(c -> c != p.getCurrChar()).findFirst().get());
+                    p.killChar(deadChar);
+                }
+
+                p.isDead = false;
+                return SpireReturn.Return(null);
+            }
+            return SpireReturn.Continue();
+        }
+
+        private static class Locator extends SpireInsertLocator {
+            @Override
+            public int[] Locate(CtBehavior ctBehavior) throws Exception {
+                Matcher finalMatcher = new Matcher.FieldAccessMatcher(AbstractDungeon.class, "deathScreen");
+                return LineFinder.findInOrder(ctBehavior, finalMatcher);
+            }
+        }
     }
 
     @Override
@@ -133,8 +167,9 @@ public class FrontlineCharacter extends CustomPlayer {
     }
 
     public String idOfHealingTarget = "";
+
     public void heal(int amount, AbstractCharacterInfo ci) {
-        if(ci.id.equals(currentCharacter)) {
+        if (ci.id.equals(currentCharacter)) {
             heal(amount);
             return;
         }
@@ -180,7 +215,7 @@ public class FrontlineCharacter extends CustomPlayer {
     @Override
     public void useCard(AbstractCard c, AbstractMonster monster, int energyOnUse) {
         super.useCard(c, monster, energyOnUse);
-        if(c.type == AbstractCard.CardType.ATTACK) {
+        if (c.type == AbstractCard.CardType.ATTACK) {
             setAni(1, "attack", false);
         }
     }
@@ -207,7 +242,7 @@ public class FrontlineCharacter extends CustomPlayer {
         onRetreat(c);
 
         int cardsInHand = 0;
-        if(AbstractDungeon.getCurrRoom().phase == AbstractRoom.RoomPhase.COMBAT) {
+        if (AbstractDungeon.getCurrRoom().phase == AbstractRoom.RoomPhase.COMBAT) {
             cardsInHand = hand.size();
 
             while (!hand.isEmpty()) {
@@ -222,9 +257,9 @@ public class FrontlineCharacter extends CustomPlayer {
 
         loadCharInfo();
 
-        if(AbstractDungeon.getCurrRoom().phase == AbstractRoom.RoomPhase.COMBAT) {
+        if (AbstractDungeon.getCurrRoom().phase == AbstractRoom.RoomPhase.COMBAT) {
             CombatDeckHandler cdh = combatDecks.get(c.id);
-            if(cdh != null) {
+            if (cdh != null) {
                 drawPile = cdh.draw;
                 discardPile = cdh.discard;
             } else {
@@ -239,7 +274,7 @@ public class FrontlineCharacter extends CustomPlayer {
     }
 
     public void loadCharInfo() {
-        if(getPrevChar() != null) {
+        if (getPrevChar() != null) {
             this.masterHandSize -= getPrevChar().getAddDraw();
         }
 
@@ -258,23 +293,27 @@ public class FrontlineCharacter extends CustomPlayer {
 
     public void switchAnimation(AbstractCharacterInfo ci) {
         this.animation = CharacterHelper.getAnimation(ci);
-        SpineAnimation spine = (SpineAnimation)animation;
+        SpineAnimation spine = (SpineAnimation) animation;
         this.loadAnimation(spine.atlasUrl, spine.skeletonUrl, spine.scale);
         AnimationState.TrackEntry e = state.setAnimation(0, "wait", true);
         //wait, attack, move, die, victoryloop, victory
         stateData.setMix("attack", "wait", 0.05f);
-        if(stateData.getSkeletonData().findAnimation("victoryloop") != null) {
+        if (stateData.getSkeletonData().findAnimation("victoryloop") != null) {
             stateData.setMix("victory", "victoryloop", 0f);
         }
         e.setTimeScale(1f);
     }
 
     public void setChar(AbstractCharacterInfo ci) {
-        if(!characters.contains(ci)) {
+        if (!characters.contains(ci)) {
             characters.add(ci);
         }
         currentCharacter = ci.id;
         loadCharInfo();
+    }
+
+    public void killChar(AbstractCharacterInfo ci) {
+        characters.remove(ci);
     }
 
     public void updateCharInfo() {
@@ -297,9 +336,9 @@ public class FrontlineCharacter extends CustomPlayer {
     }
 
     public AbstractCharacterInfo getChar(String s) {
-        if(characters != null && !characters.isEmpty()) {
-            for(AbstractCharacterInfo c : characters) {
-                if(c.id.equals(s)) {
+        if (characters != null && !characters.isEmpty()) {
+            for (AbstractCharacterInfo c : characters) {
+                if (c.id.equals(s)) {
                     return c;
                 }
             }
@@ -308,9 +347,9 @@ public class FrontlineCharacter extends CustomPlayer {
     }
 
     public AbstractCharacterInfo getCharByName(String s) {
-        if(characters != null && !characters.isEmpty()) {
-            for(AbstractCharacterInfo c : characters) {
-                if(c.name.equals(s)) {
+        if (characters != null && !characters.isEmpty()) {
+            for (AbstractCharacterInfo c : characters) {
+                if (c.name.equals(s)) {
                     return c;
                 }
             }
@@ -319,7 +358,7 @@ public class FrontlineCharacter extends CustomPlayer {
     }
 
     public void setAni(int trackIndex, String animationName, boolean loop) {
-        if(stateData.getSkeletonData().findAnimation(animationName) != null) {
+        if (stateData.getSkeletonData().findAnimation(animationName) != null) {
             AnimationState.TrackEntry e = state.setAnimation(trackIndex, animationName, loop);
             e.setTimeScale(1f);
         }
@@ -329,10 +368,10 @@ public class FrontlineCharacter extends CustomPlayer {
     @Override
     public ArrayList<String> getStartingDeck() {
         ArrayList<String> retVal = new ArrayList<>();
-        for(int i = 0; i<4;i++) {
+        for (int i = 0; i < 4; i++) {
             retVal.add(Strike.ID);
         }
-        for(int i = 0; i<4;i++) {
+        for (int i = 0; i < 4; i++) {
             retVal.add(Defend.ID);
         }
         return retVal;
@@ -394,7 +433,7 @@ public class FrontlineCharacter extends CustomPlayer {
     // The class name as it appears next to your player name in-game
     @Override
     public String getTitle(AbstractPlayer.PlayerClass playerClass) {
-        if(getCurrChar() != null) {
+        if (getCurrChar() != null) {
             return getCurrChar().name;
         }
         return NAMES[1];

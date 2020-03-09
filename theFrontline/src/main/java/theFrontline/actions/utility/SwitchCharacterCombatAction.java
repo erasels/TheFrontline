@@ -13,23 +13,34 @@ import theFrontline.vfx.combat.unique.CharacterRunEffect;
 
 public class SwitchCharacterCombatAction extends SwitchCharacterAction{
     private int eCost;
+    private boolean death;
 
     public SwitchCharacterCombatAction(AbstractCharacterInfo ci, int i) {
+        this(ci, i, false);
+    }
+
+    public SwitchCharacterCombatAction(AbstractCharacterInfo ci, int i, boolean death) {
         super(ci);
         eCost = i;
+        this.death = death;
     }
 
     @Override
     public void update() {
         if(startDuration == duration) {
             AbstractDungeon.effectsQueue.add(new SmokeBombEffect(UC.p().hb.cX, UC.p().hb.cY));
-            AbstractDungeon.effectsQueue.add(new CharacterRunEffect(UC.p().drawX, UC.p().drawY, UC.p().img, 0.75f));
-            AbstractDungeon.getMonsters().monsters.forEach(m -> UC.att(new DumbApplyPowerAction(m, UC.p(), new FlankingPower(m))));
+            if(!death) {
+                AbstractDungeon.effectsQueue.add(new CharacterRunEffect(UC.p().drawX, UC.p().drawY, UC.p().img, 0.75f));
+                AbstractDungeon.getMonsters().monsters.forEach(m -> UC.att(new DumbApplyPowerAction(m, UC.p(), new FlankingPower(m))));
+            }
 
             FrontlineCharacter p = UC.pc();
             if(p != null) {
-                p.energy.use(eCost);
+                if(!death) {
+                    p.energy.use(eCost);
+                }
                 p.switchCharacter(ci);
+                p.killChar(p.getPrevChar());
                 p.healthBarUpdatedEvent();
                 p.switchOrbSystem.fixSelection();
                 for(AbstractRelic r : p.relics) {
