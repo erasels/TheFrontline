@@ -3,9 +3,7 @@ package theFrontline.screens;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.evacipated.cardcrawl.modthespire.lib.*;
 import com.megacrit.cardcrawl.cards.AbstractCard;
-import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
@@ -14,11 +12,9 @@ import com.megacrit.cardcrawl.helpers.MathHelper;
 import com.megacrit.cardcrawl.helpers.TipHelper;
 import com.megacrit.cardcrawl.helpers.input.InputHelper;
 import com.megacrit.cardcrawl.localization.UIStrings;
-import com.megacrit.cardcrawl.rewards.RewardItem;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.megacrit.cardcrawl.screens.mainMenu.ScrollBar;
 import com.megacrit.cardcrawl.screens.mainMenu.ScrollBarListener;
-import javassist.CtBehavior;
 import theFrontline.TheFrontline;
 import theFrontline.characters.characterInfo.AbstractCharacterInfo;
 import theFrontline.ui.buttons.CharacterImageButton;
@@ -52,8 +48,8 @@ public class CharacterAddScreen extends AbstractScreen implements ScrollBarListe
     private LabledButton btnScrap;
     private CharacterImageButton btnChar;
 
-    public CharacterAddScreen(float duration) {
-        super(duration);
+    public CharacterAddScreen() {
+        super(0);
         scrollBar = new ScrollBar(this);
         btnAccept = new LabledButton(Settings.WIDTH * 0.1f, Settings.HEIGHT * 0.25f, TEXT[0], false,
                 () -> {
@@ -87,7 +83,7 @@ public class CharacterAddScreen extends AbstractScreen implements ScrollBarListe
 
     public static AbstractRoom.RoomPhase roomPhase;
 
-    @SpirePatch(clz = RewardItem.class, method = "claimReward")
+    /*@SpirePatch(clz = RewardItem.class, method = "claimReward")
     public static class tets {
         @SpireInsertPatch(locator = Locator.class)
         public static SpireReturn<Boolean> patch(RewardItem __instance) {
@@ -115,7 +111,7 @@ public class CharacterAddScreen extends AbstractScreen implements ScrollBarListe
                 return new int[]{LineFinder.findAllInOrder(ctBehavior, finalMatcher)[1]};
             }
         }
-    }
+    }*/
 
     public void close() {
         AbstractDungeon.screen = AbstractDungeon.CurrentScreen.GRID;
