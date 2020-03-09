@@ -267,7 +267,7 @@ public class CharacterAddScreen extends AbstractScreen implements ScrollBarListe
     }
 
     public boolean shouldShow() {
-        if(show && AbstractDungeon.screen != AbstractDungeon.CurrentScreen.SETTINGS) {
+        if(!(show && AbstractDungeon.screen != AbstractDungeon.CurrentScreen.SETTINGS && AbstractDungeon.screen != AbstractDungeon.CurrentScreen.MASTER_DECK_VIEW)) {
             reDarken = true;
             return false;
         }
