@@ -133,5 +133,13 @@
       "The next time you gain #yBlock from a card, gain #b",
       " additional #yBlock."
     ]
+  },
+  "theFrontline:Flanked": {
+    "NAME": "Flanked",
+    "DESCRIPTIONS": [
+      "Takes #b",
+      "% more damage and deals #b",
+      "% less damage. Is removed at the start of your next turn or when you play a card."
+    ]
   }
 }
