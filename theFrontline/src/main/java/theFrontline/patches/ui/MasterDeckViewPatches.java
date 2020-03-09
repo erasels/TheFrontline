@@ -9,6 +9,9 @@ import theFrontline.characters.FrontlineCharacter;
 import theFrontline.characters.characterInfo.AbstractCharacterInfo;
 import theFrontline.util.UC;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class MasterDeckViewPatches {
     public static boolean RESET_ON_CLOSE = false;
 
@@ -17,7 +20,7 @@ public class MasterDeckViewPatches {
             method = SpirePatch.CLASS
     )
     public static class AbstractCardFields {
-        public static SpireField<String> charID = new SpireField<>(() -> null);
+        public static SpireField<ArrayList<String>> charID = new SpireField<>(() -> null);
     }
 
     @SpirePatch(clz = MasterDeckViewScreen.class, method = "open")
@@ -29,12 +32,12 @@ public class MasterDeckViewPatches {
                 RESET_ON_CLOSE = true;
                 AbstractCharacterInfo cur_ci = p.getCurrChar();
                 for (AbstractCard c : p.masterDeck.group) {
-                    AbstractCardFields.charID.set(c, cur_ci.name);
+                    AbstractCardFields.charID.set(c, new ArrayList<>(Arrays.asList(cur_ci.id, cur_ci.name)));
                 }
                 for (AbstractCharacterInfo ci : p.characters) {
                     if (!ci.id.equals(cur_ci.id)) {
                         for (AbstractCard c : ci.masterDeck.group) {
-                            AbstractCardFields.charID.set(c, ci.name);
+                            AbstractCardFields.charID.set(c, new ArrayList<>(Arrays.asList(ci.id, ci.name)));
                             p.masterDeck.group.add(c);
                         }
                     }

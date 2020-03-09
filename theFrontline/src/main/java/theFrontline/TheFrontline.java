@@ -213,7 +213,7 @@ public class TheFrontline implements
         }
 
         if(MasterDeckViewPatches.RESET_ON_CLOSE && CardCrawlGame.dungeon != null && AbstractDungeon.screen != AbstractDungeon.CurrentScreen.MASTER_DECK_VIEW) {
-            UC.pc().masterDeck.group.removeIf(c -> !(MasterDeckViewPatches.AbstractCardFields.charID.get(c).equals(UC.pc().currentCharacter)));
+            UC.pc().masterDeck.group.removeIf(c -> !(MasterDeckViewPatches.AbstractCardFields.charID.get(c).get(0).equals(UC.pc().currentCharacter)));
             MasterDeckViewPatches.RESET_ON_CLOSE = false;
         }
     }

@@ -11,16 +11,18 @@ import com.megacrit.cardcrawl.helpers.FontHelper;
 import theFrontline.patches.ui.MasterDeckViewPatches;
 import theFrontline.util.UC;
 
+import java.util.ArrayList;
+
 public class RenderHeaderPatches {
     @SpirePatch(clz = AbstractCard.class, method = "renderCard")
     public static class RenderHeader {
         @SpirePostfixPatch
         public static void patch(AbstractCard __instance, SpriteBatch sb, boolean hovered, boolean selected) {
-            String tmp = MasterDeckViewPatches.AbstractCardFields.charID.get(__instance);
+            ArrayList<String> tmp = MasterDeckViewPatches.AbstractCardFields.charID.get(__instance);
             if (!Settings.hideCards && tmp != null) {
                 float xPos, yPos, offsetY;
                 BitmapFont font;
-                String text = tmp;
+                String text = tmp.get(1);
                 if (text == null || __instance.isFlipped || __instance.isLocked || __instance.transparency <= 0.0F)
                     return;
                 if (false) { //isCardPopup
@@ -44,7 +46,7 @@ public class RenderHeaderPatches {
                         scaleMulti = 0.5F;
                 }
                 fontData.setScale(scaleMulti * (false ? 1.0F : __instance.drawScale));
-                Color color = UC.pc().getChar(tmp).getColor();
+                Color color = UC.pc().getChar(tmp.get(0)).getColor();
                 color.a = __instance.transparency;
                 FontHelper.renderRotatedText(sb, font, text, xPos, yPos, 0.0F, offsetY, __instance.angle, true, color);
                 fontData.setScale(originalScale);
