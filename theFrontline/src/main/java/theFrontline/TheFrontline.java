@@ -28,6 +28,7 @@ import theFrontline.characters.characterInfo.AbstractCharacterInfo;
 import theFrontline.characters.characterInfo.CharacterSave;
 import theFrontline.characters.characterInfo.frontline.FrontlineInfo;
 import theFrontline.patches.character.SelectionPatches;
+import theFrontline.patches.general.ScreenPatches;
 import theFrontline.patches.ui.MasterDeckViewPatches;
 import theFrontline.screens.AbstractScreen;
 import theFrontline.ui.ScrapDisplay;
@@ -210,6 +211,8 @@ public class TheFrontline implements
     public void receivePostUpdate() {
         if ((screen != null && screen.isDone) || !CardCrawlGame.isInARun()) {
             screen = null;
+            ScreenPatches.openDeckHack = false;
+            ScreenPatches.openDeckHackDone = false;
         }
 
         if(MasterDeckViewPatches.RESET_ON_CLOSE && CardCrawlGame.dungeon != null && AbstractDungeon.screen != AbstractDungeon.CurrentScreen.MASTER_DECK_VIEW) {

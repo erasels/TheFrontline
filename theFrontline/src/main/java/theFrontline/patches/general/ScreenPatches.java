@@ -38,9 +38,9 @@ public class ScreenPatches {
         public static void patch(AbstractDungeon __instance) {
             if (TheFrontline.screen != null) {
                 TheFrontline.screen.update();
-                if (hackyHackHack && !hackyHackHack2) {
-                    hackyHackHack = false;
-                    hackyHackHack2 = true;
+                if (openDeckHack && !openDeckHackDone) {
+                    openDeckHack = false;
+                    openDeckHackDone = true;
                     AbstractDungeon.deckViewScreen.open();
                 }
             }
@@ -55,13 +55,13 @@ public class ScreenPatches {
         }
     }
 
-    private static boolean hackyHackHack = false;
-    private static boolean hackyHackHack2 = false;
+    public static boolean openDeckHack = false;
+    public static boolean openDeckHackDone = false;
 
     @SpirePatch(clz = TopPanel.class, method = "updateDeckViewButtonLogic")
     public static class AllowDeckButton {
         @SpireInsertPatch(locator = Locator.class)
-        public static void patch(TopPanel __instance, @ByRef boolean[] ___deckButtonDisabled, Hitbox ___deckHb) {
+        public static void interceptWrongScreen(TopPanel __instance, @ByRef boolean[] ___deckButtonDisabled, Hitbox ___deckHb) {
             if (TheFrontline.screen instanceof CharacterAddScreen) {
                 ___deckButtonDisabled[0] = false;
                 ___deckHb.update();
@@ -70,11 +70,11 @@ public class ScreenPatches {
         }
 
         @SpireInsertPatch(locator = Locator2.class)
-        public static void patch2(TopPanel __instance) {
+        public static void patch(TopPanel __instance) {
             if (TheFrontline.screen instanceof CharacterAddScreen) {
                 if (AbstractDungeon.isScreenUp) {
                     AbstractDungeon.deckViewScreen.open();
-                    hackyHackHack = true;
+                    openDeckHack = true;
                 }
             }
         }
