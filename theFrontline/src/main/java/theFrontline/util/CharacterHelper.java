@@ -4,11 +4,14 @@ import basemod.animations.SpineAnimation;
 import com.badlogic.gdx.graphics.Texture;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.rooms.*;
+import com.megacrit.cardcrawl.screens.CombatRewardScreen;
 import theFrontline.TheFrontline;
 import theFrontline.characters.FrontlineCharacter;
 import theFrontline.characters.characterInfo.AbstractCharacterInfo;
 import theFrontline.characters.characterInfo.frontline.FrontlineInfo;
 import theFrontline.patches.character.SelectionPatches;
+import theFrontline.rewards.FrontlinerReward;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,6 +19,19 @@ import java.util.HashMap;
 import java.util.stream.Collectors;
 
 public class CharacterHelper {
+    public static void modifyCombatRewards(CombatRewardScreen crs) {
+        if (CardCrawlGame.isInARun()) {
+            AbstractRoom room = AbstractDungeon.getCurrRoom();
+            if (room instanceof MonsterRoomBoss) {
+                crs.rewards.add(new FrontlinerReward(CharacterHelper.getRandomCharacter(CharacterHelper.getRandomRarity(60))));
+            } else if(room instanceof MonsterRoomElite || room instanceof TreasureRoom) {
+                crs.rewards.add(new FrontlinerReward(CharacterHelper.getRandomCharacter(CharacterHelper.getRandomRarity(30))));
+            } else if(room instanceof MonsterRoom) {
+                crs.rewards.add(new FrontlinerReward());
+            }
+        }
+    }
+
     /*public static HashMap<AbstractCharacterInfo.Rarity, HashMap<String, Class<? extends AbstractCharacterInfo>>> characterMap = new HashMap<AbstractCharacterInfo.Rarity, HashMap<String, Class<? extends AbstractCharacterInfo>>>() {{
         put(AbstractCharacterInfo.Rarity.BASIC, new HashMap<>());
         put(AbstractCharacterInfo.Rarity.COMMON, new HashMap<>());
@@ -81,7 +97,11 @@ public class CharacterHelper {
     }
 
     public static AbstractCharacterInfo.Rarity getRandomRarity() {
-        int roll = AbstractDungeon.relicRng.random(0, 100);
+        return getRandomRarity(0);
+    }
+
+    public static AbstractCharacterInfo.Rarity getRandomRarity(int chanceInc) {
+        int roll = AbstractDungeon.relicRng.random(0, 100) + chanceInc;
         if (roll > 89) {
             //10% chance
             return AbstractCharacterInfo.Rarity.EPIC;
@@ -151,11 +171,11 @@ public class CharacterHelper {
 
     public static SpineAnimation getAnimation(AbstractCharacterInfo ci) {
         //change Frontline if I ever add more franchises
-        if(!ci.isGFL()) return null;
+        if (!ci.isGFL()) return null;
         FrontlineInfo fi = (FrontlineInfo) ci;
         return new SpineAnimation(
-                TheFrontline.makeCharPath("frontline/" + fi.type.name() + "/"+ fi.id + "/skeleton.atlas"),
-                TheFrontline.makeCharPath("frontline/" + fi.type.name() + "/"+ fi.id + "/skeleton.json"),
+                TheFrontline.makeCharPath("frontline/" + fi.type.name() + "/" + fi.id + "/skeleton.atlas"),
+                TheFrontline.makeCharPath("frontline/" + fi.type.name() + "/" + fi.id + "/skeleton.json"),
                 TheFrontline.WAIFU_SCALE);
     }
 
