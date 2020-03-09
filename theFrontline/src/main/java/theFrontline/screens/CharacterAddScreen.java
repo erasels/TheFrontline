@@ -45,6 +45,7 @@ public class CharacterAddScreen extends AbstractScreen implements ScrollBarListe
     private float grabStartY = 0.0F;
     private ScrollBar scrollBar;
     private boolean show = false;
+    private boolean reDarken = false;
     private ArrayList<AbstractCard> cards;
 
     private LabledButton btnAccept;
@@ -266,7 +267,15 @@ public class CharacterAddScreen extends AbstractScreen implements ScrollBarListe
     }
 
     public boolean shouldShow() {
-        return show && AbstractDungeon.screen != AbstractDungeon.CurrentScreen.SETTINGS;
+        if(show && AbstractDungeon.screen != AbstractDungeon.CurrentScreen.SETTINGS) {
+            reDarken = true;
+            return false;
+        }
+        if(reDarken) {
+            AbstractDungeon.overlayMenu.showBlackScreen(BLACKSCREEN_INTENSITY);
+            reDarken = false;
+        }
+        return true;
     }
 
     @Override
