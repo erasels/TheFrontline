@@ -40,7 +40,6 @@ public class SwitchCharacterCombatAction extends SwitchCharacterAction{
                     p.energy.use(eCost);
                 }
                 p.switchCharacter(ci);
-                p.killChar(p.getPrevChar());
                 p.healthBarUpdatedEvent();
                 p.switchOrbSystem.fixSelection();
                 for(AbstractRelic r : p.relics) {

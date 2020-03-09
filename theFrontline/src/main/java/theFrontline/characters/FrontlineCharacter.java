@@ -128,10 +128,10 @@ public class FrontlineCharacter extends CustomPlayer {
                 if(AbstractDungeon.getCurrRoom() != null && AbstractDungeon.getCurrRoom().phase == AbstractRoom.RoomPhase.COMBAT) {
                     p.state.clearTracks();
                     p.setAni(0, "die", false);
-                    UC.att(new SwitchCharacterCombatAction(p.getCharacters().stream().findFirst().get(), 0, true));
+                    UC.att(new SwitchCharacterCombatAction(p.getCharacters().get(0), 0, true));
                     UC.att(new ForcedWaitAction(Settings.ACTION_DUR_LONG));
                 } else {
-                    p.switchCharacter(p.getCharacters().stream().findFirst().get());
+                    p.switchCharacter(p.getCharacters().get(0));
                     p.killChar(deadChar);
                 }
 
