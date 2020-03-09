@@ -307,6 +307,17 @@ public class FrontlineCharacter extends CustomPlayer {
         return null;
     }
 
+    public AbstractCharacterInfo getCharByName(String s) {
+        if(characters != null && !characters.isEmpty()) {
+            for(AbstractCharacterInfo c : characters) {
+                if(c.name.equals(s)) {
+                    return c;
+                }
+            }
+        }
+        return null;
+    }
+
     public void setAni(int trackIndex, String animationName, boolean loop) {
         if(stateData.getSkeletonData().findAnimation(animationName) != null) {
             AnimationState.TrackEntry e = state.setAnimation(trackIndex, animationName, loop);
