@@ -45,6 +45,7 @@ import theFrontline.util.UC;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.stream.Collectors;
 
 import static theFrontline.TheFrontline.*;
 
@@ -121,15 +122,16 @@ public class FrontlineCharacter extends CustomPlayer {
         @SpireInsertPatch(locator = Locator.class)
         public static SpireReturn patch(AbstractPlayer __instance, DamageInfo info) {
             FrontlineCharacter p = UC.pc();
-            if (p != null && p.characters.size() > 1) {
+            if (p != null && p.getCharacters().size() > 1) {
                 AbstractCharacterInfo deadChar = p.getCurrChar();
+                deadChar.isDead = true;
                 if(AbstractDungeon.getCurrRoom() != null && AbstractDungeon.getCurrRoom().phase == AbstractRoom.RoomPhase.COMBAT) {
                     p.state.clearTracks();
                     p.setAni(0, "die", false);
-                    UC.att(new SwitchCharacterCombatAction(p.characters.stream().filter(c -> c != p.getCurrChar()).findFirst().get(), 0, true));
+                    UC.att(new SwitchCharacterCombatAction(p.getCharacters().stream().findFirst().get(), 0, true));
                     UC.att(new ForcedWaitAction(Settings.ACTION_DUR_LONG));
                 } else {
-                    p.switchCharacter(p.characters.stream().filter(c -> c != p.getCurrChar()).findFirst().get());
+                    p.switchCharacter(p.getCharacters().stream().findFirst().get());
                     p.killChar(deadChar);
                 }
 
@@ -198,7 +200,7 @@ public class FrontlineCharacter extends CustomPlayer {
 
     @Override
     public void applyStartOfTurnRelics() {
-        characters.forEach(AbstractCharacterInfo::atTurnStart);
+        getCharacters().forEach(AbstractCharacterInfo::atTurnStart);
         super.applyStartOfTurnRelics();
     }
 
@@ -207,9 +209,10 @@ public class FrontlineCharacter extends CustomPlayer {
         setAni(3, "victory", false);
         setAni(2, "victoryloop", true);
         super.onVictory();
-        characters.forEach(AbstractCharacterInfo::onVictory);
+        getCharacters().forEach(AbstractCharacterInfo::onVictory);
         updateCharInfo();
         combatDecks.clear();
+        characters.stream().filter(c -> c.isDead).forEach(this::killChar);
     }
 
     @Override
@@ -229,11 +232,11 @@ public class FrontlineCharacter extends CustomPlayer {
     }
 
     public void onSwitch(AbstractCharacterInfo currChar, AbstractCharacterInfo nextChar) {
-        characters.forEach(c -> c.onSwitch(currChar, nextChar));
+        getCharacters().forEach(c -> c.onSwitch(currChar, nextChar));
     }
 
     public void onAddCharacter(AbstractCharacterInfo newChar) {
-        characters.forEach(c -> c.onAddNewCharacter(newChar));
+        getCharacters().forEach(c -> c.onAddNewCharacter(newChar));
     }
 
     public void switchCharacter(AbstractCharacterInfo c) {
@@ -321,6 +324,10 @@ public class FrontlineCharacter extends CustomPlayer {
         cc.maxHP = maxHealth;
         cc.currentHP = currentHealth;
         cc.masterDeck = masterDeck;
+    }
+
+    public ArrayList<AbstractCharacterInfo> getCharacters() {
+        return characters.stream().filter(c -> !c.isDead).collect(Collectors.toCollection(ArrayList::new));
     }
 
     public int getDamageReduction() {

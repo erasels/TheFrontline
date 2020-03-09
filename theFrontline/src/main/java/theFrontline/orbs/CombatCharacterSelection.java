@@ -37,7 +37,7 @@ public class CombatCharacterSelection {
         chars.clear();
         FrontlineCharacter p = UC.pc();
         if (p != null) {
-            for (AbstractCharacterInfo ci : p.characters) {
+            for (AbstractCharacterInfo ci : p.getCharacters()) {
                 if (!p.currentCharacter.equals(ci.id)) {
                     addChar(new CharacterOrb(ci));
                 }

@@ -32,12 +32,14 @@ public abstract class AbstractCharacterInfo {
     public Stats stats;
     public Rarity rarity;
     public int offence, defence, utility;
+    public boolean isDead;
     protected int magicNumber;
 
     public AbstractCharacterInfo(String id, int maxHP) {
         this.id = id;
         this.maxHP = this.currentHP = maxHP;
         this.rarity = getRarity();
+        isDead = false;
 
         initialize();
     }

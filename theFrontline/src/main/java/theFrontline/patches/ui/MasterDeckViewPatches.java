@@ -34,7 +34,7 @@ public class MasterDeckViewPatches {
                 for (AbstractCard c : p.masterDeck.group) {
                     AbstractCardFields.charID.set(c, new ArrayList<>(Arrays.asList(cur_ci.id, cur_ci.name)));
                 }
-                for (AbstractCharacterInfo ci : p.characters) {
+                for (AbstractCharacterInfo ci : p.getCharacters()) {
                     if (!ci.id.equals(cur_ci.id)) {
                         for (AbstractCard c : ci.masterDeck.group) {
                             AbstractCardFields.charID.set(c, new ArrayList<>(Arrays.asList(ci.id, ci.name)));
