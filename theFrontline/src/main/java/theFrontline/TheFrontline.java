@@ -208,7 +208,7 @@ public class TheFrontline implements
 
     @Override
     public void receivePostUpdate() {
-        if (screen != null && screen.isDone) {
+        if ((screen != null && screen.isDone) || !CardCrawlGame.isInARun()) {
             screen = null;
         }
 
