@@ -79,13 +79,13 @@ public class SelectionPatches {
                 XPOS,
                 YPOS + SPACE * 1.25f,
                 Settings.CREAM_COLOR);
-        sb.setColor(Color.SKY);
+        sb.setColor(Settings.RED_TEXT_COLOR);
         sb.draw(ImageMaster.MAP_CIRCLE_5,
                 selectedChar.getX() - ((ImageMaster.MAP_CIRCLE_5.getWidth() * 0.125f) * Settings.scale),
                 selectedChar.getY() - ((ImageMaster.MAP_CIRCLE_5.getHeight() * 0.25f)),
                 (ImageMaster.MAP_CIRCLE_5.getWidth() * 1.25f) * Settings.scale,
                 (ImageMaster.MAP_CIRCLE_5.getHeight() * 1.5f) * Settings.scale);
-        sb.setColor(Color.ORANGE);
+        sb.setColor(Color.SKY);
         sb.draw(ImageMaster.MAP_CIRCLE_5,
                 backUpChar.getX() - ((ImageMaster.MAP_CIRCLE_5.getWidth() * 0.125f) * Settings.scale),
                 backUpChar.getY() - ((ImageMaster.MAP_CIRCLE_5.getHeight() * 0.25f)),
@@ -110,7 +110,7 @@ public class SelectionPatches {
                         infy + (102.0F * Settings.scale) - (FontHelper.getHeight(FontHelper.tipHeaderFont, "HP", 1f) + 5 * Settings.scale),
                         10000.0F,
                         10000.0F,
-                        Settings.RED_TEXT_COLOR);
+                        Color.SKY);
             }
         }
 
