@@ -33,16 +33,9 @@ public class SelectionPatches {
     private static final float SPACE = 175f * Settings.scale;
     private static boolean resetHP = true;
 
-    public static ArrayList<CharacterSelectionButton> starterCharacters = new ArrayList<>(Arrays.asList(
-            new CharacterSelectionButton(XPOS, YPOS, new F2000()),
-            new CharacterSelectionButton(XPOS + SPACE, YPOS, new IDW()),
-            new CharacterSelectionButton(XPOS + SPACE * 2, YPOS, new BrenTen()),
-            new CharacterSelectionButton(XPOS + SPACE * 3, YPOS, new G43()),
-            new CharacterSelectionButton(XPOS + SPACE * 4, YPOS, new AAT52()),
-            new CharacterSelectionButton(XPOS + SPACE * 5, YPOS, new M1897())
-    ));
-    public static CharacterSelectionButton selectedChar = starterCharacters.get(0);
-    public static CharacterSelectionButton backUpChar = starterCharacters.get(1);
+    public static ArrayList<CharacterSelectionButton> starterCharacters;
+    public static CharacterSelectionButton selectedChar;
+    public static CharacterSelectionButton backUpChar;
 
     @SpirePatch(clz = CharacterOption.class, method = "update")
     public static class UpdateBtns {
@@ -69,6 +62,19 @@ public class SelectionPatches {
     }
 
     protected static void update() {
+        if(selectedChar == null) {
+            starterCharacters = new ArrayList<>(Arrays.asList(
+                    new CharacterSelectionButton(XPOS, YPOS, new F2000()),
+                    new CharacterSelectionButton(XPOS + SPACE, YPOS, new IDW()),
+                    new CharacterSelectionButton(XPOS + SPACE * 2, YPOS, new BrenTen()),
+                    new CharacterSelectionButton(XPOS + SPACE * 3, YPOS, new G43()),
+                    new CharacterSelectionButton(XPOS + SPACE * 4, YPOS, new AAT52()),
+                    new CharacterSelectionButton(XPOS + SPACE * 5, YPOS, new M1897())
+            ));
+
+            selectedChar = starterCharacters.get(0);
+            backUpChar = starterCharacters.get(1);
+        }
         starterCharacters.forEach(CharacterImageButton::update);
     }
 
