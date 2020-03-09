@@ -38,7 +38,7 @@ public class ScreenPatches {
         public static void patch(AbstractDungeon __instance) {
             if (TheFrontline.screen != null) {
                 TheFrontline.screen.update();
-                if(hackyHackHack && !hackyHackHack2) {
+                if (hackyHackHack && !hackyHackHack2) {
                     hackyHackHack = false;
                     hackyHackHack2 = true;
                     AbstractDungeon.deckViewScreen.open();
@@ -57,20 +57,21 @@ public class ScreenPatches {
 
     private static boolean hackyHackHack = false;
     private static boolean hackyHackHack2 = false;
+
     @SpirePatch(clz = TopPanel.class, method = "updateDeckViewButtonLogic")
     public static class AllowDeckButton {
-        @SpireInsertPatch(locator =  Locator.class)
+        @SpireInsertPatch(locator = Locator.class)
         public static void patch(TopPanel __instance, @ByRef boolean[] ___deckButtonDisabled, Hitbox ___deckHb) {
-            if(TheFrontline.screen instanceof CharacterAddScreen) {
+            if (TheFrontline.screen instanceof CharacterAddScreen) {
                 ___deckButtonDisabled[0] = false;
                 ___deckHb.update();
 
             }
         }
 
-        @SpireInsertPatch(locator =  Locator2.class)
+        @SpireInsertPatch(locator = Locator2.class)
         public static void patch2(TopPanel __instance) {
-            if(TheFrontline.screen instanceof CharacterAddScreen) {
+            if (TheFrontline.screen instanceof CharacterAddScreen) {
                 if (AbstractDungeon.isScreenUp) {
                     AbstractDungeon.deckViewScreen.open();
                     hackyHackHack = true;
@@ -90,8 +91,19 @@ public class ScreenPatches {
             @Override
             public int[] Locate(CtBehavior ctBehavior) throws Exception {
                 Matcher finalMatcher = new Matcher.FieldAccessMatcher(AbstractDungeon.CurrentScreen.class, "COMBAT_REWARD");
-                return new int[] {LineFinder.findAllInOrder(ctBehavior, finalMatcher)[1]};
+                return new int[]{LineFinder.findAllInOrder(ctBehavior, finalMatcher)[1]};
             }
+        }
+    }
+
+    @SpirePatch(clz = TopPanel.class, method = "updateMapButtonLogic")
+    public static class DisableMapFuckery {
+        @SpirePrefixPatch
+        public static SpireReturn patch(TopPanel __instance) {
+            if (TheFrontline.screen instanceof CharacterAddScreen) {
+                return SpireReturn.Return(null);
+            }
+            return SpireReturn.Continue();
         }
     }
 }
