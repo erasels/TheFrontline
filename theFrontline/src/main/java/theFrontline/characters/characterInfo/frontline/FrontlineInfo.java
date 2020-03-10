@@ -3,8 +3,8 @@ package theFrontline.characters.characterInfo.frontline;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.helpers.CardLibrary;
 import theFrontline.TheFrontline;
-import theFrontline.cards.basic.Defend;
-import theFrontline.cards.basic.Strike;
+import theFrontline.cards.all.Defend;
+import theFrontline.cards.all.Strike;
 import theFrontline.characters.characterInfo.AbstractCharacterInfo;
 import theFrontline.util.TextureLoader;
 

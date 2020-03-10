@@ -34,8 +34,8 @@ import org.apache.logging.log4j.Logger;
 import theFrontline.TheFrontline;
 import theFrontline.actions.utility.ForcedWaitAction;
 import theFrontline.actions.utility.SwitchCharacterCombatAction;
-import theFrontline.cards.basic.Defend;
-import theFrontline.cards.basic.Strike;
+import theFrontline.cards.all.Defend;
+import theFrontline.cards.all.Strike;
 import theFrontline.characters.characterInfo.AbstractCharacterInfo;
 import theFrontline.orbs.CharacterOrb;
 import theFrontline.orbs.CombatCharacterSelection;
@@ -217,10 +217,10 @@ public class FrontlineCharacter extends CustomPlayer {
 
     @Override
     public void useCard(AbstractCard c, AbstractMonster monster, int energyOnUse) {
-        super.useCard(c, monster, energyOnUse);
         if (c.type == AbstractCard.CardType.ATTACK) {
             setAni(1, "attack", false);
         }
+        super.useCard(c, monster, energyOnUse);
     }
 
     public void onDeploy() {

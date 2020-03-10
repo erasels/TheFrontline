@@ -60,6 +60,10 @@ public class UC {
     }
 
     //Do common effect
+    public static void doDmg(AbstractCreature target, AbstractCard c) {
+        doDmg(target, c.damage, c.damageTypeForTurn, AbstractGameAction.AttackEffect.NONE);
+    }
+
     public static void doDmg(AbstractCreature target, int amount) {
         doDmg(target, amount, DamageInfo.DamageType.NORMAL, AbstractGameAction.AttackEffect.NONE);
     }
@@ -184,6 +188,10 @@ public class UC {
             default:
                 return AbstractGameAction.AttackEffect.SLASH_DIAGONAL;
         }
+    }
+
+    public static DamageInfo getDmg(AbstractCreature target, AbstractCard c) {
+        return new DamageInfo(target, c.damage, c.damageTypeForTurn);
     }
 
     public static Color getRandomFireColor() {

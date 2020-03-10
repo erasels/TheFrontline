@@ -19,8 +19,6 @@ public abstract class FrontlineCard extends CustomCard {
     protected CardStrings cardStrings;
     protected String img;
 
-    public static final int INVOKE_MAX_COST = 3;
-
     protected boolean upgradesDescription;
 
     protected int baseCost;
@@ -67,7 +65,8 @@ public abstract class FrontlineCard extends CustomCard {
         this.textureImg = img;
         loadCardImage(textureImg);
 
-        this.rarity = autoRarity();
+        //this.rarity = autoRarity();
+        this.rarity = rarity;
 
         this.rawDescription = cardStrings.DESCRIPTION;
         this.originalName = cardStrings.NAME;

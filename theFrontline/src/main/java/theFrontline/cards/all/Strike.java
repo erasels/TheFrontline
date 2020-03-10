@@ -1,4 +1,4 @@
-package theFrontline.cards.basic;
+package theFrontline.cards.all;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;

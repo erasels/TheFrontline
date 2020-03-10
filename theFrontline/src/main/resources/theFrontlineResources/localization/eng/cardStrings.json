@@ -7,6 +7,10 @@
     "NAME": "Defend",
     "DESCRIPTION": "Gain !B! Block."
   },
+  "theFrontline:Deterrent": {
+    "NAME": "Deterrent",
+    "DESCRIPTION": "Deal !D! damage. NL Deals double damage if the target is above half HP."
+  },
   "theFrontline:TreasuredOrb": {
     "NAME": "Treasured Orb",
     "DESCRIPTION": "Deal !D! damage. NL Channel thesacred:Yin-Yang. NL Exhaust.",

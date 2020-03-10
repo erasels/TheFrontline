@@ -1,4 +1,4 @@
-package theFrontline.cards.basic;
+package theFrontline.cards.all;
 
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
