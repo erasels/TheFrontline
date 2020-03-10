@@ -19,8 +19,11 @@ public abstract class MGInfo extends FrontlineInfo {
     protected void initialize() {
         super.initialize();
         col = Color.SALMON.cpy();
-        //TODO: Add MG base crafting cards
-        //availableCards.add
+    }
+
+    @Override
+    public ArrayList<String> initializeAvailableCards() {
+        return super.initializeAvailableCards();
     }
 
     @Override

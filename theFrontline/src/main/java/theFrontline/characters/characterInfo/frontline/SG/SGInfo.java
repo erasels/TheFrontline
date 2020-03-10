@@ -19,8 +19,11 @@ public abstract class SGInfo  extends FrontlineInfo {
     protected void initialize() {
         super.initialize();
         col = Color.ORANGE.cpy();
-        //TODO: Add SG base crafting cards
-        //availableCards.add
+    }
+
+    @Override
+    public ArrayList<String> initializeAvailableCards() {
+        return super.initializeAvailableCards();
     }
 
     @Override

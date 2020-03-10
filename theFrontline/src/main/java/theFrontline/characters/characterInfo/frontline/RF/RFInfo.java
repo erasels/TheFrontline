@@ -19,8 +19,11 @@ public abstract class RFInfo extends FrontlineInfo {
     protected void initialize() {
         super.initialize();
         col = Color.PURPLE.cpy();
-        //TODO: Add RF base crafting cards
-        //availableCards.add
+    }
+
+    @Override
+    public ArrayList<String> initializeAvailableCards() {
+        return super.initializeAvailableCards();
     }
 
     @Override

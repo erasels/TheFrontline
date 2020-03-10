@@ -11,6 +11,7 @@ import com.megacrit.cardcrawl.localization.CharacterStrings;
 import theFrontline.characters.characterInfo.frontline.FrontlineInfo;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 import static theFrontline.TheFrontline.makeID;
 
@@ -22,13 +23,13 @@ public abstract class AbstractCharacterInfo {
     public Color col = Color.WHITE.cpy();
     public String id;
     protected CharacterStrings characterStrings;
-    public ArrayList<String> availableCards;
     public Texture img;
 
     public String name;
     public String fullName;
     public int maxHP, currentHP;
     public CardGroup masterDeck;
+    public ArrayList<String> availableCards;
     public Stats stats;
     public Rarity rarity;
     public int offence, defence, utility;
@@ -50,11 +51,16 @@ public abstract class AbstractCharacterInfo {
         fullName = characterStrings.NAMES[1];
         masterDeck = new CardGroup(CardGroup.CardGroupType.MASTER_DECK);
         masterDeck.group.addAll(getStarterDeck());
+        availableCards = initializeAvailableCards();
         stats = new Stats();
         setFlavorStats();
     }
 
+    public abstract ArrayList<String> initializeAvailableCards();
     public abstract ArrayList<AbstractCard> getStarterDeck();
+    public ArrayList<AbstractCard> getAvailableCards() {
+        return availableCards.stream().map(c -> CardLibrary.getCard(c).makeCopy()).collect(Collectors.toCollection(ArrayList::new));
+    }
 
     public abstract Rarity getRarity();
 

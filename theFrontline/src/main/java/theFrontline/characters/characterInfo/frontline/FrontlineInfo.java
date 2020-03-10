@@ -28,8 +28,6 @@ public abstract class FrontlineInfo extends AbstractCharacterInfo {
     @Override
     protected void initialize() {
         super.initialize();
-        //TODO: Add universal cards
-        //availableCards.add();
     }
 
     @Override
@@ -49,8 +47,15 @@ public abstract class FrontlineInfo extends AbstractCharacterInfo {
     }
 
     @Override
+    public ArrayList<String> initializeAvailableCards() {
+        //TODO: Add universal cards
+        ArrayList<String> cards = new ArrayList<>(Arrays.asList(Strike.ID, Defend.ID));
+        return cards;
+    }
+
+    @Override
     public ArrayList<AbstractCard> getStarterDeck() {
-        ArrayList<String> cards = new ArrayList<>(Arrays.asList(Strike.ID, Strike.ID, Defend.ID, Defend.ID));
+        ArrayList<String> cards = new ArrayList<>(Arrays.asList(Strike.ID, Defend.ID));
         return cards.stream().map(id -> CardLibrary.getCard(id).makeCopy()).collect(Collectors.toCollection(ArrayList::new));
     }
 }

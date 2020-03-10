@@ -19,8 +19,11 @@ public abstract class HGInfo extends FrontlineInfo {
     protected void initialize() {
         super.initialize();
         col = Color.BROWN.cpy();
-        //TODO: Add HG base crafting cards
-        //availableCards.add
+    }
+
+    @Override
+    public ArrayList<String> initializeAvailableCards() {
+        return super.initializeAvailableCards();
     }
 
     @Override

@@ -19,8 +19,12 @@ public abstract class ARInfo extends FrontlineInfo {
     protected void initialize() {
         super.initialize();
         col = Color.SKY.cpy();
+    }
+
+    @Override
+    public ArrayList<String> initializeAvailableCards() {
         //TODO: Add AR base crafting cards
-        //availableCards.add
+        return super.initializeAvailableCards();
     }
 
     @Override
