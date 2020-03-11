@@ -13,8 +13,8 @@ public class PreRoomTransitionAnimationPatch {
     public static void patch(AbstractDungeon __instance, SaveFile sf) {
         FrontlineCharacter p = UC.pc();
         if(p != null) {
-            p.state.clearTrack(2);
-            p.state.clearTrack(3);
+            p.state.clearTracks();
+            p.setAni(0, "wait", true);
         }
     }
 }
