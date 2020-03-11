@@ -34,6 +34,7 @@ public class BlockOnSwitchPower extends AbstractFrontlinePower implements Clonea
 
     @Override
     public void onSwitch(AbstractCharacterInfo currChar, AbstractCharacterInfo nextChar) {
+        flash();
         doDef(amount);
     }
 
