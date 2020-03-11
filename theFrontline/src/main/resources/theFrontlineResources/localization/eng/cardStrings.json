@@ -31,6 +31,18 @@
     "NAME": "Pack Tactics",
     "DESCRIPTION": "Whenever you thefrontline:switch, gain !M! Block."
   },
+  "theFrontline:Conceal": {
+    "NAME": "Conceal",
+    "DESCRIPTION": "thefrontline:Flank the enemies. NL Exhaust."
+  },
+  "theFrontline:Bushwack": {
+    "NAME": "Bushwack",
+    "DESCRIPTION": "Deal !D! damage. NL thefrontline:Flanking: Deal !D! damage again."
+  },
+  "theFrontline:Zip": {
+    "NAME": "Zip",
+    "DESCRIPTION": "Gain !B! Block. NL Gain !M! Block."
+  },
   "theFrontline:ProtectionPrayer": {
     "NAME": "Protection Prayer",
     "DESCRIPTION": "Gain 25% more Block for !theFrontline:M2! turns. NL thesacred:Aligned: ALL enemies lose !M! Strength this turn."

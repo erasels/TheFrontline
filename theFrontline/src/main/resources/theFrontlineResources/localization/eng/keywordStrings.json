@@ -16,6 +16,15 @@
     "DESCRIPTION": "Changing your active character."
   },
   {
+    "PROPER_NAME": "Flank",
+    "NAMES": [
+      "flank",
+      "flanked",
+      "flanking"
+    ],
+    "DESCRIPTION": "Flanked enemies deal less damage and take more. Is removed when playing a card or at the end of the round."
+  },
+  {
     "PROPER_NAME": "Burst",
     "NAMES": [
       "burst",

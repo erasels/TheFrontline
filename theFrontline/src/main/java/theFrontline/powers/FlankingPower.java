@@ -12,10 +12,8 @@ import com.megacrit.cardcrawl.powers.AbstractPower;
 import theFrontline.TheFrontline;
 import theFrontline.patches.combat.NewPowerTypePatches;
 import theFrontline.powers.abstracts.AbstractFrontlinePower;
-import theFrontline.util.UC;
 
 import static theFrontline.util.UC.atb;
-import static theFrontline.util.UC.p;
 
 public class FlankingPower extends AbstractFrontlinePower implements CloneablePowerInterface {
     public static final String POWER_ID = TheFrontline.makeID("Flanked");
@@ -60,7 +58,7 @@ public class FlankingPower extends AbstractFrontlinePower implements CloneablePo
     @Override
     public float atDamageGive(float damage, DamageInfo.DamageType type) {
         if (type == DamageInfo.DamageType.NORMAL) {
-            return damage * convert();
+            return damage * (1 -convert());
         }
         return damage;
     }
