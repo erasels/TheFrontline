@@ -207,19 +207,21 @@ public class FrontlineCharacter extends CustomPlayer {
 
     @Override
     public void onVictory() {
-        setAni(3, "victory", false);
-        setAni(2, "victoryloop", true);
+        addAni(2, "victory", false, 0);
+        addAni(3, "victoryloop", true, 0);
         super.onVictory();
         getCharacters().forEach(AbstractCharacterInfo::onVictory);
         updateCharInfo();
         combatDecks.clear();
-        characters.stream().filter(c -> c.isDead).forEach(this::killChar);
+        killChars();
     }
 
     @Override
     public void useCard(AbstractCard c, AbstractMonster monster, int energyOnUse) {
+
+        //TODO: fix whatever is wrong with the animations
         if (c.type == AbstractCard.CardType.ATTACK) {
-            setAni(1, "attack", false);
+            addAni(1, "attack", false, 0);
         }
         super.useCard(c, monster, energyOnUse);
     }
@@ -300,13 +302,13 @@ public class FrontlineCharacter extends CustomPlayer {
         this.animation = CharacterHelper.getAnimation(ci);
         SpineAnimation spine = (SpineAnimation) animation;
         this.loadAnimation(spine.atlasUrl, spine.skeletonUrl, spine.scale);
-        AnimationState.TrackEntry e = state.setAnimation(0, "wait", true);
+        state.clearTracks();
+        setAni(0, "wait", true);
         //wait, attack, move, die, victoryloop, victory
         stateData.setMix("attack", "wait", 0.05f);
         if (stateData.getSkeletonData().findAnimation("victoryloop") != null) {
             stateData.setMix("victory", "victoryloop", 0f);
         }
-        e.setTimeScale(1f);
     }
 
     public void setChar(AbstractCharacterInfo ci) {
@@ -319,6 +321,10 @@ public class FrontlineCharacter extends CustomPlayer {
 
     public void killChar(AbstractCharacterInfo ci) {
         characters.remove(ci);
+    }
+
+    public void killChars() {
+        characters.removeIf(c -> c.isDead);
     }
 
     public void updateCharInfo() {
@@ -369,6 +375,13 @@ public class FrontlineCharacter extends CustomPlayer {
     public void setAni(int trackIndex, String animationName, boolean loop) {
         if (stateData.getSkeletonData().findAnimation(animationName) != null) {
             AnimationState.TrackEntry e = state.setAnimation(trackIndex, animationName, loop);
+            e.setTimeScale(1f);
+        }
+    }
+
+    public void addAni(int trackIndex, String animationName, boolean loop, float delay) {
+        if (stateData.getSkeletonData().findAnimation(animationName) != null) {
+            AnimationState.TrackEntry e = state.addAnimation(trackIndex, animationName, loop, delay);
             e.setTimeScale(1f);
         }
     }
