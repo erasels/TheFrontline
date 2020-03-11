@@ -1,42 +1,40 @@
 package theFrontline.powers;
 
 import basemod.interfaces.CloneablePowerInterface;
-import com.megacrit.cardcrawl.actions.common.RemoveSpecificPowerAction;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import theFrontline.TheFrontline;
+import theFrontline.characters.characterInfo.AbstractCharacterInfo;
 import theFrontline.powers.abstracts.AbstractFrontlinePower;
-import theFrontline.util.UC;
 
+import static theFrontline.util.UC.doDef;
 import static theFrontline.util.UC.p;
 
-public class GracePower extends AbstractFrontlinePower implements CloneablePowerInterface {
-    public static final String POWER_ID = TheFrontline.makeID("Grace");
+public class BlockOnSwitchPower extends AbstractFrontlinePower implements CloneablePowerInterface {
+    public static final String POWER_ID = TheFrontline.makeID("BlockOnSwitch");
     private static final PowerStrings powerStrings = CardCrawlGame.languagePack.getPowerStrings(POWER_ID);
     public static final String NAME = powerStrings.NAME;
     public static final String[] DESCRIPTIONS = powerStrings.DESCRIPTIONS;
 
-    public GracePower(AbstractCreature owner, int amount) {
+    public BlockOnSwitchPower(AbstractCreature owner, int amount) {
         name = NAME;
         ID = POWER_ID;
         this.owner = owner;
         this.amount = amount;
         type = AbstractPower.PowerType.BUFF;
         updateDescription();
-        loadRegion("pressure_points");
+        loadRegion("like_water");
     }
 
-    public GracePower(int amount) {
+    public BlockOnSwitchPower(int amount) {
         this(p(), amount);
     }
 
     @Override
-    public float modifyBlock(float blockAmount) {
-        flash();
-        UC.atb(new RemoveSpecificPowerAction(UC.p(), UC.p(), this));
-        return blockAmount + amount;
+    public void onSwitch(AbstractCharacterInfo currChar, AbstractCharacterInfo nextChar) {
+        doDef(amount);
     }
 
     @Override
@@ -46,6 +44,6 @@ public class GracePower extends AbstractFrontlinePower implements CloneablePower
 
     @Override
     public AbstractPower makeCopy() {
-        return new GracePower(owner, amount);
+        return new BlockOnSwitchPower(owner, amount);
     }
 }

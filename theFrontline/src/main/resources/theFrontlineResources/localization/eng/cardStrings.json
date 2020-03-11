@@ -13,11 +13,23 @@
   },
   "theFrontline:CounterPace": {
     "NAME": "Counter Pace",
-    "DESCRIPTION": "Gain !B! Block. If the target intends to attack, apply !M! Weak."
+    "DESCRIPTION": "Gain !B! Block. NL If the target intends to attack, apply !M! Weak."
   },
   "theFrontline:Flare": {
     "NAME": "Flare",
-    "DESCRIPTION": "Deal !D! damage. Gain !M! Vigor."
+    "DESCRIPTION": "Deal !D! damage. NL Gain !M! Vigor."
+  },
+  "theFrontline:AimedShot": {
+    "NAME": "Aimed Shot",
+    "DESCRIPTION": "Deal !D! damage. NL Apply !M! Vulnerable."
+  },
+  "theFrontline:CheerOn": {
+    "NAME": "Cheer On!",
+    "DESCRIPTION": "Gain !M! Vigor and thefrontline:Grace."
+  },
+  "theFrontline:PackTactics": {
+    "NAME": "Pack Tactics",
+    "DESCRIPTION": "Whenever you thefrontline:switch, gain !M! Block."
   },
   "theFrontline:ProtectionPrayer": {
     "NAME": "Protection Prayer",

@@ -3,6 +3,7 @@ package theFrontline.powers.abstracts;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.evacipated.cardcrawl.mod.stslib.powers.abstracts.TwoAmountPower;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
+import theFrontline.characters.characterInfo.AbstractCharacterInfo;
 
 import static theFrontline.TheFrontline.makePowerPath;
 
@@ -25,4 +26,6 @@ public class AbstractFrontlinePower extends TwoAmountPower {
     public void setTinyImage(String imgName){
         this.img = ImageMaster.loadImage(makePowerPath(imgName));
     }
+
+    public void onSwitch(AbstractCharacterInfo currChar, AbstractCharacterInfo nextChar) {}
 }

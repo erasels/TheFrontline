@@ -39,6 +39,7 @@ import theFrontline.cards.all.Strike;
 import theFrontline.characters.characterInfo.AbstractCharacterInfo;
 import theFrontline.orbs.CharacterOrb;
 import theFrontline.orbs.CombatCharacterSelection;
+import theFrontline.powers.abstracts.AbstractFrontlinePower;
 import theFrontline.ui.SacredEnergyOrb;
 import theFrontline.util.CharacterHelper;
 import theFrontline.util.UC;
@@ -233,6 +234,7 @@ public class FrontlineCharacter extends CustomPlayer {
 
     public void onSwitch(AbstractCharacterInfo currChar, AbstractCharacterInfo nextChar) {
         getCharacters().forEach(c -> c.onSwitch(currChar, nextChar));
+        powers.stream().filter(p -> p instanceof AbstractFrontlinePower).forEachOrdered(p -> ((AbstractFrontlinePower) p).onSwitch(currChar, nextChar));
     }
 
     public void onAddCharacter(AbstractCharacterInfo newChar) {

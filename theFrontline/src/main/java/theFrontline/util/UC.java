@@ -64,6 +64,10 @@ public class UC {
         doDmg(target, c.damage, c.damageTypeForTurn, AbstractGameAction.AttackEffect.NONE);
     }
 
+    public static void doDmg(AbstractCreature target, AbstractCard c, AbstractGameAction.AttackEffect ae) {
+        doDmg(target, c.damage, c.damageTypeForTurn, ae);
+    }
+
     public static void doDmg(AbstractCreature target, int amount) {
         doDmg(target, amount, DamageInfo.DamageType.NORMAL, AbstractGameAction.AttackEffect.NONE);
     }

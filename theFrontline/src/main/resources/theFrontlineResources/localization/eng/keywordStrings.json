@@ -1,5 +1,21 @@
 [
   {
+    "PROPER_NAME": "Grace",
+    "NAMES": [
+      "grace"
+    ],
+    "DESCRIPTION": "The next time you gain Block from a card, gain additional Block."
+  },
+  {
+    "PROPER_NAME": "Switch",
+    "NAMES": [
+      "switch",
+      "switched",
+      "switching"
+    ],
+    "DESCRIPTION": "Changing your active character."
+  },
+  {
     "PROPER_NAME": "Burst",
     "NAMES": [
       "burst",

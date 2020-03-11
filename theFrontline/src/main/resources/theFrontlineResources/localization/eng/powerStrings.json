@@ -134,6 +134,13 @@
       " additional #yBlock."
     ]
   },
+  "theFrontline:BlockOnSwitch": {
+    "NAME": "Block on Switch",
+    "DESCRIPTIONS": [
+      "Whenever you #yswitch [REMOVE_SPACE], gain #b",
+      " #yBlock."
+    ]
+  },
   "theFrontline:Flanked": {
     "NAME": "Flanked",
     "DESCRIPTIONS": [
