@@ -43,6 +43,18 @@
     "NAME": "Zip",
     "DESCRIPTION": "Gain !B! Block. NL Gain !M! Block."
   },
+  "theFrontline:StoicFront": {
+    "NAME": "Stoic Front",
+    "DESCRIPTION": "Gain !B! Block. NL Whenever you take damage this turn, gain that much thefrontline:Grace."
+  },
+  "theFrontline:Unleash": {
+    "NAME": "Unleash",
+    "DESCRIPTION": "Deal !D! damage. NL Damage modifiers affect this card twice. NL Exhaust."
+  },
+  "theFrontline:PommelBash": {
+    "NAME": "Pommel Bash",
+    "DESCRIPTION": "Deal !D! damage. NL Gain !B! Block."
+  },
   "theFrontline:ProtectionPrayer": {
     "NAME": "Protection Prayer",
     "DESCRIPTION": "Gain 25% more Block for !theFrontline:M2! turns. NL thesacred:Aligned: ALL enemies lose !M! Strength this turn."
