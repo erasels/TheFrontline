@@ -176,6 +176,20 @@ public class UC {
     }
 
     //Getters
+    public static boolean isAttacking(AbstractCreature m) {
+        if(m instanceof AbstractMonster) {
+            return ((AbstractMonster) m).intent == AbstractMonster.Intent.ATTACK ||
+                    ((AbstractMonster) m).intent == AbstractMonster.Intent.ATTACK_BUFF ||
+                    ((AbstractMonster) m).intent == AbstractMonster.Intent.ATTACK_DEBUFF ||
+                    ((AbstractMonster) m).intent == AbstractMonster.Intent.ATTACK_DEFEND;
+        }
+        return false;
+    }
+
+    public static DamageInfo getDmg(AbstractCreature target, AbstractCard c) {
+        return new DamageInfo(target, c.damage, c.damageTypeForTurn);
+    }
+
     public static AbstractGameAction.AttackEffect getSpeedyAttackEffect() {
         int effect = MathUtils.random(0, 4);
         switch (effect) {
@@ -188,10 +202,6 @@ public class UC {
             default:
                 return AbstractGameAction.AttackEffect.SLASH_DIAGONAL;
         }
-    }
-
-    public static DamageInfo getDmg(AbstractCreature target, AbstractCard c) {
-        return new DamageInfo(target, c.damage, c.damageTypeForTurn);
     }
 
     public static Color getRandomFireColor() {
