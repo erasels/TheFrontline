@@ -21,6 +21,7 @@ import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.megacrit.cardcrawl.vfx.AbstractGameEffect;
 import theFrontline.actions.utility.DamageAllAction;
 import theFrontline.characters.FrontlineCharacter;
+import theFrontline.characters.characterInfo.AbstractCharacterInfo;
 import theFrontline.patches.combat.CardFieldMechanicsPatches;
 
 import java.text.DecimalFormat;
@@ -194,18 +195,13 @@ public class UC {
         return new DamageInfo(target, c.damage, c.damageTypeForTurn);
     }
 
-    public static AbstractGameAction.AttackEffect getSpeedyAttackEffect() {
-        int effect = MathUtils.random(0, 4);
-        switch (effect) {
-            case 0:
-                return AbstractGameAction.AttackEffect.SLASH_HORIZONTAL;
-            case 1:
-                return AbstractGameAction.AttackEffect.SLASH_VERTICAL;
-            case 2:
-                return AbstractGameAction.AttackEffect.BLUNT_LIGHT;
-            default:
-                return AbstractGameAction.AttackEffect.SLASH_DIAGONAL;
+    public static AbstractCharacterInfo getPlayerChar() {
+        FrontlineCharacter p = UC.pc();
+        AbstractCharacterInfo tmp = null;
+        if(p != null) {
+            tmp = p.getCurrChar();
         }
+        return tmp;
     }
 
     public static Color getRandomFireColor() {
