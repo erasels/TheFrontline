@@ -55,6 +55,19 @@
     "NAME": "Pommel Bash",
     "DESCRIPTION": "Deal !D! damage. NL Gain !B! Block."
   },
+  "theFrontline:PickOff": {
+    "NAME": "Pick Off",
+    "DESCRIPTION": "Deal !D! damage. NL If Fatal, reduce this card's cost by !M! this combat."
+  },
+  "theFrontline:OneShot": {
+    "NAME": "One Shot",
+    "DESCRIPTION": "This character's next attack deals double damage. NL Exhaust."
+  },
+  "theFrontline:Prepare": {
+    "NAME": "Prepare",
+    "DESCRIPTION": "Discard 1 random card. NL Decrease its cost by !M! until played.",
+    "UPGRADE_DESCRIPTION": "Discard 1 card. NL Decrease its cost by !M! until played."
+  },
   "theFrontline:ProtectionPrayer": {
     "NAME": "Protection Prayer",
     "DESCRIPTION": "Gain 25% more Block for !theFrontline:M2! turns. NL thesacred:Aligned: ALL enemies lose !M! Strength this turn."

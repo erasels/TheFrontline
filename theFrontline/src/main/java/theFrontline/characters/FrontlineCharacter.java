@@ -218,10 +218,10 @@ public class FrontlineCharacter extends CustomPlayer {
 
     @Override
     public void useCard(AbstractCard c, AbstractMonster monster, int energyOnUse) {
-
-        //TODO: fix whatever is wrong with the animations
+        //TODO: fix whatever is wrong with the animations ( http://de.esotericsoftware.com/spine-applying-animations )
         if (c.type == AbstractCard.CardType.ATTACK) {
-            addAni(1, "attack", false, 0);
+            setAni(0, "attack", false);
+            addAni(0, "wait", true, 0.0F);
         }
         super.useCard(c, monster, energyOnUse);
     }

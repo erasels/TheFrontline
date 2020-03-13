@@ -46,10 +46,17 @@
     ]
   },
   "theFrontline:DamageToGrace": {
-  "NAME": "Damage to Grace",
+    "NAME": "Damage to Grace",
+    "DESCRIPTIONS": [
+      "Whenever you take damage this turn, gain #yGrace equal to that multiplied by #b",
+      " [REMOVE_SPACE]."
+    ]
+  },
+  "theFrontline:OneShot": {
+  "NAME": "One Shot",
   "DESCRIPTIONS": [
-    "Whenever you take damage this turn, gain #yGrace equal to that multiplied by #b",
-    " [REMOVE_SPACE]."
+    " deals double damage with their next #b",
+    " next attacks."
   ]
 }
 }
