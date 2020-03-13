@@ -58,7 +58,7 @@ public class FlankingPower extends AbstractFrontlinePower implements CloneablePo
     @Override
     public float atDamageGive(float damage, DamageInfo.DamageType type) {
         if (type == DamageInfo.DamageType.NORMAL) {
-            return damage * (1 -convert());
+            return damage * (2f -convert());
         }
         return damage;
     }
