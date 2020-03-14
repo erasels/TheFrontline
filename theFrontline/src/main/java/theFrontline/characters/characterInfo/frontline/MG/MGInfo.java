@@ -2,6 +2,10 @@ package theFrontline.characters.characterInfo.frontline.MG;
 
 import com.badlogic.gdx.graphics.Color;
 import com.megacrit.cardcrawl.cards.AbstractCard;
+import com.megacrit.cardcrawl.helpers.CardLibrary;
+import theFrontline.cards.MG.Shredder;
+import theFrontline.cards.MG.SprayNPray;
+import theFrontline.cards.MG.Suppression;
 import theFrontline.characters.characterInfo.frontline.FrontlineInfo;
 
 import java.util.ArrayList;
@@ -27,7 +31,9 @@ public abstract class MGInfo extends FrontlineInfo {
     @Override
     public ArrayList<AbstractCard> getStarterDeck() {
         ArrayList<AbstractCard> tmp = super.getStarterDeck();
+        tmp.add(CardLibrary.getCard(Suppression.ID).makeCopy());
+        tmp.add(CardLibrary.getCard(Shredder.ID).makeCopy());
+        tmp.add(CardLibrary.getCard(SprayNPray.ID).makeCopy());
         return tmp;
-        //TODO: Add base cards
     }
 }

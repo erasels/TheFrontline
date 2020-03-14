@@ -53,10 +53,17 @@
     ]
   },
   "theFrontline:OneShot": {
-  "NAME": "One Shot",
-  "DESCRIPTIONS": [
-    " deals double damage with their next #b",
-    " next attacks."
-  ]
-}
+    "NAME": "One Shot",
+    "DESCRIPTIONS": [
+      " deals double damage with their next #b",
+      " next attacks."
+    ]
+  },
+  "theFrontline:Suppression": {
+    "NAME": "Suppression",
+    "DESCRIPTIONS": [
+      "The next time this creature attacks, it takes #b",
+      " damage."
+    ]
+  }
 }

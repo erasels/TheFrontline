@@ -55,7 +55,7 @@ public abstract class FrontlineInfo extends AbstractCharacterInfo {
 
     @Override
     public ArrayList<AbstractCard> getStarterDeck() {
-        ArrayList<String> cards = new ArrayList<>(Arrays.asList(Strike.ID, Defend.ID));
+        ArrayList<String> cards = new ArrayList<>(Arrays.asList(Strike.ID, Defend.ID, Defend.ID));
         return cards.stream().map(id -> CardLibrary.getCard(id).makeCopy()).collect(Collectors.toCollection(ArrayList::new));
     }
 }

@@ -68,6 +68,18 @@
     "DESCRIPTION": "Discard 1 random card. NL Decrease its cost by !M! until played.",
     "UPGRADE_DESCRIPTION": "Discard 1 card. NL Decrease its cost by !M! until played."
   },
+  "theFrontline:Suppression": {
+    "NAME": "Suppression",
+    "DESCRIPTION": "Gain !B! Block. NL The next time the target attacks, it takes !D! damage."
+  },
+  "theFrontline:Shredder": {
+    "NAME": "Shredder",
+    "DESCRIPTION": "Deal !D! damage. Deals double damage if the enemy has Block."
+  },
+  "theFrontline:SprayNPray": {
+    "NAME": "Spray 'n Pray",
+    "DESCRIPTION": "Deal !D! damage and apply 1 Weak to a random enemy !M! times."
+  },
   "theFrontline:ProtectionPrayer": {
     "NAME": "Protection Prayer",
     "DESCRIPTION": "Gain 25% more Block for !theFrontline:M2! turns. NL thesacred:Aligned: ALL enemies lose !M! Strength this turn."
