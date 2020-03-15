@@ -1,9 +1,7 @@
 package theFrontline.cards.all;
 
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
-import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import theFrontline.actions.utility.SwitchCharacterCombatAction;
 import theFrontline.cards.abstracts.FrontlineCard;
 import theFrontline.util.CardInfo;
 import theFrontline.util.UC;
@@ -34,8 +32,5 @@ public class Defend extends FrontlineCard {
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
         UC.doDef(block);
-        if (CardCrawlGame.playerName.toLowerCase().equals("rordev")) {
-            UC.att(new SwitchCharacterCombatAction(UC.pc().getCharacters().stream().filter(ci -> !ci.id.equals(UC.pc().getCurrChar().id)).findFirst().get(), 1));
-        }
     }
 }
