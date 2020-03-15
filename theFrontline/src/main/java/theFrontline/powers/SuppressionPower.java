@@ -2,6 +2,7 @@ package theFrontline.powers;
 
 import basemod.interfaces.CloneablePowerInterface;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
+import com.megacrit.cardcrawl.actions.common.RemoveSpecificPowerAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
@@ -30,6 +31,7 @@ public class SuppressionPower extends AbstractFrontlinePower implements Cloneabl
     @Override
     public void onAttack(DamageInfo info, int damageAmount, AbstractCreature target) {
         UC.doDmg(owner, amount, DamageInfo.DamageType.THORNS ,AbstractGameAction.AttackEffect.BLUNT_LIGHT, false, true);
+        UC.att(new RemoveSpecificPowerAction(owner, owner, this));
     }
 
     @Override
