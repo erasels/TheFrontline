@@ -51,6 +51,8 @@ public abstract class FrontlineCard extends CustomCard {
     public int showNumber;
     public boolean isShowNumberModified;
 
+    public boolean useGrace;
+
 
     public FrontlineCard(CardInfo cardInfo, boolean upgradesDescription) {
         this(FrontlineCharacter.Enums.COLOR_FRONTLINE, cardInfo.cardName, cardInfo.cardCost, cardInfo.cardType, cardInfo.cardTarget, cardInfo.cardRarity, upgradesDescription);
@@ -89,6 +91,8 @@ public abstract class FrontlineCard extends CustomCard {
         upgradeBurst = false;
         upgradeRetain = false;
         upgradeEthereal = false;
+
+        useGrace = false;
 
         if(cardName.toLowerCase().contains("strike")) {
             tags.add(CardTags.STRIKE);

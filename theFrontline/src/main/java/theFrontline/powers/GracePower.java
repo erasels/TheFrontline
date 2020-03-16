@@ -9,6 +9,7 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import theFrontline.TheFrontline;
+import theFrontline.cards.abstracts.FrontlineCard;
 import theFrontline.powers.abstracts.AbstractFrontlinePower;
 import theFrontline.util.UC;
 
@@ -42,7 +43,7 @@ public class GracePower extends AbstractFrontlinePower implements CloneablePower
     @Override
     public void onUseCard(AbstractCard card, UseCardAction action) {
         //Will probably not be compatible with certain cards, can be fixed via dynamic patching, maybe later.
-        if(card.baseBlock > -1) {
+        if(card.baseBlock > -1 || (card instanceof FrontlineCard && ((FrontlineCard) card).useGrace)) {
             flash();
             UC.att(new RemoveSpecificPowerAction(UC.p(), UC.p(), this));
         }

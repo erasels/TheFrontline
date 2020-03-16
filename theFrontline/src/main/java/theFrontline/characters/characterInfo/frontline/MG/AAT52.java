@@ -1,8 +1,13 @@
 package theFrontline.characters.characterInfo.frontline.MG;
 
+import com.megacrit.cardcrawl.cards.AbstractCard;
+import com.megacrit.cardcrawl.helpers.CardLibrary;
+import theFrontline.cards.MG.AAT52.StumblingShot;
 import theFrontline.characters.characterInfo.AbstractCharacterInfo;
 import theFrontline.powers.GracePower;
 import theFrontline.util.UC;
+
+import java.util.ArrayList;
 
 public class AAT52 extends MGInfo {
     public static final String ID = AAT52.class.getSimpleName();
@@ -20,6 +25,13 @@ public class AAT52 extends MGInfo {
         if(ci != null && ci.isGFL(Type.SG)) {
             UC.doPow(UC.p(), new GracePower(getMN()));
         }
+    }
+
+    @Override
+    public ArrayList<AbstractCard> getStarterDeck() {
+        ArrayList<AbstractCard> tmp = super.getStarterDeck();
+        tmp.add(CardLibrary.getCard(StumblingShot.ID).makeCopy());
+        return tmp;
     }
 
     @Override
