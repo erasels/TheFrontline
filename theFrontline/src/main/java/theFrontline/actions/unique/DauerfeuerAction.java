@@ -1,5 +1,6 @@
 package theFrontline.actions.unique;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardQueueItem;
@@ -35,7 +36,7 @@ public class DauerfeuerAction extends AbstractGameAction {
                 if(skip) continue;
 
                 CardModPatches.Fields.originalDmg.set(c, c.baseDamage);
-                c.baseDamage *= 0.5f;
+                c.baseDamage = MathUtils.floor(c.baseDamage * 0.5f);
                 c.freeToPlayOnce = true;
                 switch (c.target) {
                     case SELF_AND_ENEMY:

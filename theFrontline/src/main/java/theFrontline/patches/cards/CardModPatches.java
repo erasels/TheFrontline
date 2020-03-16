@@ -13,7 +13,7 @@ public class CardModPatches {
         public static SpireField<Integer> originalDmg = new SpireField<>(() -> -1);
     }
 
-    @SpirePatch(clz = AbstractPlayer.class, method = "cardUse")
+    @SpirePatch(clz = AbstractPlayer.class, method = "useCard")
     public static class ChangeBack {
         @SpireInsertPatch(locator = Locator.class)
         public static void patch(AbstractPlayer __instance, AbstractCard c, AbstractMonster monster, int energyOnUse) {

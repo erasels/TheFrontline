@@ -90,7 +90,7 @@
   },
   "theFrontline:Dauerfeuer": {
     "NAME": "Dauerfeuer",
-    "DESCRIPTION": "Play all attacks in your hand at no cost and half damage. Exhaust."
+    "DESCRIPTION": "Play all attacks in your hand at no cost and half damage. NL Exhaust."
   },
   "theFrontline:ProtectionPrayer": {
     "NAME": "Protection Prayer",
