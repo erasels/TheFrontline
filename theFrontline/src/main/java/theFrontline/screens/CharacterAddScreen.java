@@ -197,13 +197,13 @@ public class CharacterAddScreen extends AbstractScreen implements ScrollBarListe
 
         Color tCol;
         switch(character.getRarity()) {
-            case EPIC:
+            case RARE:
                 tCol = Color.GOLDENROD;
                 break;
-            case RARE:
+            case UNCOMMON:
                 tCol = Color.OLIVE;
                 break;
-            case UNCOMMON:
+            case COMMON:
                 tCol = Color.SKY;
                 break;
             default:

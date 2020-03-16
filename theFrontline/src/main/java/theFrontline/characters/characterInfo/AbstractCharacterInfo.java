@@ -17,7 +17,7 @@ import static theFrontline.TheFrontline.makeID;
 
 public abstract class AbstractCharacterInfo {
     public enum Rarity {
-        BASIC, COMMON, UNCOMMON, RARE, EPIC
+        BASIC, COMMON, UNCOMMON, RARE
     }
 
     public Color col = Color.WHITE.cpy();
@@ -78,12 +78,9 @@ public abstract class AbstractCharacterInfo {
         float tmp;
         switch(rarity) {
             case UNCOMMON:
-                tmp = 1.15f;
+                tmp = 1.2f;
                 break;
             case RARE:
-                tmp = 1.3f;
-                break;
-            case EPIC:
                 tmp = 1.5f;
                 break;
             default:

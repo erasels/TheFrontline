@@ -34,9 +34,6 @@ public abstract class FrontlineInfo extends AbstractCharacterInfo {
     public int getScrapValue() {
         int amt = 5;
         switch (getRarity()) {
-            case EPIC:
-                amt*=8;
-                break;
             case RARE:
                 amt *= 5;
                 break;

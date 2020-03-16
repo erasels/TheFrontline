@@ -37,7 +37,6 @@ public class CharacterHelper {
         put(AbstractCharacterInfo.Rarity.COMMON, new HashMap<>());
         put(AbstractCharacterInfo.Rarity.UNCOMMON, new HashMap<>());
         put(AbstractCharacterInfo.Rarity.RARE, new HashMap<>());
-        put(AbstractCharacterInfo.Rarity.EPIC, new HashMap<>());
     }};*/
 
     public static void addCharacter(AbstractCharacterInfo ci) {
@@ -102,11 +101,8 @@ public class CharacterHelper {
 
     public static AbstractCharacterInfo.Rarity getRandomRarity(int chanceInc) {
         int roll = AbstractDungeon.relicRng.random(0, 100) + chanceInc;
-        if (roll > 89) {
-            //10% chance
-            return AbstractCharacterInfo.Rarity.EPIC;
-        } else if (roll > 69) { //nice
-            //20% chance
+        if (roll > 74) {
+            //25% chance
             return AbstractCharacterInfo.Rarity.RARE;
         } else if (roll > 39) {
             //30%

@@ -73,10 +73,10 @@ public class CharacterImageButton extends Button {
         vfxTimer -= Gdx.graphics.getDeltaTime();
         if (vfxTimer < 0.0f) {
             switch (ci.getRarity()) {
-                case EPIC:
+                case RARE:
                     AbstractDungeon.topLevelEffectsQueue.add(new RarePotionParticleEffect(hb.cX + (MathUtils.random(hb.width/2) * (MathUtils.randomBoolean()?-1:1)), hb.cY+ (MathUtils.random(hb.height/2) * (MathUtils.randomBoolean()?-1:1))));
                     break;
-                case RARE:
+                case UNCOMMON:
                     AbstractDungeon.topLevelEffectsQueue.add(new UncommonPotionParticleEffect(hb.cX + (MathUtils.random(hb.width/2) * (MathUtils.randomBoolean()?-1:1)), hb.cY+ (MathUtils.random(hb.height/2) * (MathUtils.randomBoolean()?-1:1))));
                     break;
             }
