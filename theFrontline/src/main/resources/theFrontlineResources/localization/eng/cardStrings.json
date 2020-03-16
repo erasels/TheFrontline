@@ -84,6 +84,10 @@
     "NAME": "Cathletics",
     "DESCRIPTION": "Gain !M! thefrontline:Grace."
   },
+  "theFrontline:SmallSweep": {
+    "NAME": "Small Sweep",
+    "DESCRIPTION": "Deal !D! damage. NL If Fatal, heal !M! HP."
+  },
   "theFrontline:ProtectionPrayer": {
     "NAME": "Protection Prayer",
     "DESCRIPTION": "Gain 25% more Block for !theFrontline:M2! turns. NL thesacred:Aligned: ALL enemies lose !M! Strength this turn."

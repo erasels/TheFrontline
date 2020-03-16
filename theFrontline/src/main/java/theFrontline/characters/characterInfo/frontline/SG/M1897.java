@@ -1,6 +1,11 @@
 package theFrontline.characters.characterInfo.frontline.SG;
 
+import com.megacrit.cardcrawl.cards.AbstractCard;
+import com.megacrit.cardcrawl.helpers.CardLibrary;
+import theFrontline.cards.SG.M1897.SmallSweep;
 import theFrontline.util.UC;
+
+import java.util.ArrayList;
 
 public class M1897 extends SGInfo {
     public static final String ID = M1897.class.getSimpleName();
@@ -15,6 +20,13 @@ public class M1897 extends SGInfo {
     @Override
     public void onVictory() {
         UC.pc().heal(getMN(), this);
+    }
+
+    @Override
+    public ArrayList<AbstractCard> getStarterDeck() {
+        ArrayList<AbstractCard> tmp = super.getStarterDeck();
+        tmp.add(CardLibrary.getCard(SmallSweep.ID).makeCopy());
+        return tmp;
     }
 
     @Override
