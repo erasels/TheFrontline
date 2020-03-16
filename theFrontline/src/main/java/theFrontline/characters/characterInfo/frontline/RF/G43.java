@@ -1,6 +1,11 @@
 package theFrontline.characters.characterInfo.frontline.RF;
 
+import com.megacrit.cardcrawl.cards.AbstractCard;
+import com.megacrit.cardcrawl.helpers.CardLibrary;
+import theFrontline.cards.RF.G43.Dauerfeuer;
 import theFrontline.util.UC;
+
+import java.util.ArrayList;
 
 public class G43 extends RFInfo {
     public static final String ID = G43.class.getSimpleName();
@@ -17,6 +22,13 @@ public class G43 extends RFInfo {
         if(UC.pc().getPrevChar().isGFL(Type.HG)) {
             UC.doDraw(getMN());
         }
+    }
+
+    @Override
+    public ArrayList<AbstractCard> getStarterDeck() {
+        ArrayList<AbstractCard> tmp = super.getStarterDeck();
+        tmp.add(CardLibrary.getCard(Dauerfeuer.ID).makeCopy());
+        return tmp;
     }
 
     @Override

@@ -88,6 +88,10 @@
     "NAME": "Small Sweep",
     "DESCRIPTION": "Deal !D! damage. NL If Fatal, heal !M! HP."
   },
+  "theFrontline:Dauerfeuer": {
+    "NAME": "Dauerfeuer",
+    "DESCRIPTION": "Play all attacks in your hand at no cost and half damage. Exhaust."
+  },
   "theFrontline:ProtectionPrayer": {
     "NAME": "Protection Prayer",
     "DESCRIPTION": "Gain 25% more Block for !theFrontline:M2! turns. NL thesacred:Aligned: ALL enemies lose !M! Strength this turn."
