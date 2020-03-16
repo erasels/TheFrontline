@@ -80,6 +80,10 @@
     "NAME": "Spray 'n Pray",
     "DESCRIPTION": "Deal !D! damage and apply 1 Weak to a random enemy !M! times."
   },
+  "theFrontline:Cathletics": {
+    "NAME": "Cathletics",
+    "DESCRIPTION": "Gain !M! thefrontline:Grace."
+  },
   "theFrontline:ProtectionPrayer": {
     "NAME": "Protection Prayer",
     "DESCRIPTION": "Gain 25% more Block for !theFrontline:M2! turns. NL thesacred:Aligned: ALL enemies lose !M! Strength this turn."
