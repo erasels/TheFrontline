@@ -23,9 +23,9 @@ public class CharacterHelper {
         if (CardCrawlGame.isInARun()) {
             AbstractRoom room = AbstractDungeon.getCurrRoom();
             if (room instanceof MonsterRoomBoss) {
-                crs.rewards.add(new FrontlinerReward(CharacterHelper.getRandomCharacter(CharacterHelper.getRandomRarity(60))));
+                crs.rewards.add(new FrontlinerReward(CharacterHelper.getRandomCharacter(CharacterHelper.getRandomRarity(50))));
             } else if(room instanceof MonsterRoomElite || room instanceof TreasureRoom) {
-                crs.rewards.add(new FrontlinerReward(CharacterHelper.getRandomCharacter(CharacterHelper.getRandomRarity(30))));
+                crs.rewards.add(new FrontlinerReward(CharacterHelper.getRandomCharacter(CharacterHelper.getRandomRarity(25))));
             } else if(room instanceof MonsterRoom) {
                 crs.rewards.add(new FrontlinerReward());
             }
@@ -105,7 +105,7 @@ public class CharacterHelper {
             //25% chance
             return AbstractCharacterInfo.Rarity.RARE;
         } else if (roll > 39) {
-            //30%
+            //35%
             return AbstractCharacterInfo.Rarity.UNCOMMON;
         } else {
             //40%
