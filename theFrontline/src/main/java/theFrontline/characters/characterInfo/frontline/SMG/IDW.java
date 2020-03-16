@@ -32,7 +32,7 @@ public class IDW extends SMGInfo {
     public ArrayList<AbstractCard> getStarterDeck() {
         ArrayList<AbstractCard> tmp = super.getStarterDeck();
         tmp.add(CardLibrary.getCard(Cathletics.ID).makeCopy());
-        return super.getStarterDeck();
+        return tmp;
     }
 
     @Override
