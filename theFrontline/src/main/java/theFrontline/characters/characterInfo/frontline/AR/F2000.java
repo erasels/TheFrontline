@@ -1,8 +1,13 @@
 package theFrontline.characters.characterInfo.frontline.AR;
 
+import com.megacrit.cardcrawl.cards.AbstractCard;
+import com.megacrit.cardcrawl.helpers.CardLibrary;
 import com.megacrit.cardcrawl.powers.StrengthPower;
+import theFrontline.cards.AR.F2000.LikeOnTV;
 import theFrontline.characters.characterInfo.AbstractCharacterInfo;
 import theFrontline.util.UC;
+
+import java.util.ArrayList;
 
 public class F2000 extends ARInfo {
     public static final String ID = F2000.class.getSimpleName();
@@ -19,6 +24,13 @@ public class F2000 extends ARInfo {
         if(nextChar.isGFL(Type.SMG)) {
             UC.doPow(UC.p(), new StrengthPower(UC.p(), getMN()));
         }
+    }
+
+    @Override
+    public ArrayList<AbstractCard> getStarterDeck() {
+        ArrayList<AbstractCard> tmp = super.getStarterDeck();
+        tmp.add(CardLibrary.getCard(LikeOnTV.ID).makeCopy());
+        return tmp;
     }
 
     @Override

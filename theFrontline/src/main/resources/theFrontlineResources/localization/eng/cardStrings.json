@@ -96,6 +96,10 @@
     "NAME": "Stumbling Shot",
     "DESCRIPTION": "Deal !D! damage. NL Affected by thefrontline:Grace."
   },
+  "theFrontline:LikeOnTV": {
+    "NAME": "Like on TV!",
+    "DESCRIPTION": "Deal !D! damage. NL If Fatal, gain !M! Gold and raise your Max HP by !theFrontline:M2!. NL Exhaust."
+  },
   "theFrontline:ProtectionPrayer": {
     "NAME": "Protection Prayer",
     "DESCRIPTION": "Gain 25% more Block for !theFrontline:M2! turns. NL thesacred:Aligned: ALL enemies lose !M! Strength this turn."
