@@ -18,6 +18,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.powers.AbstractPower;
+import com.megacrit.cardcrawl.random.Random;
 import com.megacrit.cardcrawl.vfx.AbstractGameEffect;
 import theFrontline.actions.utility.DamageAllAction;
 import theFrontline.characters.FrontlineCharacter;
@@ -189,6 +190,14 @@ public class UC {
                     ((AbstractMonster) m).intent == AbstractMonster.Intent.ATTACK_DEFEND;
         }
         return false;
+    }
+
+    public static <T> T getRandomItem(ArrayList<T> list) {
+        return getRandomItem(list, AbstractDungeon.cardRandomRng);
+    }
+
+    public static <T> T getRandomItem(ArrayList<T> list, Random rng) {
+        return list.isEmpty() ? null : list.get(rng.random(list.size() - 1));
     }
 
     public static DamageInfo getDmg(AbstractCreature target, AbstractCard c) {
