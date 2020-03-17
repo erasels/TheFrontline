@@ -98,7 +98,7 @@
   },
   "theFrontline:LikeOnTV": {
     "NAME": "Like on TV!",
-    "DESCRIPTION": "Deal !D! damage. NL If Fatal, gain !M! Gold and raise your Max HP by !theFrontline:M2!. NL Exhaust."
+    "DESCRIPTION": "Deal !D! damage. NL If Fatal, gain !M! Gold and raise your Max HP by !theFrontline:M2!."
   },
   "theFrontline:ProtectionPrayer": {
     "NAME": "Protection Prayer",
