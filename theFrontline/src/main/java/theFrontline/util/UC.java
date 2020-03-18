@@ -181,6 +181,19 @@ public class UC {
         reducePower(p, 1);
     }
 
+    public static void copyCardPosition(AbstractCard original, AbstractCard target) {
+        target.current_x = original.current_x;
+        target.current_y = original.current_y;
+        target.target_x = original.target_x;
+        target.target_y = original.target_y;
+        target.drawScale = original.drawScale;
+        target.targetDrawScale = original.targetDrawScale;
+        target.angle = original.angle;
+        target.targetAngle = original.targetAngle;
+        target.transparency = original.transparency;
+        target.targetTransparency = original.targetTransparency;
+    }
+
     //Getters
     public static boolean isAttacking(AbstractCreature m) {
         if(m instanceof AbstractMonster) {

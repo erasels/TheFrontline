@@ -6,6 +6,7 @@ import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import javassist.CtBehavior;
 import theFrontline.cards.abstracts.FrontlineCard;
+import theFrontline.util.UC;
 
 public class SwitchCardOnPlayPatches {
     @SpirePatch(clz = UseCardAction.class, method = "update")
@@ -14,7 +15,10 @@ public class SwitchCardOnPlayPatches {
         public static void patch(UseCardAction __instance, @ByRef AbstractCard[] ___targetCard) {
             if(___targetCard[0] instanceof FrontlineCard) {
                 if(((FrontlineCard)___targetCard[0]).switchCardOnPlay) {
-                    ___targetCard[0] = ___targetCard[0].cardsToPreview.makeStatEquivalentCopy();
+                    AbstractCard tmp = ___targetCard[0].cardsToPreview.makeStatEquivalentCopy();
+                    UC.copyCardPosition(___targetCard[0], tmp);
+                    ___targetCard[0] = tmp;
+                    ___targetCard[0].superFlash();
                 }
             }
         }
