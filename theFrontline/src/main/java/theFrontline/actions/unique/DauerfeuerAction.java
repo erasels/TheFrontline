@@ -35,6 +35,10 @@ public class DauerfeuerAction extends AbstractGameAction {
                 }
                 if(skip) continue;
 
+                if(target.isDeadOrEscaped()) {
+                    target = AbstractDungeon.getRandomMonster();
+                }
+
                 CardModPatches.Fields.originalDmg.set(c, c.baseDamage);
                 c.baseDamage = MathUtils.floor(c.baseDamage * 0.5f);
                 c.freeToPlayOnce = true;
@@ -43,13 +47,8 @@ public class DauerfeuerAction extends AbstractGameAction {
                     case ENEMY:
                         AbstractDungeon.actionManager.cardQueue.add(new CardQueueItem(c, (AbstractMonster) target));
                         break;
-                    case SELF:
-                    case ALL:
-                    case ALL_ENEMY:
-                    case NONE:
                     default:
                         AbstractDungeon.actionManager.cardQueue.add(new CardQueueItem(c, null));
-                        break;
                 }
             }
         }
