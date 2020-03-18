@@ -132,6 +132,15 @@ public class CharacterHelper {
         return TextureLoader.getTexture(TheFrontline.makeUIPath("TypeIcon/Undefined.png"));
     }
 
+    public static AbstractCharacterInfo getPlayerChar() {
+        FrontlineCharacter p = UC.pc();
+        AbstractCharacterInfo tmp = null;
+        if(p != null) {
+            tmp = p.getCurrChar();
+        }
+        return tmp;
+    }
+
     public static String getFlavorStatsString(AbstractCharacterInfo ci, boolean nlBreak) {
         String tmp = TEXT[0] + ci.offence + " NL " +
                 TEXT[1] + ci.defence + " NL " +

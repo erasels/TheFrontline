@@ -22,7 +22,6 @@ import com.megacrit.cardcrawl.random.Random;
 import com.megacrit.cardcrawl.vfx.AbstractGameEffect;
 import theFrontline.actions.utility.DamageAllAction;
 import theFrontline.characters.FrontlineCharacter;
-import theFrontline.characters.characterInfo.AbstractCharacterInfo;
 import theFrontline.patches.combat.CardFieldMechanicsPatches;
 
 import java.text.DecimalFormat;
@@ -215,15 +214,6 @@ public class UC {
 
     public static DamageInfo getDmg(AbstractCreature target, AbstractCard c) {
         return new DamageInfo(target, c.damage, c.damageTypeForTurn);
-    }
-
-    public static AbstractCharacterInfo getPlayerChar() {
-        FrontlineCharacter p = UC.pc();
-        AbstractCharacterInfo tmp = null;
-        if(p != null) {
-            tmp = p.getCurrChar();
-        }
-        return tmp;
     }
 
     public static Color getRandomFireColor() {

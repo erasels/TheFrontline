@@ -13,7 +13,7 @@ import theFrontline.characters.characterInfo.AbstractCharacterInfo;
 import theFrontline.powers.abstracts.AbstractFrontlinePower;
 import theFrontline.util.UC;
 
-import static theFrontline.util.UC.getPlayerChar;
+import static theFrontline.util.CharacterHelper.getPlayerChar;
 import static theFrontline.util.UC.p;
 
 public class OneShotPower extends AbstractFrontlinePower implements CloneablePowerInterface {
