@@ -100,8 +100,13 @@
     "NAME": "Like on TV!",
     "DESCRIPTION": "Deal !D! damage. NL If Fatal, gain !M! Gold and raise your Max HP by !theFrontline:M2!."
   },
-  "theFrontline:ProtectionPrayer": {
-    "NAME": "Protection Prayer",
-    "DESCRIPTION": "Gain 25% more Block for !theFrontline:M2! turns. NL thesacred:Aligned: ALL enemies lose !M! Strength this turn."
+  "theFrontline:StarOfHope": {
+    "NAME": "Star of Hope",
+    "DESCRIPTION": "Deal !D! damage. NL Change to *Misfortune.",
+    "UPGRADE_DESCRIPTION": "Deal !D! damage. NL Gain !M! Vigor. NL Change to *Misfortune."
+  },
+  "theFrontline:Misfortune": {
+    "NAME": "Misfortune",
+    "DESCRIPTION": "Lose !M! Gold. NL Change to *Star *of *Hope"
   }
 }

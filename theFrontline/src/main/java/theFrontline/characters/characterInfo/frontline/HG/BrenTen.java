@@ -1,8 +1,13 @@
 package theFrontline.characters.characterInfo.frontline.HG;
 
+import com.megacrit.cardcrawl.cards.AbstractCard;
+import com.megacrit.cardcrawl.helpers.CardLibrary;
 import com.megacrit.cardcrawl.powers.watcher.VigorPower;
+import theFrontline.cards.HG.BrenTen.StarOfHope;
 import theFrontline.characters.characterInfo.AbstractCharacterInfo;
 import theFrontline.util.UC;
+
+import java.util.ArrayList;
 
 public class BrenTen extends HGInfo {
     public static final String ID = BrenTen.class.getSimpleName();
@@ -19,6 +24,13 @@ public class BrenTen extends HGInfo {
         if(nextChar.isGFL()) {
             UC.doPow(UC.p(), new VigorPower(UC.p(), getMN()));
         }
+    }
+
+    @Override
+    public ArrayList<AbstractCard> getStarterDeck() {
+        ArrayList<AbstractCard> tmp = super.getStarterDeck();
+        tmp.add(CardLibrary.getCard(StarOfHope.ID).makeCopy());
+        return tmp;
     }
 
     @Override

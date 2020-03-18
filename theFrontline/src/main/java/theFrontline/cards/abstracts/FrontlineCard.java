@@ -52,6 +52,7 @@ public abstract class FrontlineCard extends CustomCard {
     public boolean isShowNumberModified;
 
     public boolean useGrace;
+    public boolean switchCardOnPlay;
 
 
     public FrontlineCard(CardInfo cardInfo, boolean upgradesDescription) {
@@ -93,6 +94,7 @@ public abstract class FrontlineCard extends CustomCard {
         upgradeEthereal = false;
 
         useGrace = false;
+        switchCardOnPlay = false;
 
         if(cardName.toLowerCase().contains("strike")) {
             tags.add(CardTags.STRIKE);
@@ -259,6 +261,9 @@ public abstract class FrontlineCard extends CustomCard {
             ((FrontlineCard) card).magicNumber2 = this.magicNumber2;
             ((FrontlineCard) card).baseShowNumber = this.baseShowNumber;
             ((FrontlineCard) card).showNumber = this.showNumber;
+
+            ((FrontlineCard) card).useGrace = this.useGrace;
+            ((FrontlineCard) card).switchCardOnPlay = this.switchCardOnPlay;
         }
 
         return card;
@@ -317,6 +322,10 @@ public abstract class FrontlineCard extends CustomCard {
             }
 
             this.initializeDescription();
+
+            if(switchCardOnPlay && cardsToPreview != null && !cardsToPreview.upgraded) {
+                cardsToPreview.upgrade();
+            }
         }
     }
 
