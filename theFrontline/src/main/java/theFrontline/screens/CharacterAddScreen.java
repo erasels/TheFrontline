@@ -15,6 +15,7 @@ import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.megacrit.cardcrawl.screens.mainMenu.ScrollBar;
 import com.megacrit.cardcrawl.screens.mainMenu.ScrollBarListener;
+import org.apache.commons.lang3.math.NumberUtils;
 import theFrontline.TheFrontline;
 import theFrontline.characters.characterInfo.AbstractCharacterInfo;
 import theFrontline.ui.buttons.CharacterImageButton;
@@ -217,7 +218,8 @@ public class CharacterAddScreen extends AbstractScreen implements ScrollBarListe
         sb.setColor(Color.WHITE);
         //sb.draw(character.img, X_OFFSET / 2f, Settings.HEIGHT * 0.6f, tmpImgW, tmpImgH, 0, 0, character.img.getWidth(), character.img.getHeight(), false, false);
         btnChar.render(sb);
-        FontHelper.renderFontLeft(sb, FontHelper.cardDescFont_L, CharacterHelper.getFlavorStatsString(character, false), (X_OFFSET / 2f) + tmpImgW + (30f * Settings.scale), (Settings.HEIGHT * 0.6f) + ((tmpImgH) / 4f), Color.WHITE.cpy());
+        float tmpAddTextOffset = NumberUtils.min(tmpImgW + (30f * Settings.scale), 200f * Settings.scale);
+        FontHelper.renderFontLeft(sb, FontHelper.cardDescFont_L, CharacterHelper.getFlavorStatsString(character, false), (X_OFFSET / 2f) + tmpAddTextOffset, (Settings.HEIGHT * 0.6f) + ((tmpImgH) / 4f), Color.WHITE.cpy());
 
         String stats = CharacterHelper.getStatsString(character, false);
         FontHelper.renderFontLeft(sb, FontHelper.cardDescFont_L, stats, X_OFFSET / 2f, (Settings.HEIGHT * 0.6f) - ((tmpImgH) / 2f), Color.WHITE.cpy());
@@ -250,7 +252,7 @@ public class CharacterAddScreen extends AbstractScreen implements ScrollBarListe
                 row += 1;
             }
             r.target_x = r.current_x = (START_X + SPACE * col);
-            r.target_y = r.current_y = (START_Y - (scrollY - START_Y) - (SPACE * 2) * row);
+            r.target_y = r.current_y = (START_Y - (scrollY - START_Y) - (AbstractCard.IMG_HEIGHT_S * 1.15f) * row);
             r.render(sb);
             if (r.hb.hovered) {
                 TipHelper.renderTipForCard(r, sb, r.keywords);

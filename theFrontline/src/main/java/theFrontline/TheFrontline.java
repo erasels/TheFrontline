@@ -170,6 +170,8 @@ public class TheFrontline implements
             }
         });
 
+        //BaseMod.registerCustomReward(RewardItemTypeEnumPatch.FRONTLINER, );
+
         BaseMod.addSaveField(makeID("CurrentCharacter"), new CustomSavable<String>() {
             @Override
             public String onSave() {
