@@ -13,7 +13,7 @@ import static theFrontline.util.UC.*;
 public class Prepare extends FrontlineCard {
     private final static CardInfo cardInfo = new CardInfo(
             "Prepare",
-            1,
+            0,
             CardType.SKILL,
             CardTarget.SELF);
 
