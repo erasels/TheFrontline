@@ -1,5 +1,6 @@
 package theFrontline.patches.cards;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.evacipated.cardcrawl.modthespire.lib.*;
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
@@ -27,6 +28,25 @@ public class SwitchCardOnPlayPatches {
             @Override
             public int[] Locate(CtBehavior ctBehavior) throws Exception {
                 Matcher finalMatcher = new Matcher.MethodCallMatcher(AbstractPlayer.class, "hasRelic");
+                return LineFinder.findInOrder(ctBehavior, finalMatcher);
+            }
+        }
+    }
+
+    @SpirePatch(clz = AbstractPlayer.class, method = "renderHand")
+    public static class AlwaysRenderSwitchcardTip {
+        @SpireInsertPatch(locator = Locator.class)
+        public static void patch(AbstractPlayer __instance, SpriteBatch sb) {
+            AbstractCard c = __instance.hoveredCard;
+                if((__instance.isDraggingCard || __instance.inSingleTargetMode) && c.cardsToPreview != null && c instanceof FrontlineCard && ((FrontlineCard) c).switchCardOnPlay) {
+                    c.renderCardPreview(sb);
+                }
+        }
+
+        private static class Locator extends SpireInsertLocator {
+            @Override
+            public int[] Locate(CtBehavior ctBehavior) throws Exception {
+                Matcher finalMatcher = new Matcher.MethodCallMatcher(AbstractCard.class, "renderHoverShadow");
                 return LineFinder.findInOrder(ctBehavior, finalMatcher);
             }
         }

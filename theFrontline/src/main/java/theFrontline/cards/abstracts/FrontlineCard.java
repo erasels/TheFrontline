@@ -1,6 +1,7 @@
 package theFrontline.cards.abstracts;
 
 import basemod.abstracts.CustomCard;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
@@ -337,6 +338,19 @@ public abstract class FrontlineCard extends CustomCard {
             } else {
                 glowColor = BLUE_BORDER_GLOW_COLOR;
             }
+        }
+    }
+
+    @Override
+    public void renderCardPreview(SpriteBatch sb) {
+        boolean tmp = false;
+        if(UC.p() != null) {
+            tmp = UC.p().isDraggingCard;
+            UC.p().isDraggingCard = false;
+        }
+        super.renderCardPreview(sb);
+        if(UC.p() != null) {
+            UC.p().isDraggingCard = tmp;
         }
     }
 
