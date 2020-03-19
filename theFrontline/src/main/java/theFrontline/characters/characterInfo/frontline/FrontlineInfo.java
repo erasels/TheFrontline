@@ -35,7 +35,7 @@ public abstract class FrontlineInfo extends AbstractCharacterInfo {
         int amt = 5;
         switch (getRarity()) {
             case RARE:
-                amt *= 5;
+                amt *= 4;
                 break;
             case UNCOMMON:
                 amt *= 2;

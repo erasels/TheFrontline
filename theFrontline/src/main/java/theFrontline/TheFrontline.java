@@ -195,7 +195,7 @@ public class TheFrontline implements
             @Override
             public void onLoad(Integer i) {
                 if(i != null) {
-                    ScrapHelper.addScrap(i);
+                    ScrapHelper.addScrap(i, false);
                 }
             }
         });
