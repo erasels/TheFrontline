@@ -14,6 +14,7 @@ import com.megacrit.cardcrawl.localization.OrbStrings;
 import com.megacrit.cardcrawl.orbs.AbstractOrb;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
+import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 import com.megacrit.cardcrawl.vfx.combat.FrostOrbPassiveEffect;
 import theFrontline.TheFrontline;
 import theFrontline.actions.utility.SwitchCharacterAction;
@@ -89,7 +90,7 @@ public class CharacterOrb extends AbstractOrb {
         }
 
         if (hb.hovered) {
-            if (eCost <= AbstractDungeon.player.energy.energy &&
+            if (eCost <= EnergyPanel.totalCount &&
                     clickCD <= 0 &&
                     AbstractDungeon.getCurrRoom().phase == AbstractRoom.RoomPhase.COMBAT &&
                     AbstractDungeon.actionManager.phase == GameActionManager.Phase.WAITING_ON_USER) {
