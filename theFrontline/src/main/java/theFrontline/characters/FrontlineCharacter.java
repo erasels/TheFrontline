@@ -514,8 +514,8 @@ public class FrontlineCharacter extends CustomPlayer {
         public CardGroup draw, discard;
 
         public CombatDeckHandler(AbstractPlayer p) {
-            draw = p.drawPile;
-            discard = p.discardPile;
+            draw = new CardGroup(p.drawPile, CardGroup.CardGroupType.DRAW_PILE);
+            discard = new CardGroup(p.discardPile, CardGroup.CardGroupType.DISCARD_PILE);
         }
     }
 }
