@@ -2,9 +2,9 @@ package theFrontline.cards.AR.F2000;
 
 import com.megacrit.cardcrawl.actions.unique.GreedAction;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
+import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import theFrontline.actions.common.RaisePlayerMaxHPAction;
-import theFrontline.actions.utility.DoActionIfMonsterDeadAction;
+import theFrontline.actions.utility.DoActionIfCreatureCheckAction;
 import theFrontline.cards.abstracts.FrontlineCard;
 import theFrontline.util.CardInfo;
 import theFrontline.util.UC;
@@ -40,6 +40,7 @@ public class LikeOnTV extends FrontlineCard {
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
         atb(new GreedAction(m, UC.getDmg(m, this), magicNumber));
-        atb(new DoActionIfMonsterDeadAction(m, new RaisePlayerMaxHPAction(magicNumber2, true)));
+        atb(new DoActionIfCreatureCheckAction(m, AbstractCreature::isDeadOrEscaped, () -> UC.p().increaseMaxHp(magicNumber2, true), () -> {}));
+        //atb(new DoActionIfMonsterDeadAction(m, new RaisePlayerMaxHPAction(magicNumber2, true)));
     }
 }
