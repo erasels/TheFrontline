@@ -11,7 +11,7 @@ import theFrontline.characters.characterInfo.frontline.FrontlineInfo;
 import java.util.ArrayList;
 
 public abstract class ARInfo extends FrontlineInfo {
-    public static final int BASE_HP = 25;
+    public static final int BASE_HP = 20;
 
     public ARInfo(String id, int maxHP) {
         super(id, BASE_HP + maxHP, Type.AR);

@@ -11,7 +11,7 @@ import theFrontline.characters.characterInfo.frontline.FrontlineInfo;
 import java.util.ArrayList;
 
 public abstract class MGInfo extends FrontlineInfo {
-    public static final int BASE_HP = 30;
+    public static final int BASE_HP = 20;
 
     public MGInfo(String id, int maxHP) {
         super(id, BASE_HP + maxHP, Type.MG);
