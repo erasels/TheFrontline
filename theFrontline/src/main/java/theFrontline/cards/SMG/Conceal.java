@@ -3,6 +3,7 @@ package theFrontline.cards.SMG;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import theFrontline.actions.common.FlankAction;
+import theFrontline.actions.utility.DelayActionAction;
 import theFrontline.cards.abstracts.FrontlineCard;
 import theFrontline.util.CardInfo;
 
@@ -28,6 +29,6 @@ public class Conceal extends FrontlineCard {
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        atb(new FlankAction());
+        atb(new DelayActionAction(new FlankAction()));
     }
 }
