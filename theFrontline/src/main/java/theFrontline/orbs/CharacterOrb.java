@@ -33,6 +33,8 @@ public class CharacterOrb extends AbstractOrb {
 
     protected static final float NUM_X_OFFSET = 42.0F * Settings.scale;
     protected static final float NUM_Y_OFFSET = -30.0F * Settings.scale;
+    protected static final float MAX_CLICK_CD = 1f; //1sec
+    protected static float clickCD = 0;
     // Animation Rendering Numbers - You can leave these at default, or play around with them and see what they change.
     private float vfxTimer = 1.0f;
     private float vfxIntervalMin = 0.3f;
@@ -78,6 +80,7 @@ public class CharacterOrb extends AbstractOrb {
     @Override
     public void update() {
         super.update();
+        clickCD -= UC.gt();
         eCost = 1;
         for(AbstractRelic r : UC.p().relics) {
             if(r instanceof FrontlineRelic) {
@@ -86,9 +89,13 @@ public class CharacterOrb extends AbstractOrb {
         }
 
         if (hb.hovered) {
-            alpha = 1.0f;
-            if (AbstractDungeon.getCurrRoom().phase == AbstractRoom.RoomPhase.COMBAT && AbstractDungeon.actionManager.phase == GameActionManager.Phase.WAITING_ON_USER && InputHelper.justReleasedClickLeft) {
-                if (AbstractDungeon.actionManager.actions.stream().noneMatch(a -> a instanceof SwitchCharacterAction)) {
+            if (eCost <= AbstractDungeon.player.energy.energy &&
+                    clickCD <= 0 &&
+                    AbstractDungeon.getCurrRoom().phase == AbstractRoom.RoomPhase.COMBAT &&
+                    AbstractDungeon.actionManager.phase == GameActionManager.Phase.WAITING_ON_USER) {
+                alpha = 1.0f;
+                if (InputHelper.justReleasedClickLeft && AbstractDungeon.actionManager.actions.stream().noneMatch(a -> a instanceof SwitchCharacterAction)) {
+                    clickCD = MAX_CLICK_CD;
                     UC.atb(new SwitchCharacterCombatAction(character, eCost));
                 }
             }
