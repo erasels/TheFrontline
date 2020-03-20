@@ -13,6 +13,7 @@ import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.rewards.RewardItem;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.megacrit.cardcrawl.vfx.AbstractGameEffect;
+import org.apache.commons.lang3.math.NumberUtils;
 import theFrontline.TheFrontline;
 import theFrontline.characters.characterInfo.AbstractCharacterInfo;
 import theFrontline.patches.general.RewardItemTypeEnumPatch;
@@ -75,7 +76,24 @@ public class FrontlinerReward extends CustomReward {
 
         sb.setColor(Color.WHITE.cpy());
 
-        sb.draw(this.icon, RewardItem.REWARD_ITEM_X - 32.0f, this.y - 32.0f - 2.0f * Settings.scale, 32.0f, 32.0f, 64.0f, 64.0f, Settings.scale, Settings.scale, 0.0f, 0, 0, icon.getWidth(), icon.getHeight(), false, false);
+        float ratio = (float)NumberUtils.min(icon.getWidth(), icon.getHeight()) / NumberUtils.max(icon.getWidth(), icon.getHeight());
+
+        sb.draw(this.icon,
+                RewardItem.REWARD_ITEM_X - 32.0f,
+                this.y - 32.0f - 2.0f * Settings.scale,
+                32.0f,
+                32.0f,
+                64.0f * ratio,
+                64.0f,
+                Settings.scale,
+                Settings.scale,
+                0.0f,
+                0,
+                0,
+                icon.getWidth(),
+                icon.getHeight(),
+                false,
+                false);
 
         Color c = Settings.CREAM_COLOR.cpy();
         if (this.hb.hovered) {
