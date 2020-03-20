@@ -89,7 +89,7 @@ public class CharacterHelper {
 
             tmp = frontlineMap.get(curType).values().stream().filter(flInstanceInfo -> flInstanceInfo.rarity == rarity).collect(Collectors.toCollection(ArrayList::new));
             if (tmp.isEmpty()) {
-                tmp = new ArrayList<>(frontlineMap.get(curType).values());
+                tmp.addAll(frontlineMap.get(curType).values());
             }
             for(AbstractCharacterInfo tci : UC.pc().characters) {
                 if(tci.isGFL(curType)) {
