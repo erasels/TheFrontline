@@ -28,7 +28,8 @@
       "Special Ability: ",
       "Select your 2 starting characters. \n(LMB: 1st character, RMB: 2nd character)",
       "First: ",
-      "Second: "
+      "Second: ",
+      "HP: "
     ]
   },
   "theFrontline:CharAddScreen": {

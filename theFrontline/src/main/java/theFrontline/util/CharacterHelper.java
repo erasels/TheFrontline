@@ -152,7 +152,8 @@ public class CharacterHelper {
     }
 
     public static String getStatsString(AbstractCharacterInfo ci, boolean nlBreak) {
-        String tmp = TEXT[3] + ci.getArmor() + " NL " +
+        String tmp = TEXT[11] + ci.currentHP + "/" + ci.maxHP + " NL " +
+                TEXT[3] + ci.getArmor() + " NL " +
                 TEXT[4] + ci.getAddDraw() + " NL " +
                 TEXT[5] + ci.getStrike() + " NL " +
                 TEXT[6] + ci.getDefend() + " NL ";
