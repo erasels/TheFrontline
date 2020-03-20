@@ -70,7 +70,7 @@ public class FrontlineCharacter extends CustomPlayer {
     public static final int CARD_DRAW = 5;
     public static final int ORB_SLOTS = 0;
 
-    public static final int MAX_CHARACTERS = 5;
+    public static final int MAX_CHARACTERS = 4;
 
     private static final String ID = makeID("FrontlineCharacter");
     private static final CharacterStrings characterStrings = CardCrawlGame.languagePack.getCharacterString(ID);
@@ -325,6 +325,15 @@ public class FrontlineCharacter extends CustomPlayer {
 
     public void killChars() {
         characters.removeIf(c -> c.isDead);
+    }
+
+    public void switchToNextCharacter() {
+        if(characters.size() < 2) return;
+        int tmp = characters.indexOf(getCurrChar()) + 1;
+        if(tmp > characters.size() - 1) {
+            tmp = 0;
+        }
+        switchCharacter(characters.get(tmp));
     }
 
     public void updateCharInfo() {
