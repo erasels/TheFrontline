@@ -28,7 +28,7 @@ public class LabledButton {
     private boolean toCancel;
     private Runnable exec;
     private Color textColor = Color.WHITE.cpy();
-    private Color btnColor = Color.WHITE.cpy();
+    private Color btnColor;
     public boolean screenDisabled = false;
     private static final float HITBOX_W = 260.0F * Settings.scale;
     private static final float HITBOX_H = 80.0F * Settings.scale;
