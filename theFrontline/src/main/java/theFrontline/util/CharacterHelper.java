@@ -96,7 +96,7 @@ public class CharacterHelper {
                     tmp.removeIf(ci -> ci.fClass == tci.getClass());
                 }
             }
-        } while (!tmp.isEmpty());
+        } while (tmp.isEmpty());
         return tmp.get(AbstractDungeon.relicRng.random(tmp.size() - 1)).getChar();
     }
 
