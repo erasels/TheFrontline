@@ -3,6 +3,7 @@ package theFrontline.screens;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
@@ -32,6 +33,7 @@ public class CharacterScrapScreen extends AbstractScreen implements ScrollBarLis
     private static final float SPACE = 250.0F * Settings.scale;
     private static final float START_X = Settings.WIDTH * 0.25f;
     private static final float START_Y = Settings.HEIGHT * 0.75f;
+    private static float SCRAP_MULT = 0.75f;
     private AbstractCharacterInfo character;
     private float scrollY = START_Y;
     private float targetY = this.scrollY;
@@ -55,7 +57,7 @@ public class CharacterScrapScreen extends AbstractScreen implements ScrollBarLis
 
         buttons.add(new LabledButton(Settings.WIDTH * 0.1f, Settings.HEIGHT * 0.15f, TEXT[0], false,
                 () -> {
-                    ScrapHelper.addScrap(ScrapHelper.getScrapValue(character));
+                    ScrapHelper.addScrap(getScrapVal());
                     close();
                     if(UC.pc().getCurrChar() == character) {
                         UC.pc().switchToNextCharacter();
@@ -221,7 +223,7 @@ public class CharacterScrapScreen extends AbstractScreen implements ScrollBarLis
         FontHelper.renderFontLeft(sb, FontHelper.cardDescFont_L, stats, X_OFFSET / 2f, (Settings.HEIGHT * 0.6f) - ((tmpImgH) / 2f), Color.WHITE.cpy());
 
         //Scrap button
-        FontHelper.renderFontLeft(sb, FontHelper.cardDescFont_L, TEXT[1] + ScrapHelper.getScrapValue(character) + TEXT[2], buttons.get(0).hb.cX - (buttons.get(0).hb.width/2), buttons.get(0).hb.cY - (buttons.get(0).hb.height), Color.WHITE.cpy());
+        FontHelper.renderFontLeft(sb, FontHelper.cardDescFont_L, TEXT[1] + getScrapVal() * 0.75 + TEXT[2], buttons.get(0).hb.cX - (buttons.get(0).hb.width/2), buttons.get(0).hb.cY - (buttons.get(0).hb.height), Color.WHITE.cpy());
 
         row = -1;
         col = 0;
@@ -291,5 +293,9 @@ public class CharacterScrapScreen extends AbstractScreen implements ScrollBarLis
             return new ArrayList<>();
         }
         return character.masterDeck.group;
+    }
+
+    private int getScrapVal() {
+        return MathUtils.round(ScrapHelper.getScrapValue(character) * SCRAP_MULT);
     }
 }
