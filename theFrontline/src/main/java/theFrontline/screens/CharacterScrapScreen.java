@@ -57,7 +57,9 @@ public class CharacterScrapScreen extends AbstractScreen implements ScrollBarLis
                 () -> {
                     ScrapHelper.addScrap(ScrapHelper.getScrapValue(character));
                     close();
-                    UC.pc().switchToNextCharacter();
+                    if(UC.pc().getCurrChar() == character) {
+                        UC.pc().switchToNextCharacter();
+                    }
                     UC.pc().killChar(character);
                     if(charToAdd != null) {
                         CharacterHelper.addCharacter(charToAdd);
@@ -75,7 +77,7 @@ public class CharacterScrapScreen extends AbstractScreen implements ScrollBarLis
                 }, Color.SKY));
 
         //Next
-        buttons.add(new LabledButton(Settings.WIDTH * 0.1f, Settings.HEIGHT * 0.35f, TEXT[3], false,
+        buttons.add(new LabledButton(Settings.WIDTH * 0.1f, Settings.HEIGHT * 0.325f, TEXT[3], false,
                 () -> {
                     int tmp = UC.pc().characters.indexOf(character) + 1;
                     if(tmp > UC.pc().characters.size() - 1)
@@ -224,8 +226,6 @@ public class CharacterScrapScreen extends AbstractScreen implements ScrollBarLis
         row = -1;
         col = 0;
         renderList(sb, getCards());
-
-        //Character switch button render
 
 
         scrollBar.render(sb);
