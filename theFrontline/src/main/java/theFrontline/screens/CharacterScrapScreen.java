@@ -17,7 +17,6 @@ import com.megacrit.cardcrawl.screens.mainMenu.ScrollBar;
 import com.megacrit.cardcrawl.screens.mainMenu.ScrollBarListener;
 import org.apache.commons.lang3.math.NumberUtils;
 import theFrontline.TheFrontline;
-import theFrontline.characters.FrontlineCharacter;
 import theFrontline.characters.characterInfo.AbstractCharacterInfo;
 import theFrontline.ui.buttons.CharacterImageButton;
 import theFrontline.ui.buttons.LabledButton;
@@ -27,8 +26,8 @@ import theFrontline.util.UC;
 
 import java.util.ArrayList;
 
-public class CharacterAddScreen extends AbstractScreen implements ScrollBarListener {
-    private static final UIStrings uiStrings = CardCrawlGame.languagePack.getUIString(TheFrontline.makeID("CharAddScreen"));
+public class CharacterScrapScreen extends AbstractScreen implements ScrollBarListener {
+    private static final UIStrings uiStrings = CardCrawlGame.languagePack.getUIString(TheFrontline.makeID("CharScrapScreen"));
     public static final String[] TEXT = uiStrings.TEXT;
     private static final float SPACE = 250.0F * Settings.scale;
     private static final float START_X = Settings.WIDTH * 0.25f;
@@ -45,36 +44,49 @@ public class CharacterAddScreen extends AbstractScreen implements ScrollBarListe
     private ScrollBar scrollBar;
     private boolean show = false;
     private boolean reDarken = false;
-    private ArrayList<AbstractCard> cards;
 
-    private LabledButton btnAccept;
-    private LabledButton btnScrap;
+    private ArrayList<LabledButton> buttons = new ArrayList<>();
     private CharacterImageButton btnChar;
+    private AbstractCharacterInfo charToAdd;
 
-    public CharacterAddScreen() {
+    public CharacterScrapScreen() {
         super(0);
         scrollBar = new ScrollBar(this);
-        if(UC.pc().getCharacters().size() >= FrontlineCharacter.MAX_CHARACTERS) {
-            btnAccept = new LabledButton(Settings.WIDTH * 0.1f, Settings.HEIGHT * 0.25f, TEXT[5], false,
-                    () -> {
-                        AbstractDungeon.getCurrRoom().phase = roomPhase;
-                        roomPhase = null;
-                        TheFrontline.screen = new CharacterScrapScreen();
-                        ((CharacterScrapScreen)TheFrontline.screen).open();
-                    }, Color.FOREST);
-        } else {
-            btnAccept = new LabledButton(Settings.WIDTH * 0.1f, Settings.HEIGHT * 0.25f, TEXT[0], false,
-                    () -> {
-                        CharacterHelper.addCharacter(this.character);
-                        close();
-                    }, Color.FOREST);
-        }
 
-        btnScrap = new LabledButton(Settings.WIDTH * 0.1f, Settings.HEIGHT * 0.15f, TEXT[1], false,
+        buttons.add(new LabledButton(Settings.WIDTH * 0.1f, Settings.HEIGHT * 0.15f, TEXT[0], false,
                 () -> {
-                    ScrapHelper.addScrap(character.getScrapValue());
+                    ScrapHelper.addScrap(ScrapHelper.getScrapValue(character));
                     close();
-                }, Color.ROYAL);
+                    UC.pc().switchToNextCharacter();
+                    UC.pc().killChar(character);
+                    if(charToAdd != null) {
+                        CharacterHelper.addCharacter(charToAdd);
+                    }
+                }, Color.FIREBRICK));
+
+        //Prev
+        buttons.add(new LabledButton(Settings.WIDTH * 0.1f, Settings.HEIGHT * 0.25f, TEXT[4], false,
+                () -> {
+                    int tmp = UC.pc().characters.indexOf(character) - 1;
+                    if(tmp < 0)
+                        tmp = UC.pc().characters.size() - 1;
+                    character = UC.pc().characters.get(tmp);
+                    btnChar = new CharacterImageButton(X_OFFSET / 2f, Settings.HEIGHT * 0.6f, character, TEXT[5], character.getDescription(), true);
+                }, Color.SKY));
+
+        //Next
+        buttons.add(new LabledButton(Settings.WIDTH * 0.1f, Settings.HEIGHT * 0.35f, TEXT[3], false,
+                () -> {
+                    int tmp = UC.pc().characters.indexOf(character) + 1;
+                    if(tmp > UC.pc().characters.size() - 1)
+                        tmp = 0;
+                    character = UC.pc().characters.get(tmp);
+                    btnChar = new CharacterImageButton(X_OFFSET / 2f, Settings.HEIGHT * 0.6f, character, TEXT[5], character.getDescription(), true);
+                }, Color.SKY));
+    }
+
+    public void open() {
+        open(null);
     }
 
     public void open(AbstractCharacterInfo ci) {
@@ -83,55 +95,27 @@ public class CharacterAddScreen extends AbstractScreen implements ScrollBarListe
         AbstractDungeon.overlayMenu.proceedButton.hide();
         show = true;
 
-        character = ci;
+        character = UC.pc().getCurrChar();
         targetY = scrollLowerBound;
         scrollY = Settings.HEIGHT - 400.0f * Settings.scale;
 
-        btnChar = new CharacterImageButton(X_OFFSET / 2f, Settings.HEIGHT * 0.6f, character, TEXT[4], character.getDescription(), true);
-        btnAccept.show();
-        btnScrap.show();
+        btnChar = new CharacterImageButton(X_OFFSET / 2f, Settings.HEIGHT * 0.6f, character, TEXT[5], character.getDescription(), true);
+        buttons.forEach(LabledButton::show);
+
+        if(ci != null) {
+            charToAdd = ci;
+        }
 
         calculateScrollBounds();
     }
 
     public static AbstractRoom.RoomPhase roomPhase;
 
-    /*@SpirePatch(clz = RewardItem.class, method = "claimReward")
-    public static class tets {
-        @SpireInsertPatch(locator = Locator.class)
-        public static SpireReturn<Boolean> patch(RewardItem __instance) {
-            if (AbstractDungeon.isScreenUp) {
-                AbstractDungeon.dynamicBanner.hide();
-                AbstractDungeon.overlayMenu.cancelButton.hide();
-                AbstractDungeon.previousScreen = AbstractDungeon.screen;
-            }
-            roomPhase = AbstractDungeon.getCurrRoom().phase;
-            AbstractDungeon.getCurrRoom().phase = AbstractRoom.RoomPhase.INCOMPLETE;
-
-            AbstractDungeon.closeCurrentScreen();
-
-            TheFrontline.screen = new CharacterAddScreen(1f);
-            //((CharacterAddScreen) TheFrontline.screen).open(CharacterHelper.getRandomCharacter());
-            ((CharacterAddScreen) TheFrontline.screen).open(CharacterHelper.getRandomCharacter());
-
-            return SpireReturn.Return(true);
-        }
-
-        private static class Locator extends SpireInsertLocator {
-            @Override
-            public int[] Locate(CtBehavior ctBehavior) throws Exception {
-                Matcher finalMatcher = new Matcher.MethodCallMatcher(AbstractPlayer.class, "hasRelic");
-                return new int[]{LineFinder.findAllInOrder(ctBehavior, finalMatcher)[1]};
-            }
-        }
-    }*/
-
     public void close() {
         AbstractDungeon.screen = AbstractDungeon.CurrentScreen.GRID;
         AbstractDungeon.closeCurrentScreen();
 
-        btnAccept.hide();
-        btnScrap.hide();
+        buttons.forEach(LabledButton::hide);
         isDone = true;
         show = false;
         AbstractDungeon.getCurrRoom().phase = roomPhase;
@@ -144,8 +128,7 @@ public class CharacterAddScreen extends AbstractScreen implements ScrollBarListe
             return;
         }
 
-        btnAccept.update();
-        btnScrap.update();
+        buttons.forEach(LabledButton::update);
         btnChar.update();
 
         boolean isScrollingScrollBar = scrollBar.update();
@@ -228,7 +211,6 @@ public class CharacterAddScreen extends AbstractScreen implements ScrollBarListe
         float tmpImgH = character.img.getHeight() * Settings.scale;
         sb.draw(tIcon, X_OFFSET / 2f, (Settings.HEIGHT * 0.6f) + (tmpImgH + (5*Settings.scale)), tIcon.getWidth() * Settings.scale, tIcon.getHeight() * Settings.scale, 0, 0, tIcon.getWidth(), tIcon.getHeight(), false, false);
         sb.setColor(Color.WHITE);
-        //sb.draw(character.img, X_OFFSET / 2f, Settings.HEIGHT * 0.6f, tmpImgW, tmpImgH, 0, 0, character.img.getWidth(), character.img.getHeight(), false, false);
         btnChar.render(sb);
         float tmpAddTextOffset = NumberUtils.min(tmpImgW + (30f * Settings.scale), 200f * Settings.scale);
         FontHelper.renderFontLeft(sb, FontHelper.cardDescFont_L, CharacterHelper.getFlavorStatsString(character, false), (X_OFFSET / 2f) + tmpAddTextOffset, (Settings.HEIGHT * 0.6f) + ((tmpImgH) / 4f), Color.WHITE.cpy());
@@ -236,16 +218,19 @@ public class CharacterAddScreen extends AbstractScreen implements ScrollBarListe
         String stats = CharacterHelper.getStatsString(character, false);
         FontHelper.renderFontLeft(sb, FontHelper.cardDescFont_L, stats, X_OFFSET / 2f, (Settings.HEIGHT * 0.6f) - ((tmpImgH) / 2f), Color.WHITE.cpy());
 
-        FontHelper.renderFontLeft(sb, FontHelper.cardDescFont_L, TEXT[2] + character.getScrapValue() + TEXT[3], btnScrap.hb.cX - (btnScrap.hb.width/2), btnScrap.hb.cY - (btnScrap.hb.height), Color.WHITE.cpy());
+        //Scrap button
+        FontHelper.renderFontLeft(sb, FontHelper.cardDescFont_L, TEXT[1] + ScrapHelper.getScrapValue(character) + TEXT[2], buttons.get(0).hb.cX - (buttons.get(0).hb.width/2), buttons.get(0).hb.cY - (buttons.get(0).hb.height), Color.WHITE.cpy());
 
         row = -1;
         col = 0;
         renderList(sb, getCards());
 
+        //Character switch button render
+
+
         scrollBar.render(sb);
 
-        btnAccept.render(sb);
-        btnScrap.render(sb);
+        buttons.forEach(btn -> btn.render(sb));
     }
 
     private void updateList(ArrayList<AbstractCard> list) {
@@ -277,7 +262,7 @@ public class CharacterAddScreen extends AbstractScreen implements ScrollBarListe
     }
 
     public boolean shouldShow() {
-        if(!(show && AbstractDungeon.screen != AbstractDungeon.CurrentScreen.SETTINGS && AbstractDungeon.screen != AbstractDungeon.CurrentScreen.MASTER_DECK_VIEW)) {
+        if(!(show)) {
             reDarken = true;
             return false;
         }
@@ -301,11 +286,10 @@ public class CharacterAddScreen extends AbstractScreen implements ScrollBarListe
         scrollBar.parentScrolledToPercent(percent);
     }
 
-    //TODO: Get actual cards
     private ArrayList<AbstractCard> getCards() {
-        if (cards == null) {
-            cards = character.getStarterDeck();
+        if (character.masterDeck == null) {
+            return new ArrayList<>();
         }
-        return cards;
+        return character.masterDeck.group;
     }
 }

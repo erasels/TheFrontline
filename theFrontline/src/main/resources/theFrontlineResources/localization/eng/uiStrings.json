@@ -37,7 +37,8 @@
       "Scrap",
       "Scrap to gain ",
       " Scrap.",
-      "Special Ability"
+      "Special Ability",
+      "Replace"
     ]
   },
   "theFrontline:ScrapDisplay": {
@@ -55,6 +56,16 @@
   "theFrontline:FrontlinerReward": {
     "TEXT": [
       "Add or Scrap: "
+    ]
+  },
+  "theFrontline:CharScrapScreen": {
+    "TEXT": [
+      "Scrap",
+      "Scrap to gain ",
+      " Scrap.",
+      "Next character",
+      "Previous character",
+      "Special Ability"
     ]
   }
 }
