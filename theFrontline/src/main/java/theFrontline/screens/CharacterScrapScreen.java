@@ -33,7 +33,7 @@ public class CharacterScrapScreen extends AbstractScreen implements ScrollBarLis
     private static final float SPACE = 250.0F * Settings.scale;
     private static final float START_X = Settings.WIDTH * 0.25f;
     private static final float START_Y = Settings.HEIGHT * 0.75f;
-    private static float SCRAP_MULT = 0.75f;
+    private static final float SCRAP_MULT = 0.75f;
     private AbstractCharacterInfo character;
     private float scrollY = START_Y;
     private float targetY = this.scrollY;

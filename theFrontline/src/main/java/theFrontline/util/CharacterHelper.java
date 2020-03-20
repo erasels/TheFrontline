@@ -74,12 +74,29 @@ public class CharacterHelper {
     }
 
     public static FrontlineInfo getRandomCharacter(FrontlineInfo.Type type, AbstractCharacterInfo.Rarity rarity) {
-        ArrayList<FlInstanceInfo> tmp = frontlineMap.get(type).values().stream().filter(flInstanceInfo -> flInstanceInfo.rarity == rarity).collect(Collectors.toCollection(ArrayList::new));
-        if (tmp.isEmpty()) {
-            tmp = new ArrayList<>(frontlineMap.get(type).values());
-        }
-        ArrayList<Class<? extends AbstractCharacterInfo>> noDuplicateCheck = UC.pc().characters.stream().filter(tci -> (tci instanceof FrontlineInfo) && (((FrontlineInfo) tci).type != type)).map(ci -> ci.getClass()).collect(Collectors.toCollection(ArrayList::new));
-        tmp.removeIf(ci -> noDuplicateCheck.contains(ci.fClass));
+        ArrayList<FlInstanceInfo> tmp;
+        ArrayList<FrontlineInfo.Type> usedTypes = new ArrayList<>();
+        FrontlineInfo.Type curType = null;
+        do {
+            if(curType == null) {
+                curType = type;
+            } else {
+                ArrayList<FrontlineInfo.Type> validTypes = new ArrayList<>(Arrays.asList(FrontlineInfo.Type.values()));
+                validTypes.removeIf(usedTypes::contains);
+                curType = validTypes.get(AbstractDungeon.relicRng.random(validTypes.size() - 1));
+            }
+            usedTypes.add(curType);
+
+            tmp = frontlineMap.get(curType).values().stream().filter(flInstanceInfo -> flInstanceInfo.rarity == rarity).collect(Collectors.toCollection(ArrayList::new));
+            if (tmp.isEmpty()) {
+                tmp = new ArrayList<>(frontlineMap.get(curType).values());
+            }
+            for(AbstractCharacterInfo tci : UC.pc().characters) {
+                if(tci.isGFL(curType)) {
+                    tmp.removeIf(ci -> ci.fClass == tci.getClass());
+                }
+            }
+        } while (!tmp.isEmpty());
         return tmp.get(AbstractDungeon.relicRng.random(tmp.size() - 1)).getChar();
     }
 
@@ -101,14 +118,14 @@ public class CharacterHelper {
 
     public static AbstractCharacterInfo.Rarity getRandomRarity(int chanceInc) {
         int roll = AbstractDungeon.relicRng.random(0, 100) + chanceInc;
-        if (roll > 74) {
-            //25% chance
+        if (roll > 79) {
+            //20% chance
             return AbstractCharacterInfo.Rarity.RARE;
-        } else if (roll > 39) {
+        } else if (roll > 44) {
             //35%
             return AbstractCharacterInfo.Rarity.UNCOMMON;
         } else {
-            //40%
+            //45%
             return AbstractCharacterInfo.Rarity.COMMON;
         }
     }
