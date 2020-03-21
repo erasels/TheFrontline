@@ -41,13 +41,8 @@ public class CharacterHelper {
 
     public static void addCharacter(AbstractCharacterInfo ci) {
         FrontlineCharacter p = UC.pc();
-        if (p != null && ci != null) {
-            if (!p.characters.contains(ci)) {
-                p.onAddCharacter(ci);
-                p.characters.add(ci);
-            } else {
-                TheFrontline.logger.warn("Tried to add duplicate character.");
-            }
+        if (p != null) {
+            p.addCharacter(ci);
         }
     }
 

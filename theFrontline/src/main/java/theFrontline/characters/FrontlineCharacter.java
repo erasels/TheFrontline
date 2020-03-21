@@ -319,6 +319,17 @@ public class FrontlineCharacter extends CustomPlayer {
         loadCharInfo();
     }
 
+    public void addCharacter(AbstractCharacterInfo ci) {
+        if (ci != null) {
+            if (!characters.contains(ci)) {
+                onAddCharacter(ci);
+                characters.add(ci);
+            } else {
+                logger.warn("Tried to add duplicate character.");
+            }
+        }
+    }
+
     public void killChar(AbstractCharacterInfo ci) {
         characters.remove(ci);
     }

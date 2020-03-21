@@ -63,9 +63,7 @@ public class CharacterScrapScreen extends AbstractScreen implements ScrollBarLis
                         UC.pc().switchToNextCharacter();
                     }
                     UC.pc().killChar(character);
-                    if(charToAdd != null) {
-                        CharacterHelper.addCharacter(charToAdd);
-                    }
+                    CharacterHelper.addCharacter(charToAdd);
                 }, Color.FIREBRICK));
 
         //Prev
