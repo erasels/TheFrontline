@@ -2,6 +2,8 @@ package theFrontline.characters.characterInfo;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.cards.CardSave;
@@ -24,6 +26,7 @@ public abstract class AbstractCharacterInfo {
     public String id;
     protected CharacterStrings characterStrings;
     public Texture img;
+    public TextureAtlas statusImg;
 
     public String name;
     public String fullName;
@@ -66,6 +69,10 @@ public abstract class AbstractCharacterInfo {
 
     public abstract String getDescription();
 
+    //Only called when the character is added to the party, not to be used for effects
+    public void costlyInit() {}
+    public void dispose() {}
+
     public void onDeploy(){}
     public void onRetreat(AbstractCharacterInfo nextChar){}
     public void onSwitch(AbstractCharacterInfo currChar, AbstractCharacterInfo nextChar){}
@@ -97,6 +104,17 @@ public abstract class AbstractCharacterInfo {
 
     public boolean isGFL(FrontlineInfo.Type type) {
         return isGFL() && ((FrontlineInfo) this).type == type;
+    }
+
+    public AtlasRegion getStatusImage(boolean healthy) {
+        if(statusImg != null) {
+            if(healthy) {
+                return statusImg.findRegion("healthy");
+            } else {
+                return statusImg.findRegion("damaged");
+            }
+        }
+        return null;
     }
 
     public CharacterSave getSave() {

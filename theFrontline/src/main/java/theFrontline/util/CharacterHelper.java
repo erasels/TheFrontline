@@ -1,7 +1,9 @@
 package theFrontline.util;
 
 import basemod.animations.SpineAnimation;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.rooms.*;
@@ -123,6 +125,29 @@ public class CharacterHelper {
             //45%
             return AbstractCharacterInfo.Rarity.COMMON;
         }
+    }
+
+    public static Color getRarityColor(AbstractCharacterInfo ci) {
+        switch(ci.getRarity()) {
+            case RARE:
+                return Color.GOLDENROD;
+            case UNCOMMON:
+                return Color.OLIVE;
+            case COMMON:
+                return Color.SKY;
+            default:
+                return  Color.WHITE;
+        }
+    }
+
+    public static TextureAtlas getStatusImages(AbstractCharacterInfo ci) {
+        if(ci instanceof FrontlineInfo) {
+            TextureAtlas pics = new TextureAtlas();
+            pics.addRegion("healthy", TextureLoader.getTexture(TheFrontline.makeCharPath("frontline/" + ((FrontlineInfo) ci).type.name() + "/" + ci.id + "/status.png")), 4, 0, 252, 512);
+            pics.addRegion("damaged", TextureLoader.getTexture(TheFrontline.makeCharPath("frontline/" + ((FrontlineInfo) ci).type.name() + "/" + ci.id + "/status.png")), 260, 0, 252, 512);
+            return pics;
+        }
+        return null;
     }
 
     public static AbstractCharacterInfo getCharacterByClassName(String id) {

@@ -6,6 +6,7 @@ import theFrontline.TheFrontline;
 import theFrontline.cards.all.Defend;
 import theFrontline.cards.all.Strike;
 import theFrontline.characters.characterInfo.AbstractCharacterInfo;
+import theFrontline.util.CharacterHelper;
 import theFrontline.util.TextureLoader;
 
 import java.util.ArrayList;
@@ -54,5 +55,19 @@ public abstract class FrontlineInfo extends AbstractCharacterInfo {
     public ArrayList<AbstractCard> getStarterDeck() {
         ArrayList<String> cards = new ArrayList<>(Arrays.asList(Strike.ID, Defend.ID, Defend.ID));
         return cards.stream().map(id -> CardLibrary.getCard(id).makeCopy()).collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    @Override
+    public void costlyInit() {
+        if(statusImg == null) {
+            statusImg = CharacterHelper.getStatusImages(this);
+        }
+    }
+
+    @Override
+    public void dispose() {
+        if(statusImg != null) {
+            statusImg.dispose();
+        }
     }
 }
