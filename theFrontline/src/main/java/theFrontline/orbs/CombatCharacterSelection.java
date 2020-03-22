@@ -1,21 +1,47 @@
 package theFrontline.orbs;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.helpers.Hitbox;
+import com.megacrit.cardcrawl.helpers.ImageMaster;
+import com.megacrit.cardcrawl.helpers.TipHelper;
+import com.megacrit.cardcrawl.helpers.input.InputHelper;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
+import theFrontline.TheFrontline;
 import theFrontline.characters.FrontlineCharacter;
 import theFrontline.characters.characterInfo.AbstractCharacterInfo;
+import theFrontline.util.CharacterHelper;
+import theFrontline.util.TextureLoader;
 import theFrontline.util.UC;
 
 import java.util.ArrayList;
 
 public class CombatCharacterSelection {
+    public static Texture borderImg = TextureLoader.getTexture(TheFrontline.makeUIPath("charStatusBorder.png"));
+    public static Color bgCol = Color.BLACK.cpy();
     public ArrayList<CharacterOrb> chars = new ArrayList<>();
+    protected final float MULT = Settings.scale * 0.5f;
+    protected Hitbox curCharStatusHB = new Hitbox(borderImg.getWidth() * MULT, borderImg.getHeight() * MULT);
 
     public CombatCharacterSelection() {
+        bgCol.a = 05f;
+        curCharStatusHB.move(((borderImg.getWidth() * MULT) * 0.5f) + 12 * Settings.scale, ((borderImg.getHeight() * MULT) * 0.5f) + Settings.HEIGHT/2f);
+    }
+
+    public void update() {
+        curCharStatusHB.update();
+        chars.forEach(CharacterOrb::update);
+
+        if(curCharStatusHB.hovered) {
+            AbstractCharacterInfo ci = UC.pc().getCurrChar();
+            TipHelper.renderGenericTip(curCharStatusHB.cX + ((borderImg.getWidth()* MULT)*0.5f), InputHelper.mY, ci.name, ci.getDescription());
+        }
     }
 
     public void render(SpriteBatch sb) {
@@ -24,6 +50,24 @@ public class CombatCharacterSelection {
             if (!this.chars.isEmpty()) {
                 for (CharacterOrb co : chars) {
                     co.render(sb);
+                }
+            }
+            AbstractCharacterInfo ci = UC.pc().getCurrChar();
+            AtlasRegion tmp = ci.getStatusImage((ci.currentHP > ci.maxHP/2));
+            if(tmp != null) {
+                sb.draw(tmp, 12 * Settings.scale, Settings.HEIGHT/2f + (10 * MULT), tmp.getRegionWidth() * MULT, tmp.getRegionHeight() * MULT);
+
+                Texture tIcon = CharacterHelper.getTypeIcon(ci);
+                sb.setColor(bgCol);
+                sb.draw(ImageMaster.WHITE_SQUARE_IMG, 16 * Settings.scale, Settings.HEIGHT/2f + (10 * MULT), tIcon.getWidth() * MULT, tIcon.getHeight() * MULT);
+                sb.setColor(CharacterHelper.getRarityColor(ci));
+                sb.draw(tIcon, 16 * Settings.scale, Settings.HEIGHT/2f + (10 * MULT), tIcon.getWidth() * MULT, tIcon.getHeight() * MULT);
+
+                sb.setColor(Color.WHITE);
+                sb.draw(borderImg, 10 * Settings.scale, Settings.HEIGHT/2f, borderImg.getWidth() * MULT, borderImg.getHeight() * MULT);
+
+                if(Settings.isDebug) {
+                    curCharStatusHB.render(sb);
                 }
             }
         }

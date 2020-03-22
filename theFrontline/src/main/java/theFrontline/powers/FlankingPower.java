@@ -37,12 +37,12 @@ public class FlankingPower extends AbstractFrontlinePower implements CloneablePo
 
     @Override
     public void onInitialApplication() {
-        owner.flipHorizontal = true;
+        owner.flipHorizontal = !owner.flipHorizontal;
     }
 
     @Override
     public void onRemove() {
-        owner.flipHorizontal = false;
+        owner.flipHorizontal = !owner.flipHorizontal;
     }
 
     @Override
@@ -51,7 +51,7 @@ public class FlankingPower extends AbstractFrontlinePower implements CloneablePo
     }
 
     @Override
-    public void atStartOfTurn() {
+    public void atEndOfRound() {
         atb(new RemoveSpecificPowerAction(owner, owner, this));
     }
 

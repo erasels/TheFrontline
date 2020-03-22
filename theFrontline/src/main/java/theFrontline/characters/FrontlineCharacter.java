@@ -160,7 +160,7 @@ public class FrontlineCharacter extends CustomPlayer {
     @Override
     public void combatUpdate() {
         super.combatUpdate();
-        switchOrbSystem.chars.forEach(CharacterOrb::update);
+        switchOrbSystem.update();
     }
 
     @Override
@@ -314,6 +314,7 @@ public class FrontlineCharacter extends CustomPlayer {
     public void setChar(AbstractCharacterInfo ci) {
         if (!characters.contains(ci)) {
             characters.add(ci);
+            ci.costlyInit();
         }
         currentCharacter = ci.id;
         loadCharInfo();
@@ -324,6 +325,7 @@ public class FrontlineCharacter extends CustomPlayer {
             if (!characters.contains(ci)) {
                 onAddCharacter(ci);
                 characters.add(ci);
+                ci.costlyInit();
             } else {
                 logger.warn("Tried to add duplicate character.");
             }
@@ -331,10 +333,12 @@ public class FrontlineCharacter extends CustomPlayer {
     }
 
     public void killChar(AbstractCharacterInfo ci) {
+        ci.dispose();
         characters.remove(ci);
     }
 
     public void killChars() {
+        characters.stream().filter(c -> c.isDead).forEach(AbstractCharacterInfo::dispose);
         characters.removeIf(c -> c.isDead);
     }
 

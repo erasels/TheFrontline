@@ -165,6 +165,7 @@ public class TheFrontline implements
                         AbstractCharacterInfo ci = CharacterHelper.getCharacterByClassName(cs.id);
                         ci.setSave(cs);
                         p.characters.add(ci);
+                        ci.costlyInit();
                     }
                 }
             }
