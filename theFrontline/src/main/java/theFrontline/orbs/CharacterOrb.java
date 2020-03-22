@@ -35,6 +35,9 @@ public class CharacterOrb extends AbstractOrb {
     protected static final float NUM_X_OFFSET = 42.0F * Settings.scale;
     protected static final float NUM_Y_OFFSET = -30.0F * Settings.scale;
     protected static final float MAX_CLICK_CD = 1f; //1sec
+    protected static Color normalCol = Color.WHITE.cpy();
+    protected static Color energyTextCol = Color.SKY.cpy();
+    protected static Color healthTextCol = new Color(1, 0.4f, 0.4f, 1);
     protected static float clickCD = 0;
     // Animation Rendering Numbers - You can leave these at default, or play around with them and see what they change.
     private float vfxTimer = 1.0f;
@@ -107,7 +110,8 @@ public class CharacterOrb extends AbstractOrb {
 
     @Override
     public void render(SpriteBatch sb) {
-        sb.setColor(new Color(1.0f, 1.0f, 1.0f, alpha));
+        normalCol.a = alpha;
+        sb.setColor(normalCol);
         sb.draw(character.img,
                 cX - ((character.img.getWidth()*Settings.scale)/4f),
                 cY - (48.0f*Settings.scale) + bobEffect.y,
@@ -126,14 +130,15 @@ public class CharacterOrb extends AbstractOrb {
                 false);
         renderText(sb);
         hb.render(sb);
+        sb.setColor(Color.WHITE);
     }
 
     @Override
     protected void renderText(SpriteBatch sb) {
-        FontHelper.renderFontCentered(sb, FontHelper.cardEnergyFont_L, Integer.toString(character.currentHP), this.cX - NUM_X_OFFSET, this.cY + this.bobEffect.y / 2.0F - NUM_Y_OFFSET, new Color(1F, 0.4F, 0.4F, alpha), this.fontScale);
-        Color tmpCol = new Color(Color.SKY);
-        tmpCol.a = alpha;
-        FontHelper.renderFontCentered(sb, FontHelper.cardEnergyFont_L, Integer.toString(eCost), this.cX + NUM_X_OFFSET, this.cY + this.bobEffect.y / 2.0F + NUM_Y_OFFSET, tmpCol, this.fontScale);
+        healthTextCol.a = alpha;
+        FontHelper.renderFontCentered(sb, FontHelper.cardEnergyFont_L, Integer.toString(character.currentHP), this.cX - NUM_X_OFFSET, this.cY + this.bobEffect.y / 2.0F - NUM_Y_OFFSET, healthTextCol, this.fontScale);
+        energyTextCol.a = alpha;
+        FontHelper.renderFontCentered(sb, FontHelper.cardEnergyFont_L, Integer.toString(eCost), this.cX + NUM_X_OFFSET, this.cY + this.bobEffect.y / 2.0F + NUM_Y_OFFSET, energyTextCol, this.fontScale);
     }
 
     public void onEvoke() {
