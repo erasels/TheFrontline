@@ -23,13 +23,16 @@ import java.util.stream.Collectors;
 public class CharacterHelper {
     public static void modifyCombatRewards(CombatRewardScreen crs) {
         if (CardCrawlGame.isInARun()) {
+            int addRoll = AbstractDungeon.floorNum;
             AbstractRoom room = AbstractDungeon.getCurrRoom();
             if (room instanceof MonsterRoomBoss) {
-                crs.rewards.add(new FrontlinerReward(CharacterHelper.getRandomCharacter(CharacterHelper.getRandomRarity(50))));
+                addRoll += 25;
             } else if(room instanceof MonsterRoomElite || room instanceof TreasureRoom) {
-                crs.rewards.add(new FrontlinerReward(CharacterHelper.getRandomCharacter(CharacterHelper.getRandomRarity(25))));
-            } else if(room instanceof MonsterRoom) {
-                crs.rewards.add(new FrontlinerReward());
+                addRoll += 10;
+            }
+
+            if(room instanceof MonsterRoom || room instanceof TreasureRoom) {
+                crs.rewards.add(new FrontlinerReward(CharacterHelper.getRandomCharacter(CharacterHelper.getRandomRarity(addRoll))));
             }
         }
     }

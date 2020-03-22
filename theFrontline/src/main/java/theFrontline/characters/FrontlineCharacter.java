@@ -470,7 +470,6 @@ public class FrontlineCharacter extends CustomPlayer {
     }
 
     //Which card should be obtainable from the Match and Keep event?
-    //TODO: Add other starter card
     @Override
     public AbstractCard getStartCardForEvent() {
         return new Strike();
