@@ -3,11 +3,13 @@ package theFrontline.cards.SG;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import org.apache.commons.lang3.math.NumberUtils;
 import theFrontline.cards.abstracts.FrontlineCard;
 import theFrontline.util.CardInfo;
 
 import static theFrontline.TheFrontline.makeID;
-import static theFrontline.util.UC.*;
+import static theFrontline.util.UC.doDmg;
+import static theFrontline.util.UC.p;
 
 public class Unleash extends FrontlineCard {
     private final static CardInfo cardInfo = new CardInfo(
@@ -39,6 +41,7 @@ public class Unleash extends FrontlineCard {
     public void applyPowers() {
         super.applyPowers();
         damage += damage - baseDamage;
+        damage = NumberUtils.max(damage, 0);
     }
 
     @Override
