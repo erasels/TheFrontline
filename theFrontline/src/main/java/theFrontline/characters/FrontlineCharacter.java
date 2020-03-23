@@ -35,6 +35,7 @@ import theFrontline.TheFrontline;
 import theFrontline.actions.utility.ForcedWaitAction;
 import theFrontline.actions.utility.SwitchCharacterCombatAction;
 import theFrontline.cards.all.Defend;
+import theFrontline.cards.all.Forfend;
 import theFrontline.cards.all.Strike;
 import theFrontline.characters.characterInfo.AbstractCharacterInfo;
 import theFrontline.orbs.CharacterOrb;
@@ -472,7 +473,7 @@ public class FrontlineCharacter extends CustomPlayer {
     //Which card should be obtainable from the Match and Keep event?
     @Override
     public AbstractCard getStartCardForEvent() {
-        return new Strike();
+        return new Forfend();
     }
 
     // The class name as it appears next to your player name in-game

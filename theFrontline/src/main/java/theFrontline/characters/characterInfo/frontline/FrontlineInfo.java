@@ -4,6 +4,7 @@ import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.helpers.CardLibrary;
 import theFrontline.TheFrontline;
 import theFrontline.cards.all.Defend;
+import theFrontline.cards.all.Forfend;
 import theFrontline.cards.all.Strike;
 import theFrontline.characters.characterInfo.AbstractCharacterInfo;
 import theFrontline.util.CharacterHelper;
@@ -53,7 +54,7 @@ public abstract class FrontlineInfo extends AbstractCharacterInfo {
 
     @Override
     public ArrayList<AbstractCard> getStarterDeck() {
-        ArrayList<String> cards = new ArrayList<>(Arrays.asList(Strike.ID, Defend.ID, Defend.ID));
+        ArrayList<String> cards = new ArrayList<>(Arrays.asList(Strike.ID, Defend.ID, Forfend.ID));
         return cards.stream().map(id -> CardLibrary.getCard(id).makeCopy()).collect(Collectors.toCollection(ArrayList::new));
     }
 

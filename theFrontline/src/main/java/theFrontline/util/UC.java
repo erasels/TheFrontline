@@ -180,6 +180,18 @@ public class UC {
         reducePower(p, 1);
     }
 
+    public static void removePower(AbstractPower p, boolean top) {
+        if(top) {
+            att(new RemoveSpecificPowerAction(p.owner, p.owner, p));
+        } else {
+            atb(new RemoveSpecificPowerAction(p.owner, p.owner, p));
+        }
+    }
+
+    public static void removePower(AbstractPower p) {
+        removePower(p, false);
+    }
+
     public static void copyCardPosition(AbstractCard original, AbstractCard target) {
         target.current_x = original.current_x;
         target.current_y = original.current_y;

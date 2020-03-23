@@ -65,5 +65,12 @@
       "The next time this creature attacks, it takes #b",
       " damage."
     ]
+  },
+  "theFrontline:IncreaseSwitchCost": {
+    "NAME": "Increase Switch Cost",
+    "DESCRIPTIONS": [
+      "The next #yswitch costs #b",
+      " additional energy."
+    ]
   }
 }
