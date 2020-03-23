@@ -1,13 +1,14 @@
 package theFrontline.cards.AR;
 
+import com.megacrit.cardcrawl.actions.AbstractGameAction;
+import com.megacrit.cardcrawl.actions.common.ModifyDamageAction;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import theFrontline.cards.abstracts.FrontlineCard;
 import theFrontline.util.CardInfo;
 
 import static theFrontline.TheFrontline.makeID;
-import static theFrontline.util.UC.doDmg;
-import static theFrontline.util.UC.p;
+import static theFrontline.util.UC.*;
 
 public class Deterrent extends FrontlineCard {
     private final static CardInfo cardInfo = new CardInfo(
@@ -19,30 +20,20 @@ public class Deterrent extends FrontlineCard {
     public final static String ID = makeID(cardInfo.cardName);
 
     private static final int DAMAGE = 6;
-    private static final int UPG_DAMAGE = 2;
+
+    private static final int MAGIC = 2;
+    private static final int UPG_MAGIC = 2;
 
     public Deterrent() {
         super(cardInfo, false);
-        p(); //Stupid intellij stuff , 
 
-        setDamage(DAMAGE, UPG_DAMAGE);
+        setDamage(DAMAGE);
+        setMagic(MAGIC, UPG_MAGIC);
     }
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        doDmg(m, this);
-    }
-
-    @Override
-    public void calculateCardDamage(AbstractMonster mo) {
-        int tmp = baseDamage;
-        if(mo.currentHealth > mo.maxHealth/2) {
-            baseDamage *= 2;
-        }
-        super.calculateCardDamage(mo);
-        if(tmp != baseDamage) {
-            isDamageModified = true;
-        }
-        baseDamage = tmp;
+        doDmg(m, this, AbstractGameAction.AttackEffect.BLUNT_LIGHT);
+        atb(new ModifyDamageAction(uuid, magicNumber));
     }
 }

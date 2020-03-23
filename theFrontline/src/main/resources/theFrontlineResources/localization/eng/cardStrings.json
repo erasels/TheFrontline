@@ -9,7 +9,7 @@
   },
   "theFrontline:Deterrent": {
     "NAME": "Deterrent",
-    "DESCRIPTION": "Deal !D! damage. NL Deals double damage if the target is above half HP."
+    "DESCRIPTION": "Deal !D! damage. NL Increase this card's damage by !M! this combat."
   },
   "theFrontline:CounterPace": {
     "NAME": "Counter Pace",
