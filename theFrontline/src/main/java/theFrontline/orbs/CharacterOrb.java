@@ -12,6 +12,7 @@ import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.helpers.input.InputHelper;
 import com.megacrit.cardcrawl.localization.OrbStrings;
 import com.megacrit.cardcrawl.orbs.AbstractOrb;
+import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
@@ -21,6 +22,7 @@ import theFrontline.actions.utility.SwitchCharacterAction;
 import theFrontline.actions.utility.SwitchCharacterCombatAction;
 import theFrontline.characters.characterInfo.AbstractCharacterInfo;
 import theFrontline.characters.characterInfo.frontline.FrontlineInfo;
+import theFrontline.powers.abstracts.AbstractFrontlinePower;
 import theFrontline.relics.abstracts.FrontlineRelic;
 import theFrontline.util.UC;
 
@@ -87,9 +89,25 @@ public class CharacterOrb extends AbstractOrb {
         clickCD -= UC.gt();
         eCost = 1;
         for(AbstractRelic r : UC.p().relics) {
-            if(r instanceof FrontlineRelic) {
-                eCost = ((FrontlineRelic) r).characterSwitchCost(eCost);
+            if(eCost < -100) {
+                break;
             }
+            if(r instanceof FrontlineRelic) {
+                eCost = ((FrontlineRelic) r).characterSwitchCost(eCost, character);
+            }
+        }
+
+        for(AbstractPower p : UC.p().powers) {
+            if(eCost < -100) {
+                break;
+            }
+            if(p instanceof AbstractFrontlinePower) {
+                eCost = ((AbstractFrontlinePower) p).characterSwitchCost(eCost, character);
+            }
+        }
+
+        if(eCost < 0) {
+            eCost = 0;
         }
 
         if (hb.hovered) {

@@ -2,6 +2,7 @@ package theFrontline.relics.abstracts;
 
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import theFrontline.TheFrontline;
+import theFrontline.characters.characterInfo.AbstractCharacterInfo;
 import theFrontline.util.TextureLoader;
 
 public abstract class FrontlineRelic extends AbstractRelic {
@@ -18,5 +19,5 @@ public abstract class FrontlineRelic extends AbstractRelic {
     }
 
     public void onCharacterSwitch(boolean inCombat) {}
-    public int characterSwitchCost(int cost){ return cost;}
+    public int characterSwitchCost(int cost, AbstractCharacterInfo ci){ return cost;}
 }

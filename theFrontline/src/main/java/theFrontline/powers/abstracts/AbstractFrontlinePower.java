@@ -28,4 +28,5 @@ public class AbstractFrontlinePower extends TwoAmountPower {
     }
 
     public void onSwitch(AbstractCharacterInfo currChar, AbstractCharacterInfo nextChar) {}
+    public int characterSwitchCost(int cost, AbstractCharacterInfo ci){ return cost;}
 }

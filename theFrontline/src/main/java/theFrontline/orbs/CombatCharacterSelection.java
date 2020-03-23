@@ -30,7 +30,7 @@ public class CombatCharacterSelection {
     protected Hitbox curCharStatusHB = new Hitbox(borderImg.getWidth() * MULT, borderImg.getHeight() * MULT);
 
     public CombatCharacterSelection() {
-        bgCol.a = 05f;
+        bgCol.a = 0.5f;
         curCharStatusHB.move(((borderImg.getWidth() * MULT) * 0.5f) + 12 * Settings.scale, ((borderImg.getHeight() * MULT) * 0.5f) + Settings.HEIGHT/2f);
     }
 
