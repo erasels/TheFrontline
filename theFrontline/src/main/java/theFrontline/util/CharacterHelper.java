@@ -21,6 +21,26 @@ import java.util.HashMap;
 import java.util.stream.Collectors;
 
 public class CharacterHelper {
+    /*public static HashMap<AbstractCharacterInfo.Rarity, HashMap<String, Class<? extends AbstractCharacterInfo>>> characterMap = new HashMap<AbstractCharacterInfo.Rarity, HashMap<String, Class<? extends AbstractCharacterInfo>>>() {{
+        put(AbstractCharacterInfo.Rarity.BASIC, new HashMap<>());
+        put(AbstractCharacterInfo.Rarity.COMMON, new HashMap<>());
+        put(AbstractCharacterInfo.Rarity.UNCOMMON, new HashMap<>());
+        put(AbstractCharacterInfo.Rarity.RARE, new HashMap<>());
+    }};*/
+    public static HashMap<FrontlineInfo.Type, HashMap<String, FlInstanceInfo>> frontlineMap = new HashMap<FrontlineInfo.Type, HashMap<String, FlInstanceInfo>>() {{
+        put(FrontlineInfo.Type.AR, new HashMap<>());
+        put(FrontlineInfo.Type.HG, new HashMap<>());
+        put(FrontlineInfo.Type.MG, new HashMap<>());
+        put(FrontlineInfo.Type.RF, new HashMap<>());
+        put(FrontlineInfo.Type.SG, new HashMap<>());
+        put(FrontlineInfo.Type.SMG, new HashMap<>());
+    }};
+    public static final String[] TEXT = CardCrawlGame.languagePack.getUIString(TheFrontline.makeID("HelperStrings")).TEXT;
+
+    public static void addToMap(FrontlineInfo ci) {
+        frontlineMap.get(ci.type).put(ci.id, new FlInstanceInfo(ci.rarity, ci.getClass()));
+    }
+
     public static void modifyCombatRewards(CombatRewardScreen crs) {
         if (CardCrawlGame.isInARun()) {
             int addRoll = AbstractDungeon.floorNum;
@@ -37,36 +57,11 @@ public class CharacterHelper {
         }
     }
 
-    /*public static HashMap<AbstractCharacterInfo.Rarity, HashMap<String, Class<? extends AbstractCharacterInfo>>> characterMap = new HashMap<AbstractCharacterInfo.Rarity, HashMap<String, Class<? extends AbstractCharacterInfo>>>() {{
-        put(AbstractCharacterInfo.Rarity.BASIC, new HashMap<>());
-        put(AbstractCharacterInfo.Rarity.COMMON, new HashMap<>());
-        put(AbstractCharacterInfo.Rarity.UNCOMMON, new HashMap<>());
-        put(AbstractCharacterInfo.Rarity.RARE, new HashMap<>());
-    }};*/
-
     public static void addCharacter(AbstractCharacterInfo ci) {
         FrontlineCharacter p = UC.pc();
         if (p != null) {
             p.addCharacter(ci);
         }
-    }
-
-    public static HashMap<FrontlineInfo.Type, HashMap<String, FlInstanceInfo>> frontlineMap = new HashMap<FrontlineInfo.Type, HashMap<String, FlInstanceInfo>>() {{
-        put(FrontlineInfo.Type.AR, new HashMap<>());
-        put(FrontlineInfo.Type.HG, new HashMap<>());
-        put(FrontlineInfo.Type.MG, new HashMap<>());
-        put(FrontlineInfo.Type.RF, new HashMap<>());
-        put(FrontlineInfo.Type.SG, new HashMap<>());
-        put(FrontlineInfo.Type.SMG, new HashMap<>());
-    }};
-    public static final String[] TEXT = CardCrawlGame.languagePack.getUIString(TheFrontline.makeID("HelperStrings")).TEXT;
-
-    public static void addToMap(AbstractCharacterInfo ci) {
-        //characterMap.get(ci.rarity).put(ci.id, ci.getClass());
-    }
-
-    public static void addToMap(FrontlineInfo ci) {
-        frontlineMap.get(ci.type).put(ci.id, new FlInstanceInfo(ci.rarity, ci.getClass()));
     }
 
     public static FrontlineInfo retrieveCharacter(String id, FrontlineInfo.Type type) {
