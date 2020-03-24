@@ -13,7 +13,6 @@ import com.megacrit.cardcrawl.helpers.MathHelper;
 import com.megacrit.cardcrawl.helpers.TipHelper;
 import com.megacrit.cardcrawl.helpers.input.InputHelper;
 import com.megacrit.cardcrawl.localization.UIStrings;
-import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.megacrit.cardcrawl.screens.mainMenu.ScrollBar;
 import com.megacrit.cardcrawl.screens.mainMenu.ScrollBarListener;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -64,7 +63,7 @@ public class CharacterScrapScreen extends AbstractScreen implements ScrollBarLis
                     }
                     UC.pc().killChar(character);
                     CharacterHelper.addCharacter(charToAdd);
-                }, Color.FIREBRICK));
+                }, Color.GOLDENROD));
 
         //Prev
         buttons.add(new LabledButton(Settings.WIDTH * 0.1f, Settings.HEIGHT * 0.25f, TEXT[4], false,
@@ -110,8 +109,6 @@ public class CharacterScrapScreen extends AbstractScreen implements ScrollBarLis
 
         calculateScrollBounds();
     }
-
-    public static AbstractRoom.RoomPhase roomPhase;
 
     public void close() {
         AbstractDungeon.screen = AbstractDungeon.CurrentScreen.GRID;
@@ -221,7 +218,7 @@ public class CharacterScrapScreen extends AbstractScreen implements ScrollBarLis
         FontHelper.renderFontLeft(sb, FontHelper.cardDescFont_L, stats, X_OFFSET / 2f, (Settings.HEIGHT * 0.6f) - ((tmpImgH) / 2f), Color.WHITE.cpy());
 
         //Scrap button
-        FontHelper.renderFontLeft(sb, FontHelper.cardDescFont_L, TEXT[1] + getScrapVal() * 0.75 + TEXT[2], buttons.get(0).hb.cX - (buttons.get(0).hb.width/2), buttons.get(0).hb.cY - (buttons.get(0).hb.height), Color.WHITE.cpy());
+        FontHelper.renderFontLeft(sb, FontHelper.cardDescFont_L, TEXT[1] + getScrapVal() + TEXT[2], buttons.get(0).hb.cX - (buttons.get(0).hb.width/2), buttons.get(0).hb.cY - (buttons.get(0).hb.height), Color.WHITE.cpy());
 
         row = -1;
         col = 0;

@@ -12,7 +12,6 @@ import com.megacrit.cardcrawl.helpers.MathHelper;
 import com.megacrit.cardcrawl.helpers.TipHelper;
 import com.megacrit.cardcrawl.helpers.input.InputHelper;
 import com.megacrit.cardcrawl.localization.UIStrings;
-import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.megacrit.cardcrawl.screens.mainMenu.ScrollBar;
 import com.megacrit.cardcrawl.screens.mainMenu.ScrollBarListener;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -57,10 +56,8 @@ public class CharacterAddScreen extends AbstractScreen implements ScrollBarListe
         if(UC.pc().getCharacters().size() >= FrontlineCharacter.MAX_CHARACTERS) {
             btnAccept = new LabledButton(Settings.WIDTH * 0.1f, Settings.HEIGHT * 0.25f, TEXT[5], false,
                     () -> {
-                        AbstractDungeon.getCurrRoom().phase = roomPhase;
-                        roomPhase = null;
                         TheFrontline.screen = new CharacterScrapScreen();
-                        ((CharacterScrapScreen)TheFrontline.screen).open();
+                        ((CharacterScrapScreen)TheFrontline.screen).open(this.character);
                     }, Color.FOREST);
         } else {
             btnAccept = new LabledButton(Settings.WIDTH * 0.1f, Settings.HEIGHT * 0.25f, TEXT[0], false,
@@ -93,8 +90,6 @@ public class CharacterAddScreen extends AbstractScreen implements ScrollBarListe
 
         calculateScrollBounds();
     }
-
-    public static AbstractRoom.RoomPhase roomPhase;
 
     /*@SpirePatch(clz = RewardItem.class, method = "claimReward")
     public static class tets {
