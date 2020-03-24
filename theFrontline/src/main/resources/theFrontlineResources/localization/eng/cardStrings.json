@@ -117,5 +117,9 @@
     "NAME": "Charm",
     "DESCRIPTION": "The target attacks a random enemy. NL Exhaust.",
     "UPGRADE_DESCRIPTION": "The target attacks a random enemy. NL Exhaustive !stslib:ex!."
+  },
+  "theFrontline:SpicyFeast": {
+    "NAME": "Spicy Feast",
+    "DESCRIPTION": "Deal !D! damage. NL  Whenever you play a card this turn, the enemy loses !M! HP."
   }
 }
