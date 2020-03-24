@@ -22,7 +22,7 @@ public class IncreaseSwitchCostPower extends AbstractFrontlinePower implements C
         this.amount = amount;
         type = PowerType.DEBUFF;
         updateDescription();
-        loadRegion("barricade");
+        loadRegion("skillBurn");
     }
 
     @Override

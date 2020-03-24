@@ -207,6 +207,12 @@ public class FrontlineCharacter extends CustomPlayer {
     }
 
     @Override
+    public void applyStartOfCombatLogic() {
+        super.applyStartOfCombatLogic();
+        getCharacters().forEach(AbstractCharacterInfo::atBattleStart);
+    }
+
+    @Override
     public void onVictory() {
         addAni(2, "victory", false, 0);
         addAni(3, "victoryloop", true, 0);

@@ -97,5 +97,18 @@
     "OPTIONS": [
       ""
     ]
+  },
+  "theFrontline:INSAS": {
+    "NAMES": [
+      "INSAS",
+      "Indian Small Arms System Assault Rifle"
+    ],
+    "TEXT": [
+      "The first time you #yswitch into this character each combat, gain #b",
+      " temporary #yStrength and #yDexterity."
+    ],
+    "OPTIONS": [
+      ""
+    ]
   }
 }

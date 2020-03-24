@@ -80,6 +80,7 @@ public abstract class AbstractCharacterInfo {
     public void preBattlePrep(){}
     public void atTurnStart() {}
     public void onVictory() {}
+    public void atBattleStart() {}
 
     public Color getColor() {
         float tmp;
