@@ -20,10 +20,12 @@ import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.megacrit.cardcrawl.random.Random;
 import com.megacrit.cardcrawl.vfx.AbstractGameEffect;
+import theFrontline.TheFrontline;
 import theFrontline.actions.utility.DamageAllAction;
 import theFrontline.characters.FrontlineCharacter;
 import theFrontline.patches.combat.CardFieldMechanicsPatches;
 
+import java.lang.reflect.Field;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -277,6 +279,15 @@ public class UC {
             ReflectionHacks.setPrivateInherited(t, t.getClass(), fieldKey, newValue);
         }
         return t;
+    }
+
+    public static <T> Object getFieldContent(Field f, T obj) {
+        try {
+            return f.get(obj);
+        } catch (Exception e) {
+            TheFrontline.logger.error("Couldn't access " + f.getName() + " of input object.");
+            return null;
+        }
     }
 
     //Setters
