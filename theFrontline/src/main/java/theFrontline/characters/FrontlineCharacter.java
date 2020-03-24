@@ -247,10 +247,10 @@ public class FrontlineCharacter extends CustomPlayer {
     public void switchCharacter(AbstractCharacterInfo c) {
         updateCharInfo();
 
-        onRetreat(c);
-
         int cardsInHand = 0;
         if (AbstractDungeon.getCurrRoom().phase == AbstractRoom.RoomPhase.COMBAT) {
+            onRetreat(c);
+
             cardsInHand = hand.size();
 
             while (!hand.isEmpty()) {
@@ -275,10 +275,10 @@ public class FrontlineCharacter extends CustomPlayer {
                 discardPile.clear();
             }
             UC.att(new DrawCardAction(cardsInHand));
-        }
 
-        onSwitch(getPrevChar(), c);
-        onDeploy();
+            onSwitch(getPrevChar(), c);
+            onDeploy();
+        }
     }
 
     public void loadCharInfo() {
@@ -330,6 +330,8 @@ public class FrontlineCharacter extends CustomPlayer {
             } else {
                 logger.warn("Tried to add duplicate character.");
             }
+        } else {
+            logger.warn("Tried to add null as character.");
         }
     }
 
