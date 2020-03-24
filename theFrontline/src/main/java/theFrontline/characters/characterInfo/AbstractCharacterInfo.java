@@ -51,7 +51,7 @@ public abstract class AbstractCharacterInfo {
     protected void initialize() {
         characterStrings = CardCrawlGame.languagePack.getCharacterString(makeID(id));
         name = characterStrings.NAMES[0];
-        fullName = characterStrings.NAMES[1];
+        fullName = characterStrings.NAMES.length>1?characterStrings.NAMES[1]:name;
         masterDeck = new CardGroup(CardGroup.CardGroupType.MASTER_DECK);
         masterDeck.group.addAll(getStarterDeck());
         availableCards = initializeAvailableCards();
