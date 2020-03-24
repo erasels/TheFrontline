@@ -54,9 +54,10 @@ public class Charm extends FrontlineCard {
 
         atb(new DoActionIfCreatureCheckAction(m, UC::isAttacking, () -> {
             int i = (int) UC.getFieldContent(multiIntentField, m);
-            for (int j = 0; j < i; j++) {
+            do {
                 UC.att(new DamageAction(finalTarget, new DamageInfo(m, m.getIntentDmg(), DamageInfo.DamageType.NORMAL), AbstractGameAction.AttackEffect.BLUNT_LIGHT));
-            }
+                i--;
+            } while (i > 0);
         }, null));
     }
 
