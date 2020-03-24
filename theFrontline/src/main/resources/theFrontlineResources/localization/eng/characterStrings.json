@@ -42,7 +42,7 @@
       "Bren Ten"
     ],
     "TEXT": [
-      "Whenever you #ySwitch, gain #b",
+      "Whenever you #yswitch, gain #b",
       " #yVigor."
     ],
     "OPTIONS": [
@@ -83,6 +83,19 @@
     "TEXT": [
       "At the start of your turn, if the previous character this combat was a #ySG, gain #b",
       " #yGrace."
+    ],
+    "OPTIONS": [
+      ""
+    ]
+  },
+  "theFrontline:Tokarev": {
+    "NAMES": [
+      "Tokarev",
+      "Tokarev"
+    ],
+    "TEXT": [
+      "Whenever you #yswitch, draw #b",
+      " card."
     ],
     "OPTIONS": [
       ""
