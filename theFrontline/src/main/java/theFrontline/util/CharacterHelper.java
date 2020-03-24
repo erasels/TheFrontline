@@ -18,6 +18,7 @@ import theFrontline.rewards.FrontlinerReward;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class CharacterHelper {
@@ -35,10 +36,12 @@ public class CharacterHelper {
         put(FrontlineInfo.Type.SG, new HashMap<>());
         put(FrontlineInfo.Type.SMG, new HashMap<>());
     }};
+    public static final ArrayList<String> characterIDs = new ArrayList<>();
     public static final String[] TEXT = CardCrawlGame.languagePack.getUIString(TheFrontline.makeID("HelperStrings")).TEXT;
 
     public static void addToMap(FrontlineInfo ci) {
         frontlineMap.get(ci.type).put(ci.id, new FlInstanceInfo(ci.rarity, ci.getClass()));
+        characterIDs.add(ci.id);
     }
 
     public static void modifyCombatRewards(CombatRewardScreen crs) {
@@ -66,6 +69,17 @@ public class CharacterHelper {
 
     public static FrontlineInfo retrieveCharacter(String id, FrontlineInfo.Type type) {
         return frontlineMap.get(type).get(id).getChar();
+    }
+
+    public static FrontlineInfo retrieveCharacter(String id) {
+        for(Map.Entry<FrontlineInfo.Type, HashMap<String, CharacterHelper.FlInstanceInfo>> charMap : CharacterHelper.frontlineMap.entrySet()) {
+            for(Map.Entry<String, CharacterHelper.FlInstanceInfo> s : charMap.getValue().entrySet()) {
+                if(s.getKey().equals(id)) {
+                    return s.getValue().getChar();
+                }
+            }
+        }
+        return null;
     }
 
     public static FrontlineInfo getRandomCharacter(FrontlineInfo.Type type, AbstractCharacterInfo.Rarity rarity) {

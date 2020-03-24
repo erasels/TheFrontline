@@ -5,6 +5,7 @@ import basemod.BaseMod;
 import basemod.ModLabeledToggleButton;
 import basemod.ModPanel;
 import basemod.abstracts.CustomSavable;
+import basemod.devcommands.ConsoleCommand;
 import basemod.interfaces.*;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -27,6 +28,7 @@ import theFrontline.characters.FrontlineCharacter;
 import theFrontline.characters.characterInfo.AbstractCharacterInfo;
 import theFrontline.characters.characterInfo.CharacterSave;
 import theFrontline.characters.characterInfo.frontline.FrontlineInfo;
+import theFrontline.commands.SetCharCommand;
 import theFrontline.patches.character.SelectionPatches;
 import theFrontline.patches.general.ScreenPatches;
 import theFrontline.patches.ui.MasterDeckViewPatches;
@@ -208,6 +210,8 @@ public class TheFrontline implements
         new AutoAdd(getModID())
                 .packageFilter("theFrontline.characters.characterInfo.frontline")
                 .any(FrontlineInfo.class, (info, character) -> CharacterHelper.addToMap(character));
+
+        ConsoleCommand.addCommand("char", SetCharCommand.class);
     }
 
     @Override
