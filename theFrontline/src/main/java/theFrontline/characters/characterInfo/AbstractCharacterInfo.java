@@ -58,7 +58,7 @@ public abstract class AbstractCharacterInfo {
         initStats();
         setFlavorStats();
     }
-    
+
     protected void initStats() {
         stats = new Stats();
     }
@@ -152,10 +152,10 @@ public abstract class AbstractCharacterInfo {
     public abstract void setFlavorStats();
 
 
-    public int getArmor() { return stats.armor; }
-    public int getAddDraw() { return stats.addDraw; }
-    public int getStrike() { return stats.strike; }
-    public int getDefend() { return stats.defend; }
+    public int getArmor() { return this.stats.armor; }
+    public int getAddDraw() { return this.stats.addDraw; }
+    public int getStrike() { return this.stats.strike; }
+    public int getDefend() { return this.stats.defend; }
     public class Stats {
         protected int armor, addDraw, strike, defend;
 
