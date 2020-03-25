@@ -17,6 +17,11 @@ public class MAC10 extends SMGInfo {
     }
 
     @Override
+    protected void initStats() {
+        stats = new Stats(0,0,0, 1);
+    }
+
+    @Override
     public float atDamageModify(float amount, AbstractCard card) {
         if(currentHP <= (maxHP/2)) {
             return amount * (1f+(getMN()/100f));

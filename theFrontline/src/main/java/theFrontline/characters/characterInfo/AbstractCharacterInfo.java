@@ -55,8 +55,12 @@ public abstract class AbstractCharacterInfo {
         masterDeck = new CardGroup(CardGroup.CardGroupType.MASTER_DECK);
         masterDeck.group.addAll(getStarterDeck());
         availableCards = initializeAvailableCards();
-        stats = new Stats();
+        initStats();
         setFlavorStats();
+    }
+    
+    protected void initStats() {
+        stats = new Stats();
     }
 
     public abstract ArrayList<String> initializeAvailableCards();
@@ -162,9 +166,11 @@ public abstract class AbstractCharacterInfo {
             defend = 0;
         }
 
-        public Stats(int armor, int addDraw) {
+        public Stats(int armor, int addDraw, int strike, int defend) {
             this.armor = armor;
             this.addDraw = addDraw;
+            this.strike = strike;
+            this.defend = defend;
         }
 
         public String getSaveString() {
