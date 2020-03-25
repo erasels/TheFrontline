@@ -73,14 +73,22 @@ public abstract class AbstractCharacterInfo {
     public void costlyInit() {}
     public void dispose() {}
 
+    //Called on the character that gets switched too after onSwitch
     public void onDeploy(){}
+    //Called on the character that gets switched away from, called before hand manipulation
     public void onRetreat(AbstractCharacterInfo nextChar){}
+    //Get called for all characters, after characters have been switched
     public void onSwitch(AbstractCharacterInfo currChar, AbstractCharacterInfo nextChar){}
+    //Called on all characters when a new character gets added to the party
     public void onAddNewCharacter(AbstractCharacterInfo newChar){}
+    //Gets called on the current character at the start of battle
     public void preBattlePrep(){}
     public void atTurnStart() {}
     public void onVictory() {}
+    //Called on all characters
     public void atBattleStart() {}
+    //Called on the current character, before relic atDamageModify
+    public float atDamageModify(float amount, AbstractCard card) {return amount;}
 
     public Color getColor() {
         float tmp;

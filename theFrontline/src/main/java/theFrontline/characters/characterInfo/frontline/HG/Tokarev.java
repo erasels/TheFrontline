@@ -20,7 +20,7 @@ public class Tokarev extends HGInfo {
 
     @Override
     public void onSwitch(AbstractCharacterInfo currChar, AbstractCharacterInfo nextChar) {
-        UC.doDraw(magicNumber);
+        UC.doDraw(getMN());
     }
 
     @Override

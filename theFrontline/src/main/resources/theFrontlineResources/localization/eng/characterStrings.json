@@ -110,5 +110,18 @@
     "OPTIONS": [
       ""
     ]
+  },
+  "theFrontline:MAC10": {
+    "NAMES": [
+      "MAC-10",
+      "Ingram MAC-10"
+    ],
+    "TEXT": [
+      "Deals #b",
+      "% additional damage with attacks when below #b50% HP."
+    ],
+    "OPTIONS": [
+      ""
+    ]
   }
 }
