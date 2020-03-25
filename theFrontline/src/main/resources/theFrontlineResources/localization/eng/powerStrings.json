@@ -72,5 +72,13 @@
       "The next #yswitch costs #b",
       " additional energy."
     ]
+  },
+  "theFrontline:Cover": {
+    "NAME": "Cover",
+    "DESCRIPTIONS": [
+      "Gain #b",
+      "% additional #yBlock for the next #b",
+      " turns."
+    ]
   }
 }

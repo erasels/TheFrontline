@@ -121,5 +121,9 @@
   "theFrontline:SpicyFeast": {
     "NAME": "Spicy Feast",
     "DESCRIPTION": "Deal !D! damage. NL  Whenever you play a card this turn, the enemy loses !M! HP."
+  },
+  "theFrontline:SmokeBomb": {
+    "NAME": "Smoke Bomb",
+    "DESCRIPTION": "Gain !B! Block. NL Gain 50% additional Block for the next !M! turns. NL Exhaust."
   }
 }
