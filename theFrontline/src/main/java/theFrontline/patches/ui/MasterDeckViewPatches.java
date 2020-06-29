@@ -1,16 +1,20 @@
 package theFrontline.patches.ui;
 
-import com.evacipated.cardcrawl.modthespire.lib.SpireField;
-import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
-import com.evacipated.cardcrawl.modthespire.lib.SpirePrefixPatch;
+import basemod.ReflectionHacks;
+import com.evacipated.cardcrawl.modthespire.lib.*;
+import com.evacipated.cardcrawl.modthespire.patcher.PatchingException;
 import com.megacrit.cardcrawl.cards.AbstractCard;
+import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.screens.MasterDeckViewScreen;
+import javassist.CannotCompileException;
+import javassist.CtBehavior;
 import theFrontline.characters.FrontlineCharacter;
 import theFrontline.characters.characterInfo.AbstractCharacterInfo;
 import theFrontline.util.UC;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class MasterDeckViewPatches {
     public static boolean RESET_ON_CLOSE = false;
@@ -46,83 +50,77 @@ public class MasterDeckViewPatches {
         }
     }
 
-    /*@SpirePatch(clz = MasterDeckViewScreen.class, method = "updatePositions")
-    public static class AddAllCards1 {
-        @SpireInsertPatch(locator = Locator.class)
-        public static void patch(MasterDeckViewScreen __instance, @ByRef ArrayList<AbstractCard>[] ___cards) {
+    public static String curID, prevID;
+    public static int posTracker, lineNumTracker;
+    @SpirePatch(clz = MasterDeckViewScreen.class, method = "updatePositions")
+    public static class PositionAdjuster1 {
+        @SpireInsertPatch(locator = Locator.class, localvars = {"lineNum", "i", "mod"})
+        public static void patch(MasterDeckViewScreen __instance, @ByRef int[] lineNum, int i, @ByRef int[] mod) {
             FrontlineCharacter p = UC.pc();
-            if(p != null) {
-                ___cards[0] = new ArrayList<>(___cards[0]);
-                for(AbstractCharacterInfo ci : p.characters) {
-                    if(ci != p.getCurrChar()) {
-                        for (AbstractCard c : ci.masterDeck.group) {
-                            AbstractCardFields.charID.set(c, ci.name);
-                            ___cards[0].add(c);
-                        }
-                    }
+            if (p != null) {
+                if(ReflectionHacks.getPrivate(__instance, MasterDeckViewScreen.class, "sortOrder") != null) {
+                    return;
                 }
+                if(i == 0) {
+                    prevID = AbstractCardFields.charID.get(p.masterDeck.group.get(i)).get(0);
+                    curID = prevID;
+                    posTracker = 0;
+                    lineNumTracker = 0;
+                } else {
+                    curID = AbstractCardFields.charID.get(p.masterDeck.group.get(i)).get(0);
+                    posTracker++;
+                }
+
+                if(posTracker % 5 == 0 && i != 0) {
+                    lineNumTracker++;
+                } else if(!prevID.equals(curID)) {
+                    lineNumTracker++;
+                    posTracker = 0;
+                }
+
+                prevID = curID;
+
+                mod[0] = posTracker % 5;
+                lineNum[0] = lineNumTracker;
             }
         }
 
         private static class Locator extends SpireInsertLocator {
-            @Override
-            public int[] Locate(CtBehavior ctBehavior) throws Exception {
-                Matcher finalMatcher = new Matcher.FieldAccessMatcher(MasterDeckViewScreen.class, "sortOrder");
-                return LineFinder.findInOrder(ctBehavior, finalMatcher);
+            public int[] Locate(CtBehavior ctMethodToPatch) throws CannotCompileException, PatchingException {
+                Matcher finalMatcher = new Matcher.MethodCallMatcher(ArrayList.class, "get");
+                return LineFinder.findInOrder(ctMethodToPatch, new ArrayList<>(), finalMatcher);
             }
         }
     }
 
-    @SpirePatch(clz = MasterDeckViewScreen.class, method = "hideCards")
-    public static class AddAllCards2 {
-        @SpireInsertPatch(locator = Locator.class)
-        public static void patch(MasterDeckViewScreen __instance, @ByRef ArrayList<AbstractCard>[] ___cards) {
+    @SpirePatch(clz = MasterDeckViewScreen.class, method = "calculateScrollBounds")
+    public static class FixScrollBounds {
+        @SpireInsertPatch(locator = Locator.class, localvars = {"scrollTmp"})
+        public static void patch(MasterDeckViewScreen __instance, @ByRef int[] scrollTmp) {
             FrontlineCharacter p = UC.pc();
             if(p != null) {
-                ___cards[0] = new ArrayList<>(___cards[0]);
-                for(AbstractCharacterInfo ci : p.characters) {
-                    if(ci != p.getCurrChar()) {
-                        for (AbstractCard c : ci.masterDeck.group) {
-                            AbstractCardFields.charID.set(c, ci.name);
-                            ___cards[0].add(c);
-                        }
-                    }
+                if(ReflectionHacks.getPrivate(__instance, MasterDeckViewScreen.class, "sortOrder") != null) {
+                    return;
                 }
+
+                AtomicInteger tmp = new AtomicInteger();
+
+                p.characters.forEach(c -> {
+                    tmp.addAndGet(c.masterDeck.size() / 5 - 2);
+                    if (c.masterDeck.size() % 5 != 0) {
+                        tmp.incrementAndGet();
+                    }
+                });
+
+                scrollTmp[0] = tmp.get() + p.characters.size() / 2;
             }
         }
 
         private static class Locator extends SpireInsertLocator {
-            @Override
-            public int[] Locate(CtBehavior ctBehavior) throws Exception {
-                Matcher finalMatcher = new Matcher.MethodCallMatcher(ArrayList.class, "size");
-                return LineFinder.findInOrder(ctBehavior, finalMatcher);
+            public int[] Locate(CtBehavior ctMethodToPatch) throws CannotCompileException, PatchingException {
+                Matcher finalMatcher = new Matcher.FieldAccessMatcher(Settings.class, "DEFAULT_SCROLL_LIMIT");
+                return LineFinder.findInOrder(ctMethodToPatch, new ArrayList<>(), finalMatcher);
             }
         }
     }
-
-    /*public static ArrayList<AbstractCard> cards;
-    @SpirePatch(clz = CardGroup.class, method = "renderMasterDeck")
-    public static class RenderAllCards {
-        @SpirePrefixPatch
-        public static void patch(CardGroup __instance, SpriteBatch sb) {
-            FrontlineCharacter p = UC.pc();
-            if(p != null && cards == null) {
-                cards = __instance.group;
-                for(AbstractCharacterInfo ci : p.characters) {
-                    if(ci != p.getCurrChar()) {
-                        for (AbstractCard c : ci.masterDeck.group) {
-                            AbstractCardFields.charID.set(c, ci.name);
-                            __instance.group.add(c);
-                        }
-                    }
-                }
-            }
-        }
-
-        @SpirePostfixPatch
-        public static void patch2(CardGroup __instance, SpriteBatch sb) {
-            __instance.group = cards;
-            cards = null;
-        }
-    }*/
 }
