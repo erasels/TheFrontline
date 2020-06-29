@@ -441,8 +441,8 @@ public class FrontlineCharacter extends CustomPlayer {
 
     @Override
     public void doCharSelectScreenSelectEffect() {
-        CardCrawlGame.sound.playA("ATTACK_WHIRLWIND", 1.75f);
-        CardCrawlGame.screenShake.shake(ScreenShake.ShakeIntensity.MED, ScreenShake.ShakeDur.LONG, true);
+        CardCrawlGame.sound.playA("ATTACK_WHIRLWIND", 0.25f);
+        CardCrawlGame.screenShake.shake(ScreenShake.ShakeIntensity.LOW, ScreenShake.ShakeDur.SHORT, false);
     }
 
     @Override
