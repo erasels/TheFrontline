@@ -3,11 +3,12 @@ package theFrontline.cards.all;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import theFrontline.cards.abstracts.FrontlineCard;
-import theFrontline.powers.IncreaseSwitchCostPower;
+import theFrontline.powers.TurnIncreaseSwitchCostPower;
 import theFrontline.util.CardInfo;
 
 import static theFrontline.TheFrontline.makeID;
-import static theFrontline.util.UC.*;
+import static theFrontline.util.UC.doDef;
+import static theFrontline.util.UC.doPow;
 
 public class Forfend extends FrontlineCard {
     private final static CardInfo cardInfo = new CardInfo(
@@ -18,7 +19,7 @@ public class Forfend extends FrontlineCard {
 
     public final static String ID = makeID(cardInfo.cardName);
 
-    private static final int BLOCK = 9;
+    private static final int BLOCK = 7;
     private static final int UPG_BLOCK = 3;
 
     private static final int MAGIC = 1;
@@ -33,6 +34,6 @@ public class Forfend extends FrontlineCard {
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
         doDef(block);
-        doPow(p, new IncreaseSwitchCostPower(magicNumber));
+        doPow(p, new TurnIncreaseSwitchCostPower(magicNumber));
     }
 }

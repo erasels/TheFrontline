@@ -9,7 +9,7 @@
   },
   "theFrontline:Forfend": {
     "NAME": "Forfend",
-    "DESCRIPTION": "Gain !B! Block. NL The next thefrontline:switch costs !M! additional [E]."
+    "DESCRIPTION": "Gain !B! Block. NL The next thefrontline:switch this turn costs !M! additional [E]."
   },
   "theFrontline:Deterrent": {
     "NAME": "Deterrent",

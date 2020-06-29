@@ -80,5 +80,12 @@
       "% additional #yBlock for the next #b",
       " turns."
     ]
+  },
+  "theFrontline:LimitedIncreaseSwitchCost": {
+    "NAME": "Increase Switch Cost",
+    "DESCRIPTIONS": [
+      "The next #yswitch costs #b",
+      " additional energy this turn."
+    ]
   }
 }
