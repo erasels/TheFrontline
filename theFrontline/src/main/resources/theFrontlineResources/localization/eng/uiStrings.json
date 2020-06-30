@@ -68,5 +68,14 @@
       "< Previous Character",
       "Special Ability"
     ]
+  },
+  "theFrontline:RestOption": {
+    "TEXT": [
+      "Heal all characters for ",
+      " HP.",
+      " \n+",
+      " from Regal Pillow.",
+      "Fully heal all characters but main character loses 5 Max HP."
+    ]
   }
 }
