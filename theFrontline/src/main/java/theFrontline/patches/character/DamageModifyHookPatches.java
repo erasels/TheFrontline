@@ -12,6 +12,7 @@ import theFrontline.util.UC;
 public class DamageModifyHookPatches {
     @SpirePatch(clz = AbstractCard.class, method = "applyPowers")
     public static class AbstractCardDamageGiveHook {
+        //TODO: Replace with card mods
         @SpireInsertPatch(locator = LocatorSingle.class, localvars = {"tmp"})
         public static void callSingleHook(AbstractCard __instance, @ByRef float[] tmp) {
             FrontlineCharacter p = UC.pc();
