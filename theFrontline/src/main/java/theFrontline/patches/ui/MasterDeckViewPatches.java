@@ -105,14 +105,14 @@ public class MasterDeckViewPatches {
 
                 AtomicInteger tmp = new AtomicInteger();
 
-                p.characters.forEach(c -> {
+                p.getCharacters().forEach(c -> {
                     tmp.addAndGet(c.masterDeck.size() / 5 - 2);
                     if (c.masterDeck.size() % 5 != 0) {
                         tmp.incrementAndGet();
                     }
                 });
 
-                scrollTmp[0] = tmp.get() + p.characters.size() / 2;
+                scrollTmp[0] = tmp.get() + p.getCharacters().size() / 2;
             }
         }
 
