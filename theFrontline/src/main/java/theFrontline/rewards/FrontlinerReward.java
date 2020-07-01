@@ -122,7 +122,7 @@ public class FrontlinerReward extends CustomReward {
                         break;
                    case UNCOMMON:
                        effects.add(new UncommonPotionParticleEffect(MathUtils.random(hb.x, hb.x + hb.width), MathUtils.random(hb.y, hb.y + hb.height)));
-                       sparkleTimer = MathUtils.random(0.35F, 0.5F);
+                       sparkleTimer = MathUtils.random(0.75F, 1F);
                 }
             }
         }
