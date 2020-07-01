@@ -4,6 +4,7 @@ import basemod.abstracts.CustomReward;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
@@ -14,6 +15,8 @@ import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.rewards.RewardItem;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.megacrit.cardcrawl.vfx.AbstractGameEffect;
+import com.megacrit.cardcrawl.vfx.RarePotionParticleEffect;
+import com.megacrit.cardcrawl.vfx.UncommonPotionParticleEffect;
 import org.apache.commons.lang3.math.NumberUtils;
 import theFrontline.TheFrontline;
 import theFrontline.characters.characterInfo.AbstractCharacterInfo;
@@ -22,12 +25,14 @@ import theFrontline.patches.general.RewardItemTypeEnumPatch;
 import theFrontline.screens.CharacterAddScreen;
 import theFrontline.util.CharacterHelper;
 import theFrontline.util.ScrapHelper;
+import theFrontline.util.UC;
 
 public class FrontlinerReward extends CustomReward {
     public static UIStrings uiStrings = CardCrawlGame.languagePack.getUIString(TheFrontline.makeID("FrontlinerReward"));
 
     public AbstractCharacterInfo ci;
     private boolean rightClicked = false;
+    private float sparkleTimer;
 
     public FrontlinerReward() {
         this(CharacterHelper.getRandomCharacter());
@@ -103,13 +108,24 @@ public class FrontlinerReward extends CustomReward {
                 false,
                 false);
 
-        Color c = Settings.CREAM_COLOR.cpy();
-        if (this.hb.hovered) {
-            c = Settings.GOLD_COLOR.cpy();
-        }
+        FontHelper.renderSmartText(sb, FontHelper.cardDescFont_N, this.text, 833.0f * Settings.scale, this.y + 5.0f * Settings.scale, 1000.0f * Settings.scale, 0.0f, Color.WHITE);
+        FontHelper.renderSmartText(sb, FontCreationPatches.tipFont, uiStrings.TEXT[1] + ci.getScrapValue() + uiStrings.TEXT[2], 833.0f * Settings.scale, this.y - FontHelper.getHeight(FontHelper.cardDescFont_N, text, Settings.scale) - 6f * Settings.scale, 1000.0f * Settings.scale, 0.0f, Color.WHITE);
 
-        FontHelper.renderSmartText(sb, FontHelper.cardDescFont_N, this.text, 833.0f * Settings.scale, this.y + 5.0f * Settings.scale, 1000.0f * Settings.scale, 0.0f, c);
-        FontHelper.renderSmartText(sb, FontCreationPatches.tipFont, uiStrings.TEXT[1] + ci.getScrapValue() + uiStrings.TEXT[2], 833.0f * Settings.scale, this.y - FontHelper.getHeight(FontHelper.cardDescFont_N, text, Settings.scale) - 6f * Settings.scale, 1000.0f * Settings.scale, 0.0f, c);
+
+        if (!Settings.DISABLE_EFFECTS) {
+            sparkleTimer -= UC.gt();
+            if(sparkleTimer < 0.0F) {
+               switch(ci.getRarity()){
+                    case RARE:
+                        effects.add(new RarePotionParticleEffect(MathUtils.random(hb.x, hb.x + hb.width), MathUtils.random(hb.y, hb.y + hb.height)));
+                        sparkleTimer = MathUtils.random(0.2F, 0.35F);
+                        break;
+                   case UNCOMMON:
+                       effects.add(new UncommonPotionParticleEffect(MathUtils.random(hb.x, hb.x + hb.width), MathUtils.random(hb.y, hb.y + hb.height)));
+                       sparkleTimer = MathUtils.random(0.35F, 0.5F);
+                }
+            }
+        }
 
         if (!this.hb.hovered) {
             for (AbstractGameEffect e : this.effects) {
