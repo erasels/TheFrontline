@@ -9,6 +9,7 @@ import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
+import com.megacrit.cardcrawl.helpers.input.InputHelper;
 import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.rewards.RewardItem;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
@@ -19,11 +20,13 @@ import theFrontline.characters.characterInfo.AbstractCharacterInfo;
 import theFrontline.patches.general.RewardItemTypeEnumPatch;
 import theFrontline.screens.CharacterAddScreen;
 import theFrontline.util.CharacterHelper;
+import theFrontline.util.ScrapHelper;
 
 public class FrontlinerReward extends CustomReward {
     public static UIStrings uiStrings = CardCrawlGame.languagePack.getUIString(TheFrontline.makeID("FrontlinerReward"));
 
     public AbstractCharacterInfo ci;
+    private boolean rightClicked = false;
 
     public FrontlinerReward() {
         this(CharacterHelper.getRandomCharacter());
@@ -37,18 +40,22 @@ public class FrontlinerReward extends CustomReward {
 
     @Override
     public boolean claimReward() {
-        if (AbstractDungeon.isScreenUp) {
-            AbstractDungeon.dynamicBanner.hide();
-            AbstractDungeon.overlayMenu.cancelButton.hide();
-            AbstractDungeon.previousScreen = AbstractDungeon.screen;
+        if(!rightClicked) {
+            if (AbstractDungeon.isScreenUp) {
+                AbstractDungeon.dynamicBanner.hide();
+                AbstractDungeon.overlayMenu.cancelButton.hide();
+                AbstractDungeon.previousScreen = AbstractDungeon.screen;
+            }
+            CharacterAddScreen.roomPhase = AbstractDungeon.getCurrRoom().phase;
+            AbstractDungeon.getCurrRoom().phase = AbstractRoom.RoomPhase.INCOMPLETE;
+
+            AbstractDungeon.closeCurrentScreen();
+
+            TheFrontline.screen = new CharacterAddScreen();
+            ((CharacterAddScreen) TheFrontline.screen).open(ci);
+        } else {
+            ScrapHelper.addScrap(ci.getScrapValue());
         }
-        CharacterAddScreen.roomPhase = AbstractDungeon.getCurrRoom().phase;
-        AbstractDungeon.getCurrRoom().phase = AbstractRoom.RoomPhase.INCOMPLETE;
-
-        AbstractDungeon.closeCurrentScreen();
-
-        TheFrontline.screen = new CharacterAddScreen();
-        ((CharacterAddScreen) TheFrontline.screen).open(ci);
 
         return true;
     }
@@ -109,5 +116,16 @@ public class FrontlinerReward extends CustomReward {
         }
 
         this.hb.render(sb);
+    }
+
+    @Override
+    public void update() {
+        super.update();
+
+        if (this.hb.hovered && InputHelper.justClickedRight && !this.isDone) {
+            CardCrawlGame.sound.playA("UI_CLICK_1", 0.25f);
+            this.hb.clickStarted = true;
+            rightClicked = true;
+        }
     }
 }
