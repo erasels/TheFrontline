@@ -17,6 +17,7 @@ import com.megacrit.cardcrawl.vfx.AbstractGameEffect;
 import org.apache.commons.lang3.math.NumberUtils;
 import theFrontline.TheFrontline;
 import theFrontline.characters.characterInfo.AbstractCharacterInfo;
+import theFrontline.patches.general.FontCreationPatches;
 import theFrontline.patches.general.RewardItemTypeEnumPatch;
 import theFrontline.screens.CharacterAddScreen;
 import theFrontline.util.CharacterHelper;
@@ -108,6 +109,7 @@ public class FrontlinerReward extends CustomReward {
         }
 
         FontHelper.renderSmartText(sb, FontHelper.cardDescFont_N, this.text, 833.0f * Settings.scale, this.y + 5.0f * Settings.scale, 1000.0f * Settings.scale, 0.0f, c);
+        FontHelper.renderSmartText(sb, FontCreationPatches.tipFont, uiStrings.TEXT[1] + ci.getScrapValue() + uiStrings.TEXT[2], 833.0f * Settings.scale, this.y - FontHelper.getHeight(FontHelper.cardDescFont_N, text, Settings.scale) - 6f * Settings.scale, 1000.0f * Settings.scale, 0.0f, c);
 
         if (!this.hb.hovered) {
             for (AbstractGameEffect e : this.effects) {

@@ -56,7 +56,9 @@
   },
   "theFrontline:FrontlinerReward": {
     "TEXT": [
-      "Add or Scrap: "
+      "Add or Scrap: ",
+      "#yInstantly #yscrap #yfor #b",
+      " #ywith #yright-click"
     ]
   },
   "theFrontline:CharScrapScreen": {
