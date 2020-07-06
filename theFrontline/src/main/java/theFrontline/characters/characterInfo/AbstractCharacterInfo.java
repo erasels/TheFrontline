@@ -10,7 +10,9 @@ import com.megacrit.cardcrawl.cards.CardSave;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.helpers.CardLibrary;
 import com.megacrit.cardcrawl.localization.CharacterStrings;
+import theFrontline.TheFrontline;
 import theFrontline.characters.characterInfo.frontline.FrontlineInfo;
+import theFrontline.util.TextureLoader;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -57,6 +59,16 @@ public abstract class AbstractCharacterInfo {
         availableCards = initializeAvailableCards();
         initStats();
         setFlavorStats();
+    }
+
+    public TextureAtlas getStatusImages() {
+        if(this instanceof FrontlineInfo) {
+            TextureAtlas pics = new TextureAtlas();
+            pics.addRegion("healthy", TextureLoader.getTexture(TheFrontline.makeCharPath("frontline/" + ((FrontlineInfo) this).type.name() + "/" + this.id + "/status.png")), 4, 0, 252, 512);
+            pics.addRegion("damaged", TextureLoader.getTexture(TheFrontline.makeCharPath("frontline/" + ((FrontlineInfo) this).type.name() + "/" + this.id + "/status.png")), 260, 0, 252, 512);
+            return pics;
+        }
+        return null;
     }
 
     protected void initStats() {
