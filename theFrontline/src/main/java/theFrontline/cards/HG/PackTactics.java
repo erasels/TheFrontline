@@ -1,5 +1,6 @@
 package theFrontline.cards.HG;
 
+import com.evacipated.cardcrawl.mod.stslib.variables.ExhaustiveVariable;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import theFrontline.cards.abstracts.FrontlineCard;
@@ -20,12 +21,14 @@ public class PackTactics extends FrontlineCard {
 
     private static final int MAGIC = 2;
     private static final int UPG_MAGIC = 1;
+    private static final int EX = 2;
 
     public PackTactics() {
         super(cardInfo, false);
         p(); //Stupid intellij stuff s, s
 
         setMagic(MAGIC, UPG_MAGIC);
+        ExhaustiveVariable.setBaseValue(this, EX);
     }
 
     @Override

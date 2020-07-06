@@ -33,7 +33,7 @@
   },
   "theFrontline:PackTactics": {
     "NAME": "Pack Tactics",
-    "DESCRIPTION": "Whenever you thefrontline:switch, gain !M! Block."
+    "DESCRIPTION": "Whenever you thefrontline:switch, gain !M! Block. NL Exhaustive !stslib:ex!."
   },
   "theFrontline:Conceal": {
     "NAME": "Conceal",
