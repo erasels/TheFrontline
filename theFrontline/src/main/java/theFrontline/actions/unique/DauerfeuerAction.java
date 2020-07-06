@@ -1,13 +1,13 @@
 package theFrontline.actions.unique;
 
-import com.badlogic.gdx.math.MathUtils;
+import basemod.helpers.CardModifierManager;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardQueueItem;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import theFrontline.patches.cards.CardModPatches;
+import theFrontline.cardModifiers.DauerfeuerCMod;
 
 public class DauerfeuerAction extends AbstractGameAction {
 
@@ -39,9 +39,7 @@ public class DauerfeuerAction extends AbstractGameAction {
                     target = AbstractDungeon.getRandomMonster();
                 }
 
-                CardModPatches.Fields.originalDmg.set(c, c.baseDamage);
-                c.baseDamage = MathUtils.floor(c.baseDamage * 0.5f);
-                c.freeToPlayOnce = true;
+                CardModifierManager.addModifier(c, new DauerfeuerCMod());
                 switch (c.target) {
                     case SELF_AND_ENEMY:
                     case ENEMY:
