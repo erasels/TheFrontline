@@ -37,7 +37,7 @@
   },
   "theFrontline:Conceal": {
     "NAME": "Conceal",
-    "DESCRIPTION": "thefrontline:Flank the enemies. NL Exhaust."
+    "DESCRIPTION": "thefrontline:Flank the enemies."
   },
   "theFrontline:Bushwack": {
     "NAME": "Bushwack",
@@ -53,7 +53,7 @@
   },
   "theFrontline:Unleash": {
     "NAME": "Unleash",
-    "DESCRIPTION": "Deal !D! damage. NL Damage modifiers affect this card twice. NL Exhaust."
+    "DESCRIPTION": "Deal !D! damage. NL Damage modifiers affect this card twice."
   },
   "theFrontline:PommelBash": {
     "NAME": "Pommel Bash",
@@ -65,7 +65,7 @@
   },
   "theFrontline:OneShot": {
     "NAME": "One Shot",
-    "DESCRIPTION": "This character's next attack deals double damage. NL Exhaust."
+    "DESCRIPTION": "This character's next attack deals double damage."
   },
   "theFrontline:Prepare": {
     "NAME": "Prepare",
@@ -94,7 +94,7 @@
   },
   "theFrontline:Dauerfeuer": {
     "NAME": "Dauerfeuer",
-    "DESCRIPTION": "Play all attacks in your hand at no cost and half damage. NL Exhaust."
+    "DESCRIPTION": "Play all attacks in your hand at no cost and half damage."
   },
   "theFrontline:StumblingShot": {
     "NAME": "Stumbling Shot",
@@ -115,7 +115,7 @@
   },
   "theFrontline:Charm": {
     "NAME": "Charm",
-    "DESCRIPTION": "The target attacks a random enemy. NL Exhaust.",
+    "DESCRIPTION": "The target attacks a random enemy.",
     "UPGRADE_DESCRIPTION": "The target attacks a random enemy. NL Exhaustive !stslib:ex!."
   },
   "theFrontline:SpicyFeast": {
@@ -124,6 +124,6 @@
   },
   "theFrontline:SmokeBomb": {
     "NAME": "Smoke Bomb",
-    "DESCRIPTION": "Gain !B! Block. NL Gain 50% additional Block for the next !M! turns. NL Exhaust."
+    "DESCRIPTION": "Gain !B! Block. NL Gain 50% additional Block for the next !M! turns."
   }
 }
