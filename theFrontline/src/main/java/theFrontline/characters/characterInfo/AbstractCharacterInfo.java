@@ -61,16 +61,6 @@ public abstract class AbstractCharacterInfo {
         setFlavorStats();
     }
 
-    public TextureAtlas getStatusImages() {
-        if(this instanceof FrontlineInfo) {
-            TextureAtlas pics = new TextureAtlas();
-            pics.addRegion("healthy", TextureLoader.getTexture(TheFrontline.makeCharPath("frontline/" + ((FrontlineInfo) this).type.name() + "/" + this.id + "/status.png")), 4, 0, 252, 512);
-            pics.addRegion("damaged", TextureLoader.getTexture(TheFrontline.makeCharPath("frontline/" + ((FrontlineInfo) this).type.name() + "/" + this.id + "/status.png")), 260, 0, 252, 512);
-            return pics;
-        }
-        return null;
-    }
-
     protected void initStats() {
         stats = new Stats();
     }
@@ -140,6 +130,23 @@ public abstract class AbstractCharacterInfo {
             }
         }
         return null;
+    }
+
+    public TextureAtlas getStatusImages() {
+        if(this instanceof FrontlineInfo) {
+            TextureAtlas pics = new TextureAtlas();
+            pics.addRegion("healthy", TextureLoader.getTexture(TheFrontline.makeCharPath("frontline/" + ((FrontlineInfo) this).type.name() + "/" + this.id + "/status.png")), 4, 0, 252, 512);
+            pics.addRegion("damaged", TextureLoader.getTexture(TheFrontline.makeCharPath("frontline/" + ((FrontlineInfo) this).type.name() + "/" + this.id + "/status.png")), 260, 0, 252, 512);
+            return pics;
+        }
+        return null;
+    }
+
+    public Texture getTypeIcon() {
+        if (isGFL()) {
+            return TextureLoader.getTexture(TheFrontline.makeUIPath("TypeIcon/" + ((FrontlineInfo) this).type.name() + ".png"));
+        }
+        return TextureLoader.getTexture(TheFrontline.makeUIPath("TypeIcon/Undefined.png"));
     }
 
     public CharacterSave getSave() {

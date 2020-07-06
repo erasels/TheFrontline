@@ -57,7 +57,7 @@ public class CombatCharacterSelection {
             if(tmp != null) {
                 sb.draw(tmp, 12 * Settings.scale, Settings.HEIGHT/2f + (10 * MULT), tmp.getRegionWidth() * MULT, tmp.getRegionHeight() * MULT);
 
-                Texture tIcon = CharacterHelper.getTypeIcon(ci);
+                Texture tIcon = ci.getTypeIcon();
                 sb.setColor(bgCol);
                 sb.draw(ImageMaster.WHITE_SQUARE_IMG, 16 * Settings.scale, Settings.HEIGHT/2f + (10 * MULT), tIcon.getWidth() * MULT, tIcon.getHeight() * MULT);
                 sb.setColor(CharacterHelper.getRarityColor(ci));

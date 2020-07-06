@@ -218,7 +218,7 @@ public class CharacterAddScreen extends AbstractScreen implements ScrollBarListe
                 tCol = Color.WHITE;
         }
         sb.setColor(tCol);
-        Texture tIcon = CharacterHelper.getTypeIcon(character);
+        Texture tIcon = character.getTypeIcon();
         float tmpImgW = character.img.getWidth() * Settings.scale;
         float tmpImgH = character.img.getHeight() * Settings.scale;
         sb.draw(tIcon, X_OFFSET / 2f, (Settings.HEIGHT * 0.6f) + (tmpImgH + (5*Settings.scale)), tIcon.getWidth() * Settings.scale, tIcon.getHeight() * Settings.scale, 0, 0, tIcon.getWidth(), tIcon.getHeight(), false, false);

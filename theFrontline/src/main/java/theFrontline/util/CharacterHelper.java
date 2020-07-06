@@ -2,7 +2,6 @@ package theFrontline.util;
 
 import basemod.animations.SpineAnimation;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.rooms.*;
@@ -161,13 +160,6 @@ public class CharacterHelper {
         }
 
         return ci;
-    }
-
-    public static Texture getTypeIcon(AbstractCharacterInfo ci) {
-        if (ci.isGFL()) {
-            return TextureLoader.getTexture(TheFrontline.makeUIPath("TypeIcon/" + ((FrontlineInfo) ci).type.name() + ".png"));
-        }
-        return TextureLoader.getTexture(TheFrontline.makeUIPath("TypeIcon/Undefined.png"));
     }
 
     public static AbstractCharacterInfo getPlayerChar() {
