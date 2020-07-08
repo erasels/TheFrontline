@@ -23,10 +23,6 @@ public class CharacterSelectionButton extends CharacterImageButton {
         SelectionPatches.setSelectedCharacter(this, true);
     }
 
-    public AbstractCharacterInfo getChar() {
-        return ci;
-    }
-
     @Override
     public void render(SpriteBatch sb) {
         super.render(sb);

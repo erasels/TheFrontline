@@ -23,17 +23,22 @@ public class CharacterImageButton extends Button {
     protected float vfxTimer = 1.0f;
     protected float vfxIntervalMin = 0.075f;
     protected float vfxIntervalMax = 0.3f;
+    protected float btnScale;
 
 
-    public CharacterImageButton(float x, float y, AbstractCharacterInfo ci, String header, String msg, boolean rarityEffect, Runnable exec) {
+    public CharacterImageButton(float x, float y, AbstractCharacterInfo ci, String header, String msg, boolean rarityEffect, Runnable exec, float scale) {
         super(x, y, ci.img);
         this.header = header;
         this.msg = msg;
         this.exec = exec;
         this.ci = ci;
-        this.hb = new Hitbox(x, y, (float)ci.img.getWidth() * Settings.scale, (float)ci.img.getHeight() * Settings.scale);
+        this.hb = new Hitbox(x, y, (float)ci.img.getWidth() * getScale(), (float)ci.img.getHeight() * getScale());
         this.rarityEffect = rarityEffect;
+        btnScale = scale;
         //inactiveColor = activeColor;
+    }
+    public CharacterImageButton(float x, float y, AbstractCharacterInfo ci, String header, String msg, boolean rarityEffect, Runnable exec) {
+        this(x, y, ci, header, msg, rarityEffect, exec, 1.0f);
     }
 
     public CharacterImageButton(float x, float y, AbstractCharacterInfo ci, String header, String msg, boolean rarityEffect) {
@@ -63,7 +68,7 @@ public class CharacterImageButton extends Button {
             if(InputHelper.justClickedRight) {
                 onRightClick();
             }
-            TipHelper.renderGenericTip(x + ((ci.img.getWidth()* Settings.scale)*0.75f), InputHelper.mY, header, msg);
+            TipHelper.renderGenericTip(x + ((ci.img.getWidth()* getScale())*0.75f), InputHelper.mY, header, msg);
         }
     }
 
@@ -82,6 +87,10 @@ public class CharacterImageButton extends Button {
             }
             vfxTimer = MathUtils.random(vfxIntervalMin, vfxIntervalMax);
         }
+    }
+
+    public AbstractCharacterInfo getChar() {
+        return ci;
     }
 
     public void onClick() {
@@ -103,8 +112,12 @@ public class CharacterImageButton extends Button {
             sb.setColor(inactiveColor);
         }*/
         //sb.draw(ci.img, x, y);
-        sb.draw(ci.img, x, y, ci.img.getWidth() * Settings.scale, ci.img.getHeight() * Settings.scale, 0, 0, ci.img.getWidth(), ci.img.getHeight(), false, false);
+        sb.draw(ci.img, x, y, ci.img.getWidth() * getScale(), ci.img.getHeight() * getScale(), 0, 0, ci.img.getWidth(), ci.img.getHeight(), false, false);
         //sb.setColor(Color.WHITE);
         hb.render(sb);
+    }
+
+    protected float getScale() {
+        return Settings.scale * btnScale;
     }
 }
