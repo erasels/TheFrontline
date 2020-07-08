@@ -33,6 +33,7 @@ import theFrontline.patches.character.SelectionPatches;
 import theFrontline.patches.general.ScreenPatches;
 import theFrontline.patches.ui.MasterDeckViewPatches;
 import theFrontline.screens.AbstractScreen;
+import theFrontline.ui.CharacterSwitchPanel;
 import theFrontline.ui.ScrapDisplay;
 import theFrontline.util.CharacterHelper;
 import theFrontline.util.ScrapHelper;
@@ -62,6 +63,7 @@ public class TheFrontline implements
 
     public static AbstractScreen screen;
     public static ScrapDisplay scrapDisplay;
+    public static CharacterSwitchPanel characterSwitchPanel;
 
     private static final String MODNAME = "The Frontline";
     private static final String AUTHOR = "erasels";
@@ -247,6 +249,9 @@ public class TheFrontline implements
             SelectionPatches.selectedChar = null;
             SelectionPatches.backUpChar = null;
             BaseMod.addTopPanelItem(scrapDisplay);
+            characterSwitchPanel = new CharacterSwitchPanel(Settings.WIDTH/2, Settings.HEIGHT/2, false);
+        } else {
+            characterSwitchPanel = null;
         }
     }
 

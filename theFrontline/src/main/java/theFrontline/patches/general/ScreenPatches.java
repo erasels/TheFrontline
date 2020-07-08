@@ -21,6 +21,10 @@ public class ScreenPatches {
             if (TheFrontline.screen != null) {
                 TheFrontline.screen.renderController(sb);
             }
+
+            if(TheFrontline.characterSwitchPanel != null) {
+                TheFrontline.characterSwitchPanel.render(sb);
+            }
         }
 
         private static class Locator extends SpireInsertLocator {
@@ -43,6 +47,10 @@ public class ScreenPatches {
                     openDeckHackDone = true;
                     AbstractDungeon.deckViewScreen.open();
                 }
+            }
+
+            if(TheFrontline.characterSwitchPanel != null) {
+                TheFrontline.characterSwitchPanel.update();
             }
         }
 
