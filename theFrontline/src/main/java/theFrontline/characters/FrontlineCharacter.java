@@ -254,7 +254,7 @@ public class FrontlineCharacter extends CustomPlayer {
         updateCharInfo();
 
         int cardsInHand = 0;
-        if (AbstractDungeon.getCurrRoom().phase == AbstractRoom.RoomPhase.COMBAT) {
+        if (AbstractDungeon.getCurrRoom() != null && AbstractDungeon.getCurrRoom().phase == AbstractRoom.RoomPhase.COMBAT) {
             onRetreat(c);
 
             cardsInHand = hand.size();
@@ -271,7 +271,7 @@ public class FrontlineCharacter extends CustomPlayer {
 
         loadCharInfo();
 
-        if (AbstractDungeon.getCurrRoom().phase == AbstractRoom.RoomPhase.COMBAT) {
+        if (AbstractDungeon.getCurrRoom() != null && AbstractDungeon.getCurrRoom().phase == AbstractRoom.RoomPhase.COMBAT) {
             CombatDeckHandler cdh = combatDecks.get(c.id);
             if (cdh != null) {
                 drawPile = cdh.draw;
